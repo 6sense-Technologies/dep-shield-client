@@ -4,12 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AvatarMenu from '@/components/AvatarMenu';
 import GlobalBreadCrumb from '@/components/globalBreadCrumb';
-import PageHeading from '@/components/pageHeading';
 import PageTitle from '@/components/PageTitle';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { FolderOpen, Plus } from 'lucide-react';
+import { FolderOpen, Plus, Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import RepositorySearchbar from './_components/repositorySearchbar';
+import { RepoTable } from './_components/repotable';
+import RepoSearchArea from './_components/RepoSearchArea';
+import MyRepoSearchArea from './_components/MyRepoSearchArea';
+import PageHeadingwithButton from './_components/PageHeadingwithButton';
+import { MyRepoTable } from './_components/myRepoTable';
 
 const Repositories = () => {
   const router = useRouter();
@@ -32,6 +35,84 @@ const Repositories = () => {
     router.push(newUrl);
   };
 
+  const dummyData = [
+    {
+      repositoryName: "6senseEV/6sense-ev-accounting-service",
+      totalVulnerabilities: 13,
+      vulnerabilities: [
+        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 2, name: "High", severity: "High" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 1", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+      ],
+    },
+    {
+      repositoryName: "6senseEV/6sense-ev-billing-service",
+      totalVulnerabilities: 3,
+      vulnerabilities: [
+        { id: 1, name: "Low", severity: "Low" },
+        { id: 2, name: "Medium", severity: "Medium" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 4", avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg" },
+        { id: 2, name: "User 5", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+      ],
+    },
+    {
+      repositoryName: "6senseEV/6sense-ev-customer-service",
+      totalVulnerabilities: 2,
+      vulnerabilities: [
+        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 2, name: "High", severity: "High" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+        { id: 2, name: "User 7", avatarUrl: "url7" },
+        { id: 3, name: "User 8", avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg" },
+      ],
+    },
+  ];
+
+  const additionalDummyData = [
+    {
+      repositoryName: "6senseEV/6sense-ev-accounting-service",
+      totalVulnerabilities: 13,
+      vulnerabilities: [
+        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 2, name: "High", severity: "High" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 1", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+      ],
+    },
+    {
+      repositoryName: "6senseEV/6sense-ev-billing-service",
+      totalVulnerabilities: 3,
+      vulnerabilities: [
+        { id: 1, name: "Low", severity: "Low" },
+        { id: 2, name: "Medium", severity: "Medium" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 4", avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg" },
+        { id: 2, name: "User 5", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+      ],
+    },
+    {
+      repositoryName: "6senseEV/6sense-ev-customer-service",
+      totalVulnerabilities: 2,
+      vulnerabilities: [
+        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 2, name: "High", severity: "High" },
+      ],
+      sharingDetails: [
+        { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
+        { id: 2, name: "User 7", avatarUrl: "url7" },
+        { id: 3, name: "User 8", avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg" },
+      ],
+    },
+  ];
+
   return (
     <div>
       <PageTitle
@@ -51,8 +132,8 @@ const Repositories = () => {
         </span>
       </div>
       <div className="px-3 lg:px-6">
-        <PageHeading title="All Repositories" className="pl-2 pt-3" />
-        <div className="tab">
+        <PageHeadingwithButton title="All Repositories" className="pl-2 pt-3" />
+        <div className="tab pt-4">
           <div className="flex space-x-4 border-b">
             <button
               className={`py-2 px-4 ${activeTab === 'all' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
@@ -77,32 +158,55 @@ const Repositories = () => {
         <div className="">
           {activeTab === 'all' && (
             <>
-              <div className='flex flex-col lg:flex-row justify-between w-full'>
-                <RepositorySearchbar
-                  placeholder="Search by repository name"
-                  name="search"
-                  btntext="Search"
-                  className="mt-4 mb-[26px] gap-x-2 w-full md:max-w-[300px] relative"
-                  variant="light"
+              <RepoSearchArea />
+              {dummyData.length === 0 ? (
+                <div className='flex flex-col items-center justify-center h-96 '>
+                  <span><FolderOpen size={32} strokeWidth={1} /></span>
+                  <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
+                  <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>Get started by adding a new repository.</p>
+                  <Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button>
+                </div>
+              ) : (
+                <RepoTable
+                  repos={dummyData}
+                  totalCountAndLimit={{ totalCount: dummyData.length, size: 10 }}
+                  currentPage={1}
+                  loading={false}
+                  refetch={() => { }}
                 />
-                <Button size="xsExtended" className='lg:mt-4'>Add <span className='text-white'></span></Button>
-              </div>
-              <div className='flex flex-col items-center justify-center h-96 '>
-                <span><FolderOpen size={32} strokeWidth={1} /></span>
-                <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
-                <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>Get started by adding a new repository.</p>
-                <Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button>
-              </div>
+              )}
             </>
           )}
           {activeTab === 'myrepositories' && (
             <>
-              <p className="text-xl">My Repositories Content</p>
+              <MyRepoSearchArea />
+              {dummyData.length === 0 ? (
+                <div className='flex flex-col items-center justify-center h-96 '>
+                  <span><FolderOpen size={32} strokeWidth={1} /></span>
+                  <p className="text-xl font-medium text-deepBlackColor">No Shared Repositories</p>
+                  <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>You haven't shared any repositories yet.</p>
+                  <Button className='w-[84px]'>Share <span className='text-white'><Share size={16} /></span></Button>
+                </div>
+              ) :
+                (
+                  <MyRepoTable
+                    repos={additionalDummyData}
+                    totalCountAndLimit={{ totalCount: additionalDummyData.length, size: 10 }}
+                    currentPage={1}
+                    loading={false}
+                    refetch={() => { }}
+                  />
+                )}
             </>
           )}
           {activeTab === 'sharedwithme' && (
             <>
-              <p className="text-xl">Shared with Me Content</p>
+              <RepoSearchArea />
+              <div className='flex flex-col items-center justify-center h-96 '>
+                <span><FolderOpen size={32} strokeWidth={1} /></span>
+                <p className="text-xl font-medium text-deepBlackColor">No Repositories Shared With You</p>
+                <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>No one has shared a repository with you yet.</p>
+              </div>
             </>
           )}
         </div>
