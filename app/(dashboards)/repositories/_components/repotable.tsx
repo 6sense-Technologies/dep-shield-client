@@ -25,6 +25,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RepoPagination } from "./repoPagination";
+import Link from "next/link";
 
 type Repository = {
   repositoryName: string;
@@ -42,7 +43,7 @@ const getBadgeVariant = (severity: string) => {
     case "Medium":
       return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD] font-normal";
     case "Low":
-      return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";    
+      return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
     default:
       return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
   }
@@ -107,7 +108,7 @@ export const columns: ColumnDef<Repository>[] = [
     enableHiding: false,
     cell: ({ row }) => (
       <div className="flex items-center justify-end space-x-4 pr-4">
-        <Button variant="outline">View</Button>
+        <Link href={`http://localhost:3000/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
       </div>
     ),
   },
@@ -198,24 +199,23 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                     {headerGroup.headers.map((header: any) => (
                       <TableHead
                         key={header.id}
-                        className={`text-left h-[51px] pl-4 leading-none ${
-                          header.column.id === "actions"
+                        className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
                             ? "text-right"
                             : header.column.id === "repositoryName"
-                            ? "min-w-[300px]"
-                            : header.column.id === "totalVulnerabilities"
-                            ? "min-w-[200px]"
-                            : header.column.id === "sharingDetails"
-                            ? "min-w-[200px]"
-                            : "min-w-[200px]"
-                        }`}
+                              ? "min-w-[300px]"
+                              : header.column.id === "totalVulnerabilities"
+                                ? "min-w-[200px]"
+                                : header.column.id === "sharingDetails"
+                                  ? "min-w-[200px]"
+                                  : "min-w-[200px]"
+                          }`}
                       >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header as React.ReactNode,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header as React.ReactNode,
+                            header.getContext()
+                          )}
                       </TableHead>
                     ))}
                   </TableRow>
@@ -232,17 +232,16 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                       {row.getVisibleCells().map((cell: any) => (
                         <TableCell
                           key={cell.id}
-                          className={`py-1 leading-none ${
-                            cell.column.id === "actions"
+                          className={`py-1 leading-none ${cell.column.id === "actions"
                               ? "text-right"
                               : cell.column.id === "repositoryName"
-                              ? "pl-4 text-start"
-                              : cell.column.id === "totalVulnerabilities"
-                              ? "text-start pl-4"
-                              : cell.column.id === "vulnerabilities"
-                              ? "pl-4 text-start"
-                              : "pl-4 text-start"
-                          }`}
+                                ? "pl-4 text-start"
+                                : cell.column.id === "totalVulnerabilities"
+                                  ? "text-start pl-4"
+                                  : cell.column.id === "vulnerabilities"
+                                    ? "pl-4 text-start"
+                                    : "pl-4 text-start"
+                            }`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell as React.ReactNode,

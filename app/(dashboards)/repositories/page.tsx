@@ -13,6 +13,7 @@ import RepoSearchArea from './_components/RepoSearchArea';
 import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
 import { MyRepoTable } from './_components/myRepoTable';
+import { ShareTable } from './_components/shareTable';
 
 const Repositories = () => {
   const router = useRouter();
@@ -113,6 +114,57 @@ const Repositories = () => {
     },
   ];
 
+  const shareData = [
+    {
+      sharedBy: {
+        name: "User 1",
+        avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+      },
+      sharedRepositories: 12,
+      platform: "GitHub",
+    },
+    {
+      sharedBy: {
+        name: "User 2",
+        avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
+      },
+      sharedRepositories: 13,
+      platform: "GitLab",
+    },
+    {
+      sharedBy: {
+        name: "User 3",
+        avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg",
+      },
+      sharedRepositories: 10,
+      platform: "BitBucket",
+    },
+    {
+      sharedBy: {
+        name: "User 4",
+        avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg",
+      },
+      sharedRepositories: 15,
+      platform: "GitHub",
+    },
+    {
+      sharedBy: {
+        name: "User 5",
+        avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg",
+      },
+      sharedRepositories: 8,
+      platform: "GitLab",
+    },
+    {
+      sharedBy: {
+        name: "User 6",
+        avatarUrl: "https://randomuser.me/api/portraits/women/6.jpg",
+      },
+      sharedRepositories: 20,
+      platform: "BitBucket",
+    },
+  ];
+
   return (
     <div>
       <PageTitle
@@ -172,7 +224,6 @@ const Repositories = () => {
                   totalCountAndLimit={{ totalCount: dummyData.length, size: 10 }}
                   currentPage={1}
                   loading={false}
-                  refetch={() => { }}
                 />
               )}
             </>
@@ -194,7 +245,6 @@ const Repositories = () => {
                     totalCountAndLimit={{ totalCount: additionalDummyData.length, size: 10 }}
                     currentPage={1}
                     loading={false}
-                    refetch={() => { }}
                   />
                 )}
             </>
@@ -202,11 +252,20 @@ const Repositories = () => {
           {activeTab === 'sharedwithme' && (
             <>
               <RepoSearchArea />
-              <div className='flex flex-col items-center justify-center h-96 '>
-                <span><FolderOpen size={32} strokeWidth={1} /></span>
-                <p className="text-xl font-medium text-deepBlackColor">No Repositories Shared With You</p>
-                <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>No one has shared a repository with you yet.</p>
-              </div>
+              {shareData.length === 0 ? (
+                <div className='flex flex-col items-center justify-center h-96 '>
+                  <span><FolderOpen size={32} strokeWidth={1} /></span>
+                  <p className="text-xl font-medium text-deepBlackColor">No Repositories Shared With You</p>
+                  <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>No one has shared a repository with you yet.</p>
+                </div>
+              ) : (
+                <ShareTable
+                  data={shareData}
+                  totalCountAndLimit={{ totalCount: shareData.length, size: 10 }}
+                  currentPage={1}
+                  loading={false}
+                />
+              )}
             </>
           )}
         </div>
