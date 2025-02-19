@@ -5,11 +5,11 @@ import { ScanText, Share } from 'lucide-react'
 import RepositorySearchbar from '../../../_components/repositorySearchbar'
 import { VulnabalitiesDropdown } from './VulnabalitiesDropdown'
 
-const VulnabalitiesSearchArea = () => {
+const DependenciesSearchArea = () => {
     return (
         <div className='flex flex-col lg:flex-row justify-between w-full'>
             <RepositorySearchbar
-                placeholder="Search by name or dependency"
+                placeholder="Search by name or license"
                 name="search"
                 btntext="Search"
                 className="mt-4 mb-[26px] gap-x-2 w-full lg:max-w-[300px] relative"
@@ -30,4 +30,4 @@ const VulnabalitiesSearchArea = () => {
     )
 }
 
-export default VulnabalitiesSearchArea
+export default DependenciesSearchArea

@@ -25,7 +25,7 @@ const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams
 const Repositories = () => {
   const router = useRouter();
 
-  const [activeTab, setActiveTab] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>("");
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -168,7 +168,10 @@ const Repositories = () => {
         {(searchParams) => {
           useEffect(() => {
             const tab = searchParams.get("tab");
-            if (tab) {
+            if (!tab) {
+              router.replace(`${window.location.pathname}?tab=all`);
+          }
+            else {
               setActiveTab(tab);
             }
           }, [searchParams]);
