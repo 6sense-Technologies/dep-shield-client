@@ -161,19 +161,13 @@ const SignUp = () => {
           </Link>
         </div>
 
-        <div className='mx-auto w-full max-w-[465px] px-8 pb-5 pt-4 lg:px-5 lg:pt-0 xl:pt-8'>
+        <div className='mx-auto w-full max-w-[465px] px-8 pb-5 pt-4 lg:px-5 lg:pt-0 xl:pt-20'>
           <div>
             <p className='pt-6 text-3xl font-semibold text-black lg:pb-6'>
               Sign up
             </p>
-            <AuthPageHeader
-              title='You are one click away'
-              subTitle='from being efficient'
-              titleclassName='md:text-2xl text-deepBlackColor pt-6 md:pt-0'
-              subTitleClassName='pt-[4px] pb-[20px]'
-            />
           </div>
-          <div className='flex gap-x-4'>
+          <div className='flex gap-x-4 pt-8 pb-3'>
             {/* <Link href={"/sign-up/sso"}> */}
             <Button
               variant='extralight'
@@ -283,11 +277,11 @@ const SignUp = () => {
                   className='absolute right-5 top-2.5'
                 >
                   {passwordVisible ? (
-                    <Eye size={20} className='text-xl text-deepBlackColor' />
+                    <Eye size={20} className='text-xl text-inputFooterColor' />
                   ) : (
                     <EyeOff
                       size={20}
-                      className='text-xl font-normal text-deepBlackColor'
+                      className='text-xl font-normal text-inputFooterColor'
                     />
                   )}
                 </button>

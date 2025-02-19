@@ -34,7 +34,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className='text-sidebarSecondaryColor'>Platform</SidebarGroupLabel>
+      {/* <SidebarGroupLabel className='text-sidebarSecondaryColor'>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>

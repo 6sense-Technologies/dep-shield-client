@@ -1,10 +1,9 @@
 import React from 'react'
-import RepositorySearchbar from './repositorySearchbar'
 import { Button } from '@/components/ui/button'
+import RepositorySearchbar from '../../_components/repositorySearchbar'
 import Link from 'next/link'
 
-
-const RepoSearchArea = () => {
+const AddRepoSearchArea = () => {
     return (
         <div className='flex flex-col lg:flex-row justify-between w-full'>
             <RepositorySearchbar
@@ -14,9 +13,9 @@ const RepoSearchArea = () => {
                 className="mt-4 mb-[26px] gap-x-2 w-full lg:max-w-[300px] relative"
                 variant="light"
             />
-            <Link href="/repositories/add"><Button size="xsExtended" className='lg:mt-4'>Add</Button></Link>
+            <Link href="/repositories/add"><Button size="xsExtended" className='lg:mt-4'>Add all</Button></Link>
         </div>
     )
 }
 
-export default RepoSearchArea
+export default AddRepoSearchArea

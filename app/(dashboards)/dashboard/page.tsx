@@ -17,7 +17,7 @@ const Dashboard = () => {
       <PageTitle
         title="Dashboard • DepShield.io"
       />
-      <div className="flex justify-between items-center md:hidden px-4 py-2">
+      <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
       <span className="md:hidden"><SidebarTrigger /></span>
         <AvatarMenu />
       </div>
