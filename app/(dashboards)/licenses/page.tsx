@@ -60,19 +60,19 @@ const LicensesContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="Dependencies • DepShield.io" />
+            <PageTitle title="Licenses • DepShield.io" />
             <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
                 <span className="md:hidden"><SidebarTrigger /></span>
                 <AvatarMenu />
             </div>
             <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Dependencies" initalLink="/Dependencies" />
+                <GlobalBreadCrumb initialData="Licenses" initalLink="/licenses" />
                 <span className="hidden md:flex pr-2">
                     <AvatarMenu />
                 </span>
             </div>
             <div className="flex items-center pl-4 md:pl-8 pt-3">
-                <PageHeading title="All Dependencies" className="mr-4" />
+                <PageHeading title="All Licenses" className="mr-4" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6">
                 <AllLicensesSearchArea />
