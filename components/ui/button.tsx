@@ -14,7 +14,8 @@ const buttonVariants = cva(
         thinprimary: "text-white bg-primary hover:opacity-90 w-full lg:w-[120px] !font-normal",
         secondary: "text-black bg-secondary hover:bg-secondaryHover",
         outline:
-          "text-black bg-transparent border-[1px] border-borderColor hover:bg-outlineHover focus:outline focus:outline-2 focus:outline-primary focus:outline-offset-2",
+          "text-black bg-transparent border-[1px] border-borderColor  focus:outline focus:outline-2 focus:outline-primary focus:outline-offset-2",
+        lightDestructive:"bg-[#FEF2F2] text-destructive",
         destructive: "text-white bg-destructive hover:bg-destructiveHover",
         ghost:
           "text-textPrimary bg-transparent hover:bg-disabled focus:bg-disabled focus:outline focus:outline-2 focus:outline-primary focus:outline-offset-2",
@@ -29,11 +30,14 @@ const buttonVariants = cva(
         darkish: 'text-white bg-primary font-normal',
         blackWhite: "text-white bg-black border border-white",
         disable: 'text-destructive underline underline-offset-2  border-none',
+        none:'text-black bg-transparent'
       },
       size: {
+        tight: "text-sm w-7 h-7",
         exSmall: "text-sm px-1 h-10",
         smallest: "px-2 h-10",
         xsExtended: "text-sm px-2 h-9 w-full lg:w-[90px]",
+        xsTight: "text-sm px-2 h-9 w-full lg:w-[40px]",
         md: "text-sm px-5 h-9",
         xs: "text-sm px-3 h-7",
         sm: "text-sm px-5 h-9",
@@ -43,6 +47,7 @@ const buttonVariants = cva(
         xl: "text-lg px-5 h-9",
         icon: "h-9 w-9",
         sidebaricon : "h-12 w-12",
+        default: "text-sm px-5 h-9",
       },
     },
     defaultVariants: {
