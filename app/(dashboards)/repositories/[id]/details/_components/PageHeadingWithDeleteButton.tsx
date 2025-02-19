@@ -41,7 +41,7 @@ const PageHeadingWithDeleteButton: FC<IHeadingProps> = ({ title, subTitle, title
                 <h3 className={cn('text-2xl md:text-2xl font-semibold', titleclassName)}>{title}</h3>
                 {subTitle ? <p className={cn('text-md md:text-sm text-subHeading pt-2', subTitleClassName)}>{subTitle}</p> : null}
             </div>
-            <div>
+            <div className='hidden md:block'>
                 <VulnabalitiesDropdown
                     placeholder="main"
                     name="vul"
@@ -49,7 +49,7 @@ const PageHeadingWithDeleteButton: FC<IHeadingProps> = ({ title, subTitle, title
                     className="mt-4 w-[140px] !placeholder:text-black"
                 />
             </div>
-            <div className='mt-4 relative'>
+            <div className='hidden md:block mt-4 relative'>
                 <Button size="tight" variant="light" onClick={() => setMenuVisible(!menuVisible)}><Users size={16} /></Button>
 
                 {menuVisible && (
@@ -84,7 +84,7 @@ const PageHeadingWithDeleteButton: FC<IHeadingProps> = ({ title, subTitle, title
                     </div>
                 )}
             </div>
-            <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4'><Trash2 size={12} className='text-destructive' /></Button>} />
+            <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4 hidden md:block'><Trash2 size={12} className='text-destructive' /></Button>} />
         </div>
     );
 };

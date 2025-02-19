@@ -108,7 +108,7 @@ export const columns: ColumnDef<Repository>[] = [
     enableHiding: false,
     cell: ({ row }) => (
       <div className="flex items-center justify-end space-x-4 pr-4">
-        <Link href={`http://localhost:3000/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
+        <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
       </div>
     ),
   },
@@ -200,14 +200,14 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                       <TableHead
                         key={header.id}
                         className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                            ? "text-right"
-                            : header.column.id === "repositoryName"
-                              ? "min-w-[300px]"
-                              : header.column.id === "totalVulnerabilities"
+                          ? "text-right"
+                          : header.column.id === "repositoryName"
+                            ? "min-w-[300px]"
+                            : header.column.id === "totalVulnerabilities"
+                              ? "min-w-[200px]"
+                              : header.column.id === "sharingDetails"
                                 ? "min-w-[200px]"
-                                : header.column.id === "sharingDetails"
-                                  ? "min-w-[200px]"
-                                  : "min-w-[200px]"
+                                : "min-w-[200px]"
                           }`}
                       >
                         {header.isPlaceholder
@@ -233,14 +233,14 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                         <TableCell
                           key={cell.id}
                           className={`py-1 leading-none ${cell.column.id === "actions"
-                              ? "text-right"
-                              : cell.column.id === "repositoryName"
-                                ? "pl-4 text-start"
-                                : cell.column.id === "totalVulnerabilities"
-                                  ? "text-start pl-4"
-                                  : cell.column.id === "vulnerabilities"
-                                    ? "pl-4 text-start"
-                                    : "pl-4 text-start"
+                            ? "text-right"
+                            : cell.column.id === "repositoryName"
+                              ? "pl-4 text-start"
+                              : cell.column.id === "totalVulnerabilities"
+                                ? "text-start pl-4"
+                                : cell.column.id === "vulnerabilities"
+                                  ? "pl-4 text-start"
+                                  : "pl-4 text-start"
                             }`}
                         >
                           {flexRender(
