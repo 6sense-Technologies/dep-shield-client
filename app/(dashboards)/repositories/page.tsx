@@ -16,6 +16,7 @@ import { MyRepoTable } from './_components/myRepoTable';
 import { ShareTable } from './_components/shareTable';
 import Loader from '@/components/loader';
 
+// Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
   const searchParams = useSearchParams();
   return <>{typeof children === 'function' ? (children as (params: URLSearchParams) => React.ReactNode)(searchParams) : children}</>;
