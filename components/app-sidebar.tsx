@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const { toggleSidebar } = useSidebar();
-  console.log("🚀 ~ AppSidebar ~ toggleSidebar:", toggleSidebar)
+  // console.log("🚀 ~ AppSidebar ~ toggleSidebar:", toggleSidebar)
 
   useEffect(() => {
     const savedSelectedItem = localStorage.getItem('selectedItem');

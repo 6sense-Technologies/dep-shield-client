@@ -215,9 +215,7 @@ const Repositories = () => {
                 <div className="">
                   {activeTab === 'all' && (
                     <>
-                      <RepoSearchArea
-                        all={true}
-                      />
+                      <RepoSearchArea/>
                       {dummyData.length === 0 ? (
                         <div className='flex flex-col items-center justify-center h-96 '>
                           <span><FolderOpen size={32} strokeWidth={1} /></span>

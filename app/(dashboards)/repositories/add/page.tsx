@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -10,35 +10,36 @@ import { AddRepoTable } from "./_components/AddRepoTable";
 import Image from "next/image";
 import Github from "../../../../public/logo/grayGithub.svg";
 import AddRepoSearchArea from "./_components/AddRepoSearchArea";
+import Loader from "@/components/loader";
 
-const AddRepository = () => {
-    const addRepoData = [
-        {
-            name: "6senseEV/6sense-ev-admin",
-            useCase: "Non-distributed"
-        },
-        {
-            name: "6senseEV/6sense-ev-frontend",
-            useCase: "Distributed"
-        },
-        {
-            name: "6senseEV/6sense-ev-backend",
-            useCase: "Unknown"
-        },
-        {
-            name: "6senseEV/6sense-ev-analytics",
-            useCase: "Non-distributed"
-        },
-        {
-            name: "6senseEV/6sense-ev-mobile",
-            useCase: "Distributed"
-        },
-        {
-            name: "6senseEV/6sense-ev-database",
-            useCase: "Unknown"
-        }
-    ];
+const addRepoData = [
+    {
+        name: "6senseEV/6sense-ev-admin",
+        useCase: "Non-distributed"
+    },
+    {
+        name: "6senseEV/6sense-ev-frontend",
+        useCase: "Distributed"
+    },
+    {
+        name: "6senseEV/6sense-ev-backend",
+        useCase: "Unknown"
+    },
+    {
+        name: "6senseEV/6sense-ev-analytics",
+        useCase: "Non-distributed"
+    },
+    {
+        name: "6senseEV/6sense-ev-mobile",
+        useCase: "Distributed"
+    },
+    {
+        name: "6senseEV/6sense-ev-database",
+        useCase: "Unknown"
+    }
+];
 
+const AddRepositoryContent = () => {
     const hasData = addRepoData.length > 0;
 
     return (
@@ -60,19 +61,26 @@ const AddRepository = () => {
             </div>
             {hasData ? (
                 <div className="pt-4 px-4 md:pt-4 md:px-6">
-                    <>
-                        <AddRepoSearchArea />
-                        <AddRepoTable repositories={addRepoData}
-                            totalCountAndLimit={{ totalCount: addRepoData.length, size: 10 }}
-                            currentPage={1}
-                            loading={false}
-                        />
-                    </>
+                    <AddRepoSearchArea />
+                    <AddRepoTable
+                        repositories={addRepoData}
+                        totalCountAndLimit={{ totalCount: addRepoData.length, size: 10 }}
+                        currentPage={1}
+                        loading={false}
+                    />
                 </div>
             ) : (
                 <EmptyAddRepoView />
             )}
         </div>
+    );
+};
+
+const AddRepository = () => {
+    return (
+        <Suspense fallback={<Loader />}>
+            <AddRepositoryContent />
+        </Suspense>
     );
 };
 

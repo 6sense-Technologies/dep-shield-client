@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 
-const RepoSearchArea :FC<> = () => {
+const RepoSearchArea = () => {
     return (
         <div className='flex flex-col lg:flex-row justify-between w-full'>
             <RepositorySearchbar
