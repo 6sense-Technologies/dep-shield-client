@@ -2,8 +2,7 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
   "ignorePatterns": ["next.config.mjs", "next.config.js"],
   "extends": [
@@ -11,7 +10,8 @@
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
-    "next"
+    "next",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -81,7 +81,7 @@
     "no-nested-ternary": "off",
     "no-new": "warn",
     "no-new-object": "warn",
-    "no-param-reassign": "off",
+    "no-param-reassign": "warn",
     "no-useless-concat": "warn",
     "no-useless-return": "warn",
     "prefer-template": "warn",

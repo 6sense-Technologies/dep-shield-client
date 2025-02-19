@@ -47,6 +47,7 @@ const buttonVariants = cva(
         xl: "text-lg px-5 h-9",
         icon: "h-9 w-9",
         sidebaricon : "h-12 w-12",
+        default: "text-sm px-5 h-9",
       },
     },
     defaultVariants: {

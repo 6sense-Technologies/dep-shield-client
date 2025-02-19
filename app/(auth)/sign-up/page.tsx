@@ -38,8 +38,8 @@ const SignUp = () => {
     displayName: string;
     emailAddress: string;
   } | null>(null);
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  // const searchParams = useSearchParams();
+  // const token = searchParams.get('token');
 
   const handlePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
