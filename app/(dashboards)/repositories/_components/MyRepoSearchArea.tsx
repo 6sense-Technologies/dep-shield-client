@@ -16,7 +16,7 @@ const MyRepoSearchArea = () => {
             <div className='flex flex-col lg:flex-row space-y-4 lg:space-x-4'>
                 <div className='flex space-x-4'>
                     <Button size="xsTight" variant="light" className='lg:mt-4'><Share /> <span className='text-sm font-medium text-deepBlackColor lg:hidden'>Share</span></Button>
-                    <Button size="xsExtended" variant="light" className='lg:mt-4'><ScanText className='lg:hidden'/>Scan All</Button>
+                    <Button size="xsExtended" variant="light" className='lg:mt-4'><ScanText className='lg:hidden'/>Scan all</Button>
                 </div>
                 <Button size="xsExtended" className='mr-4 lg:mt-4'>Add</Button>
             </div>

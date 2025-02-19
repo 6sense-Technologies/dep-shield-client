@@ -71,12 +71,12 @@ export const columns: ColumnDef<ShareData>[] = [
     },
     {
         id: "actions",
-        header: () => <div className="text-bold text-start pr-4">Action</div>,
+        header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Button variant="outline">View</Button>
-                <CustomAlertDialog trigger={<Button variant="destructive">Delete</Button>} />
+                <CustomAlertDialog trigger={<Button variant="destructive">Remove</Button>} />
             </div>
         ),
     },
@@ -168,7 +168,7 @@ export const ShareTable: React.FC<TShareTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right"
+                                                    ? "text-right w-[225px]"
                                                     : header.column.id === "sharedBy"
                                                         ? "min-w-[300px]"
                                                         : header.column.id === "sharedRepositories"

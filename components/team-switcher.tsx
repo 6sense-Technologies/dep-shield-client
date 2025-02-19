@@ -1,17 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown, X } from 'lucide-react';
 import Image from 'next/image';
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 
 export function TeamSwitcher({
@@ -23,34 +20,37 @@ export function TeamSwitcher({
     plan: string;
   }[];
 }) {
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+  const [activeTeam] = React.useState(teams[0]);
+
+  const { toggleSidebar } = useSidebar();
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         {/* <DropdownMenu> */}
-          {/* <DropdownMenuTrigger asChild> */}
-            <SidebarMenuButton
-              size='lg'
-              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-auto'
-            >
-              <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-transparent text-white'>
-                {typeof activeTeam.logo != 'string' ? (
-                  <Image src={activeTeam.logo} alt={`${activeTeam.name} logo`} className='size-8' />
-                ) : (
-                  <activeTeam.logo/>
-                )}
-              </div>
-              <div className='grid flex-1 text-left leading-tight'>
-                <span className='truncate font-semibold text-sm text-miniSubheadingColor'>
-                  {activeTeam.name}
-                </span>
-                <span className='truncate text-tweleve font-normal text-miniSubheadingColor'>{activeTeam.plan}</span>
-              </div>
-              {/* <ChevronsUpDown className='ml-auto cursor-not-allowed' /> */}
-            </SidebarMenuButton>
-          {/* </DropdownMenuTrigger> */}
-          {/* <DropdownMenuContent
+        {/* <DropdownMenuTrigger asChild> */}
+        <SidebarMenuButton
+          size='lg'
+          className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-auto'
+        >
+          <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-transparent text-white'>
+            {typeof activeTeam.logo != 'string' ? (
+              <Image src={activeTeam.logo} alt={`${activeTeam.name} logo`} className='size-8' />
+            ) : (
+              <activeTeam.logo />
+            )}
+          </div>
+          <div className='grid flex-1 text-left leading-tight'>
+            <span className='truncate font-semibold text-sm text-miniSubheadingColor'>
+              {activeTeam.name}
+            </span>
+            <span className='truncate text-tweleve font-normal text-miniSubheadingColor'>{activeTeam.plan}</span>
+          </div>
+          <X strokeWidth={1} className='ml-auto h-4 w-4 block md:hidden cursor-pointer' onClick={() => toggleSidebar()} />
+          {/* <ChevronsUpDown className='ml-auto cursor-not-allowed' /> */}
+        </SidebarMenuButton>
+        {/* </DropdownMenuTrigger> */}
+        {/* <DropdownMenuContent
             className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg'
             align='start'
             side={isMobile ? 'bottom' : 'right'}

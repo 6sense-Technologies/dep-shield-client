@@ -116,7 +116,7 @@ export const columns: ColumnDef<Dependency>[] = [
     },
     {
         id: "actions",
-        header: () => <div className="text-bold text-start pr-4">Action</div>,
+        header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
@@ -212,7 +212,7 @@ export const DependenciesTable: React.FC<TDependenciesTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right"
+                                                    ? "text-right w-[110px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
                                                         : header.column.id === "totalVulnerabilities"

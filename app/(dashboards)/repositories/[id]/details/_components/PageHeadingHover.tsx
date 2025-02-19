@@ -94,7 +94,7 @@ const PageHeadingHover: FC<IHeadingProps> = ({ title, subTitle, titleclassName, 
                         </div>
                     )}
                 </div>
-                <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4 block md:hidden'><Trash2 size={12} className='text-destructive' /></Button>} />
+                <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4 block md:hidden'><Trash2 size={12} className='text-destructive mx-auto' /></Button>} />
             </div>
         </TooltipProvider>
     );

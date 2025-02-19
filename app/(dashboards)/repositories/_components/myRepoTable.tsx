@@ -70,7 +70,7 @@ export const columns: ColumnDef<Repository>[] = [
   },
   {
     accessorKey: "vulnerabilities",
-    header: () => <div className="text-bold">Vulnerabilities</div>,
+    header: () => <div className="text-bold">Vulnerability </div>,
     cell: ({ row }: { row: any }) => {
       const vulnerabilities = row.original.vulnerabilities;
       const severities = ["Critical", "High", "Medium", "Low", "Unknown"];
@@ -90,7 +90,7 @@ export const columns: ColumnDef<Repository>[] = [
   },
   {
     accessorKey: "sharingDetails",
-    header: () => <div className="text-bold">Sharing Details</div>,
+    header: () => <div className="text-bold">Shared With</div>,
     cell: ({ row }: { row: any }) => (
       <div className="flex -space-x-2">
         {row.original.sharingDetails.map((user: any) => (
@@ -104,7 +104,7 @@ export const columns: ColumnDef<Repository>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-bold text-start pr-4">Action</div>,
+    header: () => <div className="text-bold text-start pr-4">Actions</div>,
     enableHiding: false,
     cell: ({ row }) => (
       <div className="flex items-center justify-end space-x-4 pr-4">
@@ -202,7 +202,7 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
                         key={header.id}
                         className={`text-left h-[51px] pl-4 leading-none ${
                           header.column.id === "actions"
-                            ? "text-right"
+                            ? "text-right w-[170px]"
                             : header.column.id === "repositoryName"
                             ? "min-w-[300px]"
                             : header.column.id === "totalVulnerabilities"
