@@ -169,7 +169,7 @@ const Repositories = () => {
             const tab = searchParams.get("tab");
             if (!tab) {
               router.replace(`${window.location.pathname}?tab=all`);
-          }
+            }
             else {
               setActiveTab(tab);
             }
@@ -178,7 +178,7 @@ const Repositories = () => {
           return (
             <div>
               <PageTitle title="Repositories • DepShield.io" />
-              <div className="flex justify-between items-center md:hidden px-4 py-2">
+              <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
                 <span className="md:hidden"><SidebarTrigger /></span>
                 <AvatarMenu />
               </div>
@@ -189,7 +189,7 @@ const Repositories = () => {
                 </span>
               </div>
               <div className="px-3 lg:px-6">
-                <PageHeadingwithButton title="All Repositories" className="pl-2 pt-3" />
+                <PageHeadingwithButton title="All Repositories" className="pl-2 pt-3" showButton={activeTab !== 'all'} />
                 <div className="tab pt-4">
                   <div className="flex space-x-4 border-b">
                     <button
@@ -202,20 +202,22 @@ const Repositories = () => {
                       className={`py-2 px-4 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                       onClick={() => handleTabChange('myrepositories')}
                     >
-                      My Repositories
+                      My repositories
                     </button>
                     <button
                       className={`py-2 px-4 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                       onClick={() => handleTabChange('sharedwithme')}
                     >
-                      Shared with Me
+                      Shared with me
                     </button>
                   </div>
                 </div>
                 <div className="">
                   {activeTab === 'all' && (
                     <>
-                      <RepoSearchArea />
+                      <RepoSearchArea
+                        all={true}
+                      />
                       {dummyData.length === 0 ? (
                         <div className='flex flex-col items-center justify-center h-96 '>
                           <span><FolderOpen size={32} strokeWidth={1} /></span>

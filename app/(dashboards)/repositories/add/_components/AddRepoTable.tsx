@@ -22,75 +22,63 @@ import {
 import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Badge } from "@/components/ui/badge";
-import { LicensesPagination } from "./licensesPagination";
+import { Button } from "@/components/ui/button";
+import { AddRepoPagination } from "./AddRepoPagination";
 
-type License = {
+type Repository = {
     name: string;
-    licenseRisk: string;
-    dependencies: number;
-    licenseFamily: string;
+    useCase: string;
 };
 
-const getBadgeVariant = (risk: string) => {
-    switch (risk) {
-        case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] font-normal";
-        case "High":
-            return "text-[#B45309] bg-[#FDEBDD] font-normal";
-        case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] font-normal";
-        case "Low":
-            return "text-[#166534] bg-[#DCFCE7] font-normal";
-        case "Unknown":
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
-        default:
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
-    }
-};
 
-export const columns: ColumnDef<License>[] = [
+export const columns: ColumnDef<Repository>[] = [
     {
         accessorKey: "name",
-        header: () => <div className="text-bold">Name</div>,
+        header: () => <div className="text-bold">Repository Name</div>,
         cell: ({ row }: { row: any }) => (
             <div className="text-medium">{row.getValue("name") || "-"}</div>
         ),
     },
     {
-        accessorKey: "licenseRisk",
-        header: () => <div className="text-bold">License Risk</div>,
+        accessorKey: "useCase",
+        header: () => <div className="text-bold">Use Case</div>,
         cell: ({ row }: { row: any }) => (
-            <Badge className={getBadgeVariant(row.getValue("licenseRisk"))}>
-                {row.getValue("licenseRisk")}
+            <Badge className="text-black bg-white border-lightborderColor font-normal">
+                {row.getValue("useCase")}
             </Badge>
         ),
     },
     {
-        accessorKey: "dependencies",
-        header: () => <div className="text-bold">Dependencies</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("dependencies") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "licenseFamily",
-        header: () => <div className="text-bold">License Family</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("licenseFamily") || "-"}</div>
-        ),
+        id: "actions",
+        header: () => <div className="text-bold text-start pr-4">Actions</div>,
+        enableHiding: false,
+        cell: ({ row }) => {
+            const [added, setAdded] = useState(false);
+
+            return (
+                <div className="flex items-center justify-end space-x-4 pr-4">
+                    <Button
+                        variant={added ? "nonedisable" : "outline"}
+                        onClick={() => setAdded(true)}
+                    >
+                        {added ? "Added" : "Add"}
+                    </Button>
+                </div>
+            );
+        },
     },
 ];
 
-type TLicensesTableProps = {
-    licenses?: License[];
+type TAddRepoTableProps = {
+    repositories?: Repository[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;
     loading?: boolean;
 };
 
-export const LicensesTable: React.FC<TLicensesTableProps> = ({
-    licenses = [],
+export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
+    repositories = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
@@ -113,7 +101,7 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
         : 0;
 
     const table = useReactTable({
-        data: licenses,
+        data: repositories,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -149,8 +137,8 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
 
     const displayedRowsCount =
         currentPageState > 1
-            ? (currentPageState - 1) * pagination.pageSize + licenses.length
-            : licenses.length;
+            ? (currentPageState - 1) * pagination.pageSize + repositories.length
+            : repositories.length;
 
     return (
         <div className="w-full">
@@ -158,7 +146,7 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
                 <EmptyTableSkeleton />
             ) : (
                 <>
-                    <div className="overflow-hidden rounded-lg border border-lightborderColor mt-4 lg:mt-0">
+                    <div className="overflow-hidden rounded-lg border border-lightborderColor mt-6 lg:mt-0">
                         <Table className="!rounded-lg !min-w-[600px]">
                             <TableHeader className="border-b-[1px] text-inputFooterColor">
                                 {table.getHeaderGroups().map((headerGroup: any) => (
@@ -167,16 +155,12 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right"
+                                                    ? "text-right min-w-[100px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
-                                                        : header.column.id === "licenseRisk"
+                                                        : header.column.id === "useCase"
                                                             ? "min-w-[200px]"
-                                                            : header.column.id === "dependencies"
-                                                                ? "min-w-[200px]"
-                                                                : header.column.id === "licenseFamily"
-                                                                    ? "min-w-[200px]"
-                                                                    : "min-w-[200px]"
+                                                            : "min-w-[200px]"
                                                     }`}
                                             >
                                                 {header.isPlaceholder
@@ -205,13 +189,9 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
                                                         ? "text-right"
                                                         : cell.column.id === "name"
                                                             ? "pl-4 text-start"
-                                                            : cell.column.id === "licenseRisk"
+                                                            : cell.column.id === "useCase"
                                                                 ? "text-start pl-4"
-                                                                : cell.column.id === "dependencies"
-                                                                    ? "pl-4 text-start"
-                                                                    : cell.column.id === "licenseFamily"
-                                                                        ? "pl-4 text-start"
-                                                                        : "pl-4 text-start"
+                                                                : "pl-4 text-start"
                                                         }`}
                                                 >
                                                     {flexRender(
@@ -241,7 +221,7 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <LicensesPagination
+                            <AddRepoPagination
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}

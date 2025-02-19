@@ -142,19 +142,14 @@ const SignIn = () => {
           </Link>
         </div>
 
-        <div className="w-full max-w-[465px] mx-auto px-8 pt-4 xl:pt-8 lg:px-5 lg:pt-0">
+        <div className="w-full max-w-[465px] mx-auto px-8 pt-4 xl:pt-20 lg:px-5 lg:pt-0">
           <p className="text-3xl text-black font-semibold pt-4 lg:pt-0">
             Sign in
           </p>
           <div>
-            <AuthPageHeader
-              title="You are one click away"
-              subTitle="from being efficient"
-              titleclassName="md:text-2xl text-deepBlackColor pt-6"
-              subTitleClassName="pt-[4px] pb-[24px]"
-            />
+
           </div>
-          <div className="flex gap-x-4">
+          <div className="flex gap-x-4 pt-8 pb-3">
             {/* <Link href={"/sign-in/sso"}> */}
             <Button
               variant="extralight"
@@ -228,7 +223,7 @@ const SignIn = () => {
                 externalError={errorMessage}
               />
             </div>
-            <div className="pt-6 lg:pt-5 w-full">
+            <div className="pt-6 lg:pt-6 w-full">
               <label
                 htmlFor="password"
                 className="text-black font-medium text-sm"
@@ -251,11 +246,11 @@ const SignIn = () => {
                     className="absolute right-5 top-2.5"
                   >
                     {passwordVisible ? (
-                      <Eye size={20} className="text-xl text-deepBlackColor" />
+                      <Eye size={20} className="text-xl text-inputFooterColor" />
                     ) : (
                       <EyeOff
                         size={20}
-                        className="text-xl text-deepBlackColor"
+                        className="text-xl text-inputFooterColor"
                       />
                     )}
                   </button>

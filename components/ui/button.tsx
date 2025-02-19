@@ -30,7 +30,8 @@ const buttonVariants = cva(
         darkish: 'text-white bg-primary font-normal',
         blackWhite: "text-white bg-black border border-white",
         disable: 'text-destructive underline underline-offset-2  border-none',
-        none:'text-black bg-transparent'
+        none:'text-black bg-transparent',
+        nonedisable: 'text-subHeading bg-transparent'
       },
       size: {
         tight: "text-sm w-7 h-7",

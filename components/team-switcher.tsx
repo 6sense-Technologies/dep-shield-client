@@ -28,11 +28,11 @@ export function TeamSwitcher({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        {/* <DropdownMenu> */}
+          {/* <DropdownMenuTrigger asChild> */}
             <SidebarMenuButton
               size='lg'
-              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
+              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-auto'
             >
               <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-transparent text-white'>
                 {typeof activeTeam.logo != 'string' ? (
@@ -47,9 +47,9 @@ export function TeamSwitcher({
                 </span>
                 <span className='truncate text-tweleve font-normal text-miniSubheadingColor'>{activeTeam.plan}</span>
               </div>
-              <ChevronsUpDown className='ml-auto cursor-not-allowed' />
+              {/* <ChevronsUpDown className='ml-auto cursor-not-allowed' /> */}
             </SidebarMenuButton>
-          </DropdownMenuTrigger>
+          {/* </DropdownMenuTrigger> */}
           {/* <DropdownMenuContent
             className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg'
             align='start'
@@ -84,7 +84,7 @@ export function TeamSwitcher({
               <div className='text-muted-foreground font-medium'>Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent> */}
-        </DropdownMenu>
+        {/* </DropdownMenu> */}
       </SidebarMenuItem>
     </SidebarMenu>
   );

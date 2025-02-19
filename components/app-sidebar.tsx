@@ -74,7 +74,7 @@ const defaultData = {
     },
     {
       title: 'Integrations',
-      url: '#',
+      url: '/integrations',
       icon: BoxesIcon,
     },
   ],
