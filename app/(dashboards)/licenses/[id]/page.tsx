@@ -121,7 +121,7 @@ const LicensesDetailsContent = () => {
                     </div>
                 </div>
                 <div>
-                    <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Conditions</h1>
+                    <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 mt-5 md:mt-0">Conditions</h1>
                     <div className="flex flex-wrap gap-2 mt-4 ml-1">
                         <Badge className="inline-flex items-center gap-1 bg-[#F1F5F9]  hover:bg-[#F1F5F9] text-nowrap font-normal">
                             <div className="flex items-center gap-1">

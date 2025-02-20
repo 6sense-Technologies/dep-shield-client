@@ -76,7 +76,7 @@ export const columns: ColumnDef<Licenses>[] = [
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
 
-                <ExternalLink size={16} />
+                <ExternalLink size={16} className="cursor-pointer"/>
 
             </div>
         ),
@@ -154,7 +154,7 @@ export const SingleLicenseTable: React.FC<TSingleLicenseTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right w-[115px]"
+                                                    ? "text-right w-[150px]"
                                                     : header.column.id === "repositoryName"
                                                         ? "min-w-[300px]"
                                                         : "min-w-[200px]"

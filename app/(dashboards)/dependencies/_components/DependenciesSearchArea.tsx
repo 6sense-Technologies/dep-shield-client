@@ -18,7 +18,7 @@ const DependenciesSearchArea = () => {
                             placeholder='None'
                             name="vulStatus"
                             active={false}
-                            className="mt-4 w-[172px] lg:w-[160px] h-10 !placeholder:text-black"
+                            className="mt-0 lg:mt-4 w-[172px] lg:w-[160px] h-10 !placeholder:text-black"
                         />
                     </div>
                 </div>

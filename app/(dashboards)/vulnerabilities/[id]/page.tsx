@@ -168,7 +168,7 @@ const VulnerabilitiesDetailsContent = () => {
                 <div className="flex items-center gap-2 border-b pb-4">
                     <p className="font-medium text-[16px] text-deepBlackColor">Vulnerable dependency</p>
 
-                    <Badge className="inline-flex items-center gap-1 bg-transparent text-black px-2 py-1 rounded-xl hover:bg-transparent">
+                    <Badge className="inline-flex items-center gap-1 bg-transparent text-black px-2 py-1 rounded-xl hover:bg-transparent cursor-pointer">
                         log4j (Maven)
                         <ExternalLink size={16} className='ml-[6px]' />
                     </Badge>

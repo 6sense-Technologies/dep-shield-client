@@ -210,18 +210,18 @@ const RepositoriesDetails = () => {
                                 <PageHeadingWithDeleteButton title="6senseEV/6sense-ev-accounting-service" className="hidden md:block pl-2 pt-3" />
                                 <PageHeadingHover title="Repository" hoverTitle="6senseEV/6sense-ev-accounting-service" className="block md:hidden pl-2 pt-3" />
                                 <div className="tab pt-4">
-                                    <div className="flex space-x-4 border-b">
+                                    <div className="flex space-x-0 md:space-x-4 border-b">
                                         <button
-                                            className={`py-2 px-4 ${activeTab === 'vulnerabilities' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                                            className={`py-2 px-2 md:px-4 ${activeTab === 'vulnerabilities' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                                             onClick={() => handleTabChange('vulnerabilities')}
                                         >
                                             Vulnerabilities
                                         </button>
                                         <button
-                                            className={`py-2 px-4 ${activeTab === 'dependency' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
-                                            onClick={() => handleTabChange('dependency')}
+                                            className={`py-2 px-4 ${activeTab === 'dependencies' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                                            onClick={() => handleTabChange('dependencies')}
                                         >
-                                            Dependency
+                                            Dependencies
                                         </button>
                                         <button
                                             className={`py-2 px-4 ${activeTab === 'licenses' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
@@ -243,7 +243,7 @@ const RepositoriesDetails = () => {
                                             />
                                         </>
                                     )}
-                                    {activeTab === 'dependency' && (
+                                    {activeTab === 'dependencies' && (
                                         <>
                                             <DependenciesSearchArea />
                                             <DependenciesTable

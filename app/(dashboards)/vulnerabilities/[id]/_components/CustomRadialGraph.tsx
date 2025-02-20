@@ -1,6 +1,4 @@
 "use client";
-
-import { TrendingUp } from "lucide-react";
 import {
     Label,
     PolarGrid,
@@ -13,7 +11,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
@@ -37,20 +34,25 @@ const chartConfig = {
 
 export default function CustomRadialGraph({ chartData, heading, subHeading }: CustomRadialGraphProps) {
     return (
-        <Card className="flex flex-col w-full max-w-[200px]">
+        <Card className="flex flex-col w-full max-w-[200px] bg-[#FCFCFC]">
             <CardHeader className="items-center pb-0">
                 <CardTitle className="text-[16px] font-semibold text-deepBlackColor">{heading}</CardTitle>
                 <CardDescription className="text-sm !text-[#60646C] font-normal">{subHeading}</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0 flex justify-center items-center">
-                <div style={{ width: '200px', height: '200px' }}>
+                <div style={{ position: 'relative', width: '200px', height: '200px' }}>
+                    <svg width="200" height="200" style={{ position: 'absolute', top: 0, left: 0 }}>
+                        <circle cx="100" cy="100" r="70" fill="#E0E0E0" />
+                        <circle cx="100" cy="100" r="60" fill="#FFFFFF" />
+                    </svg>
                     <RadialBarChart
                         data={chartData}
-                        width={180}
-                        height={180}
-                        endAngle={90}
-                        innerRadius={60}
-                        outerRadius={100}
+                        width={200}
+                        height={200}
+                        endAngle={270}
+                        innerRadius={65}
+                        outerRadius={115}
+                        style={{ position: 'relative' }}
                     >
                         <PolarGrid
                             gridType="circle"

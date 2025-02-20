@@ -65,7 +65,7 @@ export const columns: ColumnDef<ShareData>[] = [
                 {row.original.platform === "BitBucket" && (
                     <Image src="/logo/Bitbucket.svg" alt="BitBucket" width={16} height={16} className="mr-2" />
                 )}
-                <span>{row.original.platform}</span>
+                {/* <span>{row.original.platform}</span> */}
             </div>
         ),
     },

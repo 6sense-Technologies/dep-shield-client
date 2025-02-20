@@ -83,7 +83,7 @@ export const columns: ColumnDef<Dependency>[] = [
     },
     {
         accessorKey: "vulnerabilityPriority",
-        header: () => <div className="text-bold">Vulnerability Priority</div>,
+        header: () => <div className="text-bold">Vulnerabilities Priority</div>,
         cell: ({ row }: { row: any }) => (
             <div className="flex gap-2">
                 {row.getValue("vulnerabilityPriority").map((priority: string, index: number) => (
