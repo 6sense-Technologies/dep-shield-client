@@ -15,7 +15,7 @@ const VulnabalitiesSearchArea = () => {
                 className="mt-4 mb-[26px] gap-x-2 w-full lg:max-w-[300px] relative"
                 variant="light"
             />
-            <div className='flex flex-col lg:flex-row space-y-4 lg:space-x-4'>
+            <div className='flex flex-col lg:flex-row space-y-4 lg:space-x-4 items-end lg:items-start'>
                 <div className='flex justify-end lg:justify-start'>
                     <VulnabalitiesDropdown
                         placeholder='Critical'
@@ -24,7 +24,9 @@ const VulnabalitiesSearchArea = () => {
                         className="mt-4 w-[172px] lg:w-[160px] h-10 !placeholder:text-black"
                     />
                 </div>
-                <Button size="xsExtended" className='mr-4 lg:mt-4'>Scan</Button>
+                <div className='w-full'>
+                    <Button size="xsExtended" className='mr-4 lg:mt-0'>Scan</Button>
+                </div>
             </div>
         </div>
     )

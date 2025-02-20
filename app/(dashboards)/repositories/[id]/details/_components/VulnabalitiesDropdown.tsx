@@ -47,7 +47,7 @@ export function VulnabalitiesDropdown({
   );
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {control ? (
         <Controller
           control={control}

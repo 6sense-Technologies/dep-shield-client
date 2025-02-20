@@ -39,17 +39,17 @@ type License = {
 const getBadgeVariant = (risk: string) => {
     switch (risk) {
         case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] font-normal";
+            return "text-[#B91C1C] bg-[#FEF2F2] font-normal hover:bg-[#FEF2F2]";
         case "High":
-            return "text-[#B45309] bg-[#FDEBDD] font-normal";
+            return "text-[#B45309] bg-[#FDEBDD] font-normal hover:bg-[#FDEBDD]";
         case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] font-normal";
+            return "text-[#0284C7] bg-[#DDF3FD] font-normal hover:bg-[#DDF3FD]";
         case "Low":
-            return "text-[#166534] bg-[#DCFCE7] font-normal";
+            return "text-[#166534] bg-[#DCFCE7] font-normal hover:bg-[#DCFCE7]";
         case "Unknown":
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#0F172A] bg-[#F1F5F9] font-normal  hover:bg-[#F1F5F9]";
         default:
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#0F172A] bg-[#F1F5F9] font-normal hover:bg-[#F1F5F9]";
     }
 };
 
@@ -79,7 +79,7 @@ export const columns: ColumnDef<License>[] = [
                 <div className="flex items-center space-x-2">
                     {repos.length === 1 ? (
                         <>
-                            <Badge className="inline-flex items-center gap-x-2 text-black bg-white border-lightborderColor hover:bg-white hover:cursor-pointer ">
+                            <Badge className="inline-flex items-center gap-x-2 text-black bg-white border-lightborderColor hover:bg-white hover:cursor-pointer font-normal">
                                 {repos[0]}
                                 <ExternalLink className="h-4 w-4 text-muted-foreground" />
                             </Badge>
@@ -88,9 +88,9 @@ export const columns: ColumnDef<License>[] = [
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Badge className="bg-white text-black hover:bg-white border-lightborderColor">+{repos.length}</Badge>
+                                    <Badge className="bg-white text-black hover:bg-white border-lightborderColor font-normal">+{repos.length}</Badge>
                                 </TooltipTrigger>
-                                <TooltipContent className="p-4 text-black bg-white border">
+                                <TooltipContent className="p-4 text-black bg-white border font-normal">
                                     <p>{repos.join(", ")}</p>
                                 </TooltipContent>
                             </Tooltip>

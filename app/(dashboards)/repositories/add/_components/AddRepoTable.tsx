@@ -43,7 +43,7 @@ export const columns: ColumnDef<Repository>[] = [
         accessorKey: "useCase",
         header: () => <div className="text-bold">Use Case</div>,
         cell: ({ row }: { row: any }) => (
-            <Badge className="text-black bg-white border-lightborderColor font-normal">
+            <Badge className="text-black bg-white border-lightborderColor hover:bg-white font-normal">
                 {row.getValue("useCase")}
             </Badge>
         ),
@@ -59,6 +59,7 @@ export const columns: ColumnDef<Repository>[] = [
                 <div className="flex items-center justify-end space-x-4 pr-4">
                     <Button
                         variant={added ? "nonedisable" : "outline"}
+                        size="xsExtended"
                         onClick={() => setAdded(true)}
                     >
                         {added ? "Added" : "Add"}
@@ -155,7 +156,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right w-[110px]"
+                                                    ? "text-right w-[125px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
                                                         : header.column.id === "useCase"

@@ -21,13 +21,13 @@ const LicensesSearchArea = () => {
                         placeholder='Critical'
                         name="LicStatus"
                         active={false}
-                        className="mt-4 w-[176px] lg:w-[160px] h-10 !placeholder:text-black"
+                        className="mt-4 w-full lg:w-[160px] h-10 !placeholder:text-black"
                     />
                     <VulnabalitiesDropdown
                         placeholder='Low'
                         name="LowStatus"
                         active={false}
-                        className="mt-4 w-[176px] lg:w-[160px] h-10 !placeholder:text-black"
+                        className="mt-4 w-full lg:w-[160px] h-10 !placeholder:text-black"
                     />
                 </div>
                 <Button size="xsExtended" className='mr-4 lg:mt-4'>Scan</Button>

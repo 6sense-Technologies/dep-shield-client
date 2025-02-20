@@ -34,17 +34,17 @@ type License = {
 const getBadgeVariant = (risk: string) => {
     switch (risk) {
         case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] font-normal";
+            return "text-[#B91C1C] bg-[#FEF2F2] font-normal hover:bg-[#FEF2F2]";
         case "High":
-            return "text-[#B45309] bg-[#FDEBDD] font-normal";
+            return "text-[#B45309] bg-[#FDEBDD] font-normal hover:bg-[#FDEBDD]";
         case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] font-normal";
+            return "text-[#0284C7] bg-[#DDF3FD] font-normal hover:bg-[#DDF3FD]";
         case "Low":
-            return "text-[#166534] bg-[#DCFCE7] font-normal";
+            return "text-[#166534] bg-[#DCFCE7] font-normal hover:bg-[#DCFCE7]";
         case "Unknown":
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#0F172A] bg-[#F1F5F9] font-normal hover:bg-[#F1F5F9]";
         default:
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#0F172A] bg-[#F1F5F9] font-normal hover:bg-[#F1F5F9]";
     }
 };
 

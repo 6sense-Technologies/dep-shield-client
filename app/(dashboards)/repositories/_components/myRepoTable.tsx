@@ -70,7 +70,7 @@ export const columns: ColumnDef<Repository>[] = [
   },
   {
     accessorKey: "vulnerabilities",
-    header: () => <div className="text-bold">Vulnerability </div>,
+    header: () => <div className="text-bold">Vulnerabilities </div>,
     cell: ({ row }: { row: any }) => {
       const vulnerabilities = row.original.vulnerabilities;
       const severities = ["Critical", "High", "Medium", "Low", "Unknown"];
