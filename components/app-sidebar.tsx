@@ -54,17 +54,17 @@ const defaultData = {
     },
     {
       title: 'Vulnerabilities',
-      url: '#',
+      url: '/vulnerabilities',
       icon: CircleAlert,
     },
     {
       title: 'Dependencies',
-      url: '#',
+      url: '/dependencies',
       icon: FileSymlink,
     },
     {
       title: 'Licenses',
-      url: '#',
+      url: '/licenses',
       icon: BadgeCheck,
     },
     {

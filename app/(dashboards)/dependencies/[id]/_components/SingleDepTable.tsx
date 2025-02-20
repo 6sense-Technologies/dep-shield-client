@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
     ColumnDef,
-    ColumnFiltersState,
     SortingState,
-    VisibilityState,
     flexRender,
     getCoreRowModel,
-    getFilteredRowModel,
     getPaginationRowModel,
-    getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -19,75 +15,21 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import Link from "next/link";
-import { VulnabilitiesPagination } from "./VulnabilitiesPagination";
+import { SingleDepPagination } from "./SingleDepPagination";
 
-type Vulnerability = {
-    name: string;
-    discovered: string;
-    severity: string;
-    dependency: string;
-    exploited: string;
+
+type Dependencies = {
+    repositoryName: string;
 };
 
-const getBadgeVariant = (severity: string) => {
-    switch (severity) {
-        case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
-        case "High":
-            return "text-[#B45309] bg-[#FDEBDD] hover:bg-[#FDEBDD] font-normal";
-        case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD] font-normal";
-        case "Low":
-            return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
-        default:
-            return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-    }
-};
-
-export const columns: ColumnDef<Vulnerability>[] = [
+export const columns: ColumnDef<Dependencies>[] = [
     {
-        accessorKey: "name",
-        header: () => <div className="text-bold">Name</div>,
+        accessorKey: "repositoryName",
+        header: () => <div className="text-bold">Repository Name</div>,
         cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("name") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "discovered",
-        header: () => <div className="text-bold">Discovered</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("discovered") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "severity",
-        header: () => <div className="text-bold">Severity</div>,
-        cell: ({ row }: { row: any }) => (
-            <Badge className={getBadgeVariant(row.getValue("severity"))}>
-                {row.getValue("severity")}
-            </Badge>
-        ),
-    },
-    {
-        accessorKey: "dependency",
-        header: () => <div className="text-bold">Dependencies</div>,
-        cell: ({ row }: { row: any }) => (
-            <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                {row.getValue("dependency")} <ExternalLink size={16} />
-            </Badge>
-        ),
-    },
-    {
-        accessorKey: "exploited",
-        header: () => <div className="text-bold">Exploited (CISA)</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("exploited") || "-"}</div>
+            <div className="text-medium">{row.getValue("repositoryName") || "-"}</div>
         ),
     },
     {
@@ -96,59 +38,45 @@ export const columns: ColumnDef<Vulnerability>[] = [
         enableHiding: false,
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
-                <Link href={`/vulnerabilities/${12}`}><Button variant="outline">View</Button></Link>
+                <Button variant="outline">View</Button>
             </div>
         ),
     },
 ];
 
-type TVulnerabilityTableProps = {
-    vulnerabilities?: Vulnerability[];
+type TSingleDepTableProps = {
+    repos?: Dependencies[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;
     loading?: boolean;
 };
 
-export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
-    vulnerabilities = [],
+export const SingleDepTable: React.FC<TSingleDepTableProps> = ({
+    repos = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
     loading,
 }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-    const [rowSelection, setRowSelection] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [pagination] = useState({
         pageIndex: currentPage - 1,
         pageSize: 10,
     });
-    const searchParams = useSearchParams();
-    const page = parseInt(searchParams?.get("page") || "1");
-    const [currentPageState, setCurrentPageState] = useState(page);
-    const [isLoading, setIsLoading] = useState(false);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
 
     const table = useReactTable({
-        data: vulnerabilities,
+        data: repos,
         columns,
         onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
             pagination,
         },
         manualPagination: true,
@@ -157,7 +85,6 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
 
     const onPageChange = (page: number): void => {
         setIsLoading(true);
-        setCurrentPageState(page);
         table.setPageIndex(page - 1);
         refetch?.();
     };
@@ -169,9 +96,9 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
     }, [loading]);
 
     const displayedRowsCount =
-        currentPageState > 1
-            ? (currentPageState - 1) * pagination.pageSize + vulnerabilities.length
-            : vulnerabilities.length;
+        currentPage > 1
+            ? (currentPage - 1) * pagination.pageSize + repos.length
+            : repos.length;
 
     return (
         <div className="w-full">
@@ -188,16 +115,10 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right w-[110px]"
-                                                    : header.column.id === "name"
+                                                    ? "text-right w-[115px]"
+                                                    : header.column.id === "repositoryName"
                                                         ? "min-w-[300px]"
-                                                        : header.column.id === "discovered"
-                                                            ? "min-w-[200px]"
-                                                            : header.column.id === "severity"
-                                                                ? "min-w-[200px]"
-                                                                : header.column.id === "dependency"
-                                                                    ? "min-w-[200px]"
-                                                                    : "min-w-[200px]"
+                                                        : "min-w-[200px]"
                                                     }`}
                                             >
                                                 {header.isPlaceholder
@@ -223,16 +144,10 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
                                                 <TableCell
                                                     key={cell.id}
                                                     className={`py-1 leading-none ${cell.column.id === "actions"
-                                                        ? "text-right"
-                                                        : cell.column.id === "name"
+                                                        ? "text-right pr-48"
+                                                        : cell.column.id === "repositoryName"
                                                             ? "pl-4 text-start"
-                                                            : cell.column.id === "discovered"
-                                                                ? "text-start pl-4"
-                                                                : cell.column.id === "severity"
-                                                                    ? "pl-4 text-start"
-                                                                    : cell.column.id === "dependency"
-                                                                        ? "pl-4 text-start"
-                                                                        : "pl-4 text-start"
+                                                            : "pl-4 text-start"
                                                         }`}
                                                 >
                                                     {flexRender(
@@ -262,8 +177,8 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <VulnabilitiesPagination
-                                currentPage={currentPageState}
+                            <SingleDepPagination
+                                currentPage={currentPage}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
                             />

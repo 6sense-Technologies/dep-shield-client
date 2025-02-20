@@ -248,7 +248,7 @@ const RepositoriesDetails = () => {
                                             <DependenciesSearchArea />
                                             <DependenciesTable
                                                 dependencies={dependenciesData}
-                                                totalCountAndLimit={{ totalCount: vulnerabilitiesData.length, size: 10 }}
+                                                totalCountAndLimit={{ totalCount: dependenciesData.length, size: 10 }}
                                                 currentPage={1}
                                                 loading={false}
                                             />
@@ -259,7 +259,7 @@ const RepositoriesDetails = () => {
                                             <LicensesSearchArea />
                                             <LicensesTable
                                                 licenses={licensesData}
-                                                totalCountAndLimit={{ totalCount: vulnerabilitiesData.length, size: 10 }}
+                                                totalCountAndLimit={{ totalCount: licensesData.length, size: 10 }}
                                                 currentPage={1}
                                                 loading={false}
                                             />

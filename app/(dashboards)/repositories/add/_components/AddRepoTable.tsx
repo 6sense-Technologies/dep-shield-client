@@ -155,7 +155,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right min-w-[100px]"
+                                                    ? "text-right w-[110px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
                                                         : header.column.id === "useCase"

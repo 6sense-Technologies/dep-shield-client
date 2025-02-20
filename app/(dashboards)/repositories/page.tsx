@@ -192,7 +192,7 @@ const Repositories = () => {
               <div className="px-3 lg:px-6">
                 <PageHeadingwithButton title="All Repositories" className="pl-2 pt-3" showButton={activeTab !== 'all'} />
                 <div className="tab pt-4">
-                  <div className="flex space-x-4 border-b">
+                  <div className="flex space-x-2 md:space-x-4 border-b">
                     <button
                       className={`py-2 px-4 ${activeTab === 'all' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                       onClick={() => handleTabChange('all')}
@@ -200,13 +200,13 @@ const Repositories = () => {
                       All
                     </button>
                     <button
-                      className={`py-2 px-4 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                      className={`py-2 px-4 text-nowrap ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                       onClick={() => handleTabChange('myrepositories')}
                     >
                       My repositories
                     </button>
                     <button
-                      className={`py-2 px-4 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                      className={`py-2 px-4 text-nowrap ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
                       onClick={() => handleTabChange('sharedwithme')}
                     >
                       Shared with me

@@ -84,7 +84,7 @@ const PageHeadingWithDeleteButton: FC<IHeadingProps> = ({ title, subTitle, title
                     </div>
                 )}
             </div>
-            <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4 hidden md:block'><Trash2 size={12} className='text-destructive' /></Button>} />
+            <CustomAlertDialog trigger={<Button variant="lightDestructive" size="tight" className='mt-4 hidden md:block'><Trash2 size={12} className='text-destructive mx-auto' /></Button>} />
         </div>
     );
 };

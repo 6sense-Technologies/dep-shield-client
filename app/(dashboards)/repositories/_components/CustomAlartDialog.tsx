@@ -16,7 +16,7 @@ const CustomAlertDialog: React.FC<DisableModalProps> = ({ trigger }) => {
                 <AlertDialogHeader>
                     <AlertDialogTitle className="text-destructive text-[18px] font-semibold">Remove repository</AlertDialogTitle>
                     <AlertDialogDescription className='text-sm text-inputFooterColor'>
-                        Remove the selected repository from your list. This action cannot be undone.
+                        Removing this shared repository will permanently delete its access. Are you sure you want to proceed?
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
