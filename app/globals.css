@@ -57,3 +57,6 @@
   z-index: 1000 !important;
 }
 
+.first\:fill-muted:first-child {
+  /* fill: #000; */
+}

@@ -6,9 +6,8 @@ import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
 import PageHeading from "@/components/pageHeading";
 import Loader from "@/components/loader";
-import { VulnerabilityTable } from "../repositories/[id]/details/_components/VulnabilitiesTable";
 import DependenciesSearchArea from "./_components/DependenciesSearchArea";
-import { DependenciesTable } from "../repositories/[id]/details/_components/DependencyTable";
+import { AllDependenciesTable } from "./_components/AllDependenciesTable";
 
 const dependenciesData = [
     {
@@ -92,7 +91,7 @@ const DependenciesContent = () => {
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6">
                 <DependenciesSearchArea />
-                <DependenciesTable
+                <AllDependenciesTable
                     dependencies={dependenciesData}
                     totalCountAndLimit={{ totalCount: dependenciesData.length, size: 10 }}
                     currentPage={1}

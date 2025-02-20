@@ -24,8 +24,8 @@ export default function CustomStepper() {
             <div className="flex items-center overflow-x-auto">
                 {/* Initial red line with triangle */}
                 <div className="relative flex items-center mt-14 mx-3">
-                    <div className="h-[2px] w-20 bg-red-500" />
-                    <div className="absolute right-20 -mr-2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-red-500" />
+                    <div className="h-[2px] w-full min-w-16 bg-red-500" />
+                    <div className="absolute right-16 -mr-2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-red-500" />
                 </div>
 
                 {versions.map((version, index) => (
@@ -49,7 +49,7 @@ export default function CustomStepper() {
                         {index < versions.length - 1 && (
                             <div
                                 className={cn(
-                                    "h-[2px] w-16 mt-14 mx-3",
+                                    "h-[2px] w-full min-w-16 mt-14 mx-3",
                                     version.status === "success" ? "bg-[#15803D]" : "bg-red-500"
                                 )}
                             />
@@ -58,7 +58,7 @@ export default function CustomStepper() {
                 ))}
                 <div
                     className={cn(
-                        "h-[2px] w-16 border-t-2 border-dashed mx-3 mt-14",
+                        "h-[2px] w-full min-w-16 border-t-2 border-dashed mx-3 mt-14",
                         versions[versions.length - 1].status === "success" ? "border-[#DCFCE7]" : "border-red-500"
                     )}
                 >

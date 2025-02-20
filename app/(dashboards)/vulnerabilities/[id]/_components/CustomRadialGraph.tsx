@@ -59,7 +59,7 @@ export default function CustomRadialGraph({ chartData, heading, subHeading }: Cu
                             className="first:fill-muted last:fill-background"
                             polarRadius={[86, 74]}
                         />
-                        <RadialBar dataKey="visitors" background={{ fill: '#d3d3d3' }} />
+                        <RadialBar dataKey="visitors" background={{ fill: '' }} />
                         <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
                             <Label
                                 content={({ viewBox }) => {

@@ -50,7 +50,7 @@ const AddRepositoryContent = () => {
                 <AvatarMenu />
             </div>
             <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Integrations" initalLink="/integrations" secondayData="Add Repositories" secondayLink="/repositories/add" />
+                <GlobalBreadCrumb initialData="Repositories" initalLink="/repositories" secondayData="Add Repositories" secondayLink="/repositories/add" />
                 <span className="hidden md:flex pr-2">
                     <AvatarMenu />
                 </span>

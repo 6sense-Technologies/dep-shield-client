@@ -66,13 +66,22 @@ const secondTabData = [
     { key: "Privileges Required", value: "None" },
     { key: "User Interaction", value: "Required" },
     { key: "Scope", value: "Unchanged" },
-    { key: "Confidentiality Impact", value: "High" },
-    { key: "Integrity Impact", value: "High" },
-    { key: "Availability Impact", value: "High" },
+    { key: "Confidentiality", value: "High" },
+    { key: "Integrity", value: "High" },
+    { key: "Availability", value: "High" },
+];
+
+const firstTabData = [
+    { key: "Attack Vector", value: "Network" },
+    { key: "Attack Complexity", value: "Medium" },
+    { key: "Authentication", value: "None" },
+    { key: "Confidentiality", value: "Partial" },
+    { key: "Integrity", value: "None" },
+    { key: "Availability", value: "None" },
 ];
 
 const chartData = [
-    { browser: "safari", visitors: 3.7, fill: "var(--color-safari)" },
+    { browser: "safari", visitors: 3.7, fill: "" },
 ];
 
 
@@ -111,7 +120,7 @@ const VulnerabilitiesDetailsContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="Vulnerabilities • DepShield.io" />
+            <PageTitle title="CVE-2023-42282 Details • Vulnerabilities • DepShield.io" />
             <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
                 <span className="md:hidden"><SidebarTrigger /></span>
                 <AvatarMenu />
@@ -188,12 +197,12 @@ const VulnerabilitiesDetailsContent = () => {
                         {activeTab === 'cv' && (
                             <div>
                                 <FristTabTable
-                                    data={secondTabData}
+                                    data={firstTabData}
                                 />
                             </div>
                         )}
                         {activeTab === 'cvv' && (
-                            <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-20 pb-8">
+                            <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 pb-8">
                                 <SecondTabTable data={secondTabData} />
                                 <div className="flex flex-col lg:flex-row gap-4">
                                     <CustomRadialGraph

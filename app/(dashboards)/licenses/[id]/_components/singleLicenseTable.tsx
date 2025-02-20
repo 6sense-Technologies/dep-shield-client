@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
     ColumnDef,
-    ColumnFiltersState,
     SortingState,
-    VisibilityState,
     flexRender,
     getCoreRowModel,
-    getFilteredRowModel,
     getPaginationRowModel,
-    getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -19,94 +15,52 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Badge } from "@/components/ui/badge";
-import { AllLicensesPagination } from "./AllLicensesPagiantion";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink } from "lucide-react";
+import { SingleLicensesPagination } from "./singleLicensesPagination";
 
-type License = {
-    name: string;
+type Licenses = {
+    repositoryName: string;
     licenseRisk: string;
-    dependencies: number;
     licenseFamily: string;
-    affectedRepositories: string[];
 };
 
-const getBadgeVariant = (risk: string) => {
-    switch (risk) {
+const getBadgeVariant = (priority: string) => {
+    switch (priority) {
         case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] font-normal";
+            return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
         case "High":
-            return "text-[#B45309] bg-[#FDEBDD] font-normal";
+            return "text-[#B45309] bg-[#FDEBDD]  hover:bg-[#FDEBDD] font-normal";
         case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] font-normal";
+            return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD]  font-normal";
         case "Low":
-            return "text-[#166534] bg-[#DCFCE7] font-normal";
-        case "Unknown":
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
         default:
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal";
+            return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
     }
 };
 
-export const columns: ColumnDef<License>[] = [
+export const columns: ColumnDef<Licenses>[] = [
     {
-        accessorKey: "name",
-        header: () => <div className="text-bold">Name</div>,
+        accessorKey: "repositoryName",
+        header: () => <div className="text-bold">Repositories</div>,
         cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("name") || "-"}</div>
+            <div className="text-medium">{row.getValue("repositoryName") || "-"}</div>
         ),
     },
     {
         accessorKey: "licenseRisk",
         header: () => <div className="text-bold">License Risk</div>,
-        cell: ({ row }: { row: any }) => (
-            <Badge className={getBadgeVariant(row.getValue("licenseRisk"))}>
-                {row.getValue("licenseRisk")}
-            </Badge>
-        ),
-    },
-    {
-        accessorKey: "affectedRepositories",
-        header: () => <div className="text-bold">Affected Repositories</div>,
         cell: ({ row }: { row: any }) => {
-            const repos = row.getValue("affectedRepositories");
+            const licenseRisk = row.getValue("licenseRisk");
             return (
-                <div className="flex items-center space-x-2">
-                    {repos.length === 1 ? (
-                        <>
-                            <Badge className="inline-flex items-center gap-x-2 text-black bg-white border-lightborderColor hover:bg-white hover:cursor-pointer ">
-                                {repos[0]}
-                                <ExternalLink className="h-4 w-4 text-muted-foreground" />
-                            </Badge>
-                        </>
-                    ) : (
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <Badge className="bg-white text-black hover:bg-white border-lightborderColor">+{repos.length}</Badge>
-                                </TooltipTrigger>
-                                <TooltipContent className="p-4 text-black bg-white border">
-                                    <p>{repos.join(", ")}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    )
-                    }
-                </div >
+                <Badge className={getBadgeVariant(licenseRisk)}>
+                    {licenseRisk}
+                </Badge>
             );
         },
-    },
-    {
-        accessorKey: "dependencies",
-        header: () => <div className="text-bold">Dependencies</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("dependencies") || "-"}</div>
-        ),
     },
     {
         accessorKey: "licenseFamily",
@@ -121,21 +75,23 @@ export const columns: ColumnDef<License>[] = [
         enableHiding: false,
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
-                <Link href={`/licenses/${12}`}><Button variant="outline">View</Button></Link>
+
+                <ExternalLink size={16} />
+
             </div>
         ),
     },
 ];
 
-type TAllLicensesTableProps = {
-    licenses?: License[];
+type TSingleLicenseTableProps = {
+    licenses?: Licenses[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;
     loading?: boolean;
 };
 
-export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
+export const SingleLicenseTable: React.FC<TSingleLicenseTableProps> = ({
     licenses = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
@@ -143,17 +99,11 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     loading,
 }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-    const [rowSelection, setRowSelection] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [pagination] = useState({
         pageIndex: currentPage - 1,
         pageSize: 10,
     });
-    const searchParams = useSearchParams();
-    const page = parseInt(searchParams?.get("page") || "1");
-    const [currentPageState, setCurrentPageState] = useState(page);
-    const [isLoading, setIsLoading] = useState(false);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
@@ -162,18 +112,10 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
         data: licenses,
         columns,
         onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        onColumnVisibilityChange: setColumnVisibility,
-        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
             pagination,
         },
         manualPagination: true,
@@ -182,7 +124,6 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
 
     const onPageChange = (page: number): void => {
         setIsLoading(true);
-        setCurrentPageState(page);
         table.setPageIndex(page - 1);
         refetch?.();
     };
@@ -194,8 +135,8 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     }, [loading]);
 
     const displayedRowsCount =
-        currentPageState > 1
-            ? (currentPageState - 1) * pagination.pageSize + licenses.length
+        currentPage > 1
+            ? (currentPage - 1) * pagination.pageSize + licenses.length
             : licenses.length;
 
     return (
@@ -213,16 +154,10 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right"
-                                                    : header.column.id === "name"
+                                                    ? "text-right w-[115px]"
+                                                    : header.column.id === "repositoryName"
                                                         ? "min-w-[300px]"
-                                                        : header.column.id === "licenseRisk"
-                                                            ? "min-w-[200px]"
-                                                            : header.column.id === "dependencies"
-                                                                ? "min-w-[200px]"
-                                                                : header.column.id === "licenseFamily"
-                                                                    ? "min-w-[200px]"
-                                                                    : "min-w-[200px]"
+                                                        : "min-w-[200px]"
                                                     }`}
                                             >
                                                 {header.isPlaceholder
@@ -248,16 +183,10 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
                                                 <TableCell
                                                     key={cell.id}
                                                     className={`py-1 leading-none ${cell.column.id === "actions"
-                                                        ? "text-right w-[115px]"
-                                                        : cell.column.id === "name"
+                                                        ? "text-right pr-24"
+                                                        : cell.column.id === "repositoryName"
                                                             ? "pl-4 text-start"
-                                                            : cell.column.id === "licenseRisk"
-                                                                ? "text-start pl-4"
-                                                                : cell.column.id === "dependencies"
-                                                                    ? "pl-4 text-start"
-                                                                    : cell.column.id === "licenseFamily"
-                                                                        ? "pl-4 text-start"
-                                                                        : "pl-4 text-start"
+                                                            : "pl-4 text-start"
                                                         }`}
                                                 >
                                                     {flexRender(
@@ -287,8 +216,8 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <AllLicensesPagination
-                                currentPage={currentPageState}
+                            <SingleLicensesPagination
+                                currentPage={currentPage}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
                             />
