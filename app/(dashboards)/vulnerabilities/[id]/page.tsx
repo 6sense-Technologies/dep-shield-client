@@ -202,7 +202,7 @@ const VulnerabilitiesDetailsContent = () => {
                             </div>
                         )}
                         {activeTab === 'cvv' && (
-                            <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 pb-8">
+                            <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 2xl:gap-44 pb-8">
                                 <SecondTabTable data={secondTabData} />
                                 <div className="flex flex-col lg:flex-row gap-4">
                                     <CustomRadialGraph
