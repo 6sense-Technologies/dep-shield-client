@@ -124,7 +124,7 @@ const DependenciesDetailsContent = () => {
             </div>
 
             <div className="pt-6 px-4 md:pt-6 md:px-6 flex flex-col lg:hidden">
-                <div className="flex flex-row gap-x-12 lg:hidden border-b pb-4 px-[38px]">
+                <div className="flex flex-row gap-x-12 lg:hidden border-b pb-4 items-center justify-center">
                     <p className="text-sm font-normal text-deepBlackColor mt-2 mr-5">Current Version</p>
                     <div className="mt-1">
                         <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">

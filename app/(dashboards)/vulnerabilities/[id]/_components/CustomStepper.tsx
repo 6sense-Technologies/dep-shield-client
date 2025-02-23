@@ -21,7 +21,7 @@ const versions: Version[] = [
 export default function CustomStepper() {
     return (
         <div className="w-full">
-            <div className="flex items-center overflow-x-auto">
+            <div className="flex items-center overflow-x-auto pb-3">
                 {/* Initial red line with triangle */}
                 <div className="relative flex items-center mt-14 mx-3">
                     <div className="h-[2px] w-full min-w-16 bg-red-500" />
