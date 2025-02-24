@@ -26,7 +26,7 @@ export type TBasicSignupFormInputs =
 export type TVerifyEmail = 
 {
     token: string;
-    email: string;
+    emailAddress?: string;
 }
 
 export type TResndOtp =

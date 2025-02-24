@@ -1,13 +1,12 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import OrDivider from '../_components/orDivider';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Logo from "../../../public/logo/depSheildLogo.svg";
 import GoogleLogo from "../../../public/logo/googleLogo.svg";
 import FacebookLogo from "../../../public/logo/facebookLogo.svg";
 import AppleLogo from "../../../public/logo/appleLogo.svg";
-import AuthPageHeader from '../_components/authPageHeader';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TBasicSignupFormInputs } from '@/types/Auth.types';
@@ -38,8 +37,6 @@ const SignUp = () => {
     displayName: string;
     emailAddress: string;
   } | null>(null);
-  // const searchParams = useSearchParams();
-  // const token = searchParams.get('token');
 
   const handlePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -55,33 +52,6 @@ const SignUp = () => {
   });
   const session = useSession();
 
-  //   useEffect(() => {
-  //     if (session.status === 'unauthenticated' && token) {
-  //       axios
-  //         .post(
-  //           'https://o4t-backend-for-tester.vercel.app/auth/register/verify-invite',
-  //           {
-  //             jwtToken: token,
-  //           }
-  //         )
-  //         .then((response) => {
-  //           //dummy push
-  //           // console.log("RT", response);
-  //           const { displayName, emailAddress } = response.data;
-  //           setInviteData({ displayName, emailAddress });
-  //           setValue('displayName', displayName);
-  //           setValue('emailAddress', emailAddress);
-  //         })
-  //         .catch((error) => {
-  //           console.error('Error verifying invite:', error);
-  //           if (error.response && error.response.status === 401) {
-  //             setErrorMessage('Invalid or expired token.');
-  //           } else {
-  //             setErrorMessage('An error occurred while verifying the invite.');
-  //           }
-  //         });
-  //     }
-  //   }, [session.status, token, setValue]);
 
   const basicSignUpMutation = useMutation({
     mutationFn: handleBasicSignup,
@@ -92,16 +62,18 @@ const SignUp = () => {
         password: formData.password,
       }).then(() => {
         session.update().then(() => {
-          //   localStorage.setItem('user-email', data.userInfo.emailAddress);
+          localStorage.setItem('user-email', data.userInfo.emailAddress);
           router.push('/sign-up/verification');
         });
       });
     },
     onError: (error: any) => {
-      // console.log(error.message);
-      if (error.message) {
+      console.log(error.message);
+      if (error.message === 'User already exists') {
         setErrorMessage('Email already exists.');
       }
+      else
+        setErrorMessage('Something went wrong. Please try again.');
     },
   });
 
@@ -110,28 +82,25 @@ const SignUp = () => {
     basicSignUpMutation.mutate(data);
   };
 
-  //   if (session.status === 'loading') {
-  //     return <Loader />;
-  //   }
+  console.log("SignUp Status", session.status);
 
-  //   if (session.status === 'authenticated') {
-  //     if (!session.data?.isVerified && !session.data?.hasOrganization) {
-  //       router.push('/sign-up/verification');
-  //       return <Loader />;
-  //     }
-  //     if (session.data?.isVerified && !session.data?.hasOrganization) {
-  //       router.push('/sign-up/create-organization');
-  //       return <Loader />;
-  //     }
-  //     if (
-  //       session.data?.isVerified &&
-  //       session.data?.hasOrganization &&
-  //       session.status === 'authenticated'
-  //     ) {
-  //       router.push('/dashboard');
-  //       return <Loader />;
-  //     }
-  //   }
+  if (session.status === 'loading') {
+    return <Loader />;
+  }
+
+  if (session.status === 'authenticated') {
+    if (!session.data?.isVerified) {
+      router.push('/sign-up/verification');
+      return <Loader />;
+    }
+    if (
+      session.data?.isVerified &&
+      session.status === 'authenticated'
+    ) {
+      router.push('/dashboard');
+      return <Loader />;
+    }
+  }
 
   return (
     <div className='grid h-screen w-full grid-cols-1 overflow-y-hidden md:grid-cols-2'>
@@ -161,7 +130,7 @@ const SignUp = () => {
           </Link>
         </div>
 
-        <div className='mx-auto w-full max-w-[465px] px-8 pb-5 pt-4 lg:px-5 lg:pt-0 xl:pt-20'>
+        <div className='mx-auto w-full max-w-[465px] px-8 pb-5 pt-4 lg:px-5 lg:pt-0 2xl:pt-20'>
           <div>
             <p className='pt-6 text-3xl font-semibold text-black lg:pb-6'>
               Sign up

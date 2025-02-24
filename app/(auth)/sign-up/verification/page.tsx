@@ -1,25 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Logo from "../../../../public/logo/depSheildLogo.svg";
 import { useRouter } from "next/navigation";
 import AuthPageHeader from "../../_components/authPageHeader";
 import PageTitle from "@/components/PageTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TVerifyEmail } from "@/types/Auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import Otpfields from "./_components/otpfields";
 import { useMutation } from "@tanstack/react-query";
-
 import { useSession } from "next-auth/react";
-// import Loader from "@/components/loader";
+import Loader from "@/components/loader";
 import { Circle } from "@phosphor-icons/react";
-import SmallLogo from "../../../../public/logo/smallLogo.svg";
-import Logo from "../../../../public/logo/depSheildLogo.svg";
+import SmallLogo from '../../../../public/logo/smallLogo.svg';
 import { VerifyEmailSchema } from "@/schema/authSchema";
 import { handleOtp, handleResendOTP } from "@/helpers/Auth/authApi";
-import { Button } from "@/components/ui/button";
 import FooterTexts from "../../_components/footerText";
+import { Button } from "@/components/ui/button";
 const Verify = () => {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -49,7 +47,7 @@ const Verify = () => {
     } else {
       localStorage.setItem("endTime", (Date.now() + timeLeft * 1000).toString());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -99,7 +97,7 @@ const Verify = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<TVerifyEmail>({
     resolver: zodResolver(VerifyEmailSchema),
   });
 
@@ -107,12 +105,12 @@ const Verify = () => {
 
   const otpMutation = useMutation({
     mutationFn: handleOtp,
-    // onSuccess: (data) => {
-    //   update({ isVerified: data.isValidated }).then(() => {
-    //     router.push("/sign-up/create-organization");
-    //   });
-    //   localStorage.removeItem("endTime");
-    // },
+    onSuccess: (data) => {
+      update({ isVerified: data.isValidated }).then(() => {
+        router.push("/dashboard");
+      });
+      localStorage.removeItem("endTime");
+    },
     onError: (error) => {
       if (error.message) {
         setVerifyError("Incorrect OTP.");
@@ -124,7 +122,6 @@ const Verify = () => {
     setVerifyError(null);
     const email = userEmail || "";
     const payload: TVerifyEmail = {
-      email,
       token: data.token,
     };
     otpMutation.mutate(payload);
@@ -140,50 +137,49 @@ const Verify = () => {
     setVerifyError(null);
   };
 
-//   if (status === "loading") {
-//     return <Loader />;
-//   }
+  console.log("SignUp Status",status);
 
-//   if (status === "authenticated") {
-//     if (!session.isVerified && !session.hasOrganization) {
-//       router.push("/sign-up/verification");
-//     }
-//     if (session.isVerified && !session.hasOrganization) {
-//       router.push("/sign-up/create-organization");
-//       return <Loader />;
-//     }
-//     if (session.isVerified && session.hasOrganization) {
-//       router.push("/dashboard");
-//       return <Loader />;
-//     }
-//   } else if (status === "unauthenticated") {
-//     router.push("/sign-in");
-//     return <Loader />;
-//   }
+  if (status === "loading") {
+    return <Loader />;
+  }
+
+  if (status === "authenticated") {
+    if (!session.isVerified) {
+      router.push("/sign-up/verification");
+    }
+    if (session.isVerified) {
+      router.push("/dashboard");
+      return <Loader />;
+    }
+  } else if (status === "unauthenticated") {
+    router.push("/sign-in");
+    return <Loader />;
+  }
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
       <PageTitle
         pageName="Verify Account"
-        title="Try DepShield for Free • DepShield.io"
+        title="Try Ops4 Team for Free • Ops4 Team"
       />
       <div className="bg-blackishBg w-full h-screen md:flex md:flex-col md:justify-between hidden">
         <div className="pl-[36px] pt-[36px]">
-          <Image src={Logo} alt="Depsheild Logo" width={160} />
+          <Image src={Logo} alt="Ops4Team Logo" />
         </div>
         <FooterTexts
-          heading="Understand a library’s dependencies, licenses, and vulnerabilities before using it in a project to ensure security, compliance, and stability."
-          
+          heading="“This library has saved me countless hours of work and helped me deliver
+        stunning designs to my clients faster than ever before.”"
+          subHeading="Sofia Davis"
         />
       </div>
       <div className="bg-white w-full my-auto">
         <div className="flex justify-center lg:justify-start md:hidden mt-9 mx-4 md:mr-9  md:gap-0">
           <div className="block md:hidden text-center px-3">
-            <Image src={SmallLogo} alt="Ops4Team Logo" width={140} />
+            <Image src={SmallLogo} alt="Ops4Team Logo" />
           </div>
         </div>
 
-        <div className="w-full max-w-[465px] mx-auto px-8 pt-4 lg:px-6 lg:pt-0">
+        <div className="w-full max-w-[465px] mx-auto px-8 pt-6 lg:px-6 lg:pt-0">
           <div>
             <AuthPageHeader
               title="Verify Email"
@@ -203,13 +199,13 @@ const Verify = () => {
               </div>
               <div className="flex justify-between items-center relative max-w-[310px] lg:max-w-[240px]">
                 <p className="text-sm text-destructive font-medium pt-2">
-                  {/* {isExpired
+                  {isExpired
                     ? "OTP is expired."
                     : errors.token
-                    ? errors.token.message
-                    : verifyError
-                    ? verifyError
-                    : ""} */}
+                      ? errors.token.message
+                      : verifyError
+                        ? verifyError
+                        : ""}
                 </p>
 
                 <p className="text-sm text-textMuted pt-2">
@@ -220,7 +216,7 @@ const Verify = () => {
 
             <div>
               <p className="text-sm text-textMuted pt-4 text-start">
-              Didn&apos;t receive an email? Try checking your junk folder.
+                Didn&apos;t receive an email? Try checking your junk folder.
               </p>
               {isExpired && (
                 <p
@@ -238,10 +234,10 @@ const Verify = () => {
               variant="submit"
               className="mt-6 bg-primary hover:bg-primary hidden lg:block"
             >
-              {otpMutation.isPending ?(
+              {otpMutation.isPending ? (
                 <Circle className="animate-spin" />
-              ):(
-              "Submit"
+              ) : (
+                "Submit"
               )}
             </Button>
 
@@ -249,10 +245,10 @@ const Verify = () => {
               variant="submitExtended"
               className="mt-6 bg-primary hover:bg-primary block lg:hidden"
             >
-              {otpMutation.isPending ?(
+              {otpMutation.isPending ? (
                 <Circle className="animate-spin mx-auto" />
-              ):(
-              "Submit"
+              ) : (
+                "Submit"
               )}
             </Button>
           </form>

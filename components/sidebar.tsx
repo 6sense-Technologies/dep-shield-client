@@ -14,11 +14,10 @@ const Sidebar: FC<TSidebarprop> = ({ children }) => {
   const session = useSession();
   const router = useRouter();
 
-//   if (
-//     session.status === "authenticated" &&
-//     session.data?.isVerified &&
-//     session.data?.hasOrganization
-//   ) {
+  if (
+    session.status === "authenticated" &&
+    session.data?.isVerified
+  ) {
     return (
       <SidebarProvider>
         <div className="flex h-screen w-full">
@@ -29,26 +28,17 @@ const Sidebar: FC<TSidebarprop> = ({ children }) => {
         </div>
       </SidebarProvider>
     );
-//   }
-//   if (
-//     session.status === "authenticated" &&
-//     !session.data?.isVerified &&
-//     !session.data?.hasOrganization
-//   ) {
-//     router.push("/sign-up/verification");
-//     return <Loader />;
-//   }
-//   if (
-//     session.status === "authenticated" &&
-//     session.data?.isVerified &&
-//     !session.data?.hasOrganization
-//   ) {
-//     router.push("/sign-up/create-organization");
-//     return <Loader />;
-//   } else if (session.status == "unauthenticated") {
-//     router.push("/sign-in");
-//     return <Loader />;
-//   } 
+  }
+  if (
+    session.status === "authenticated" &&
+    !session.data?.isVerified) {
+    router.push("/sign-up/verification");
+    return <Loader />;
+  }
+  else if (session.status == "unauthenticated") {
+    router.push("/sign-in");
+    return <Loader />;
+  } 
 };
 
 export default Sidebar;
