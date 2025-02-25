@@ -82,7 +82,7 @@ const SignUp = () => {
     basicSignUpMutation.mutate(data);
   };
 
-  console.log("SignUp Status", session.status);
+  // console.log("SignUp Status", session.status);
 
   if (session.status === 'loading') {
     return <Loader />;
