@@ -40,6 +40,8 @@ const SignIn = () => {
 
   const session = useSession();
 
+  console.log("Sign-IN",session);
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorFlag, setErrorFlag] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -98,7 +100,7 @@ const SignIn = () => {
 
   if (session.status === "authenticated") {
     if (!session.data?.isVerified) {
-      // router.push("/sign-up/verification");
+      router.push("/sign-up/verification");
       signOut({ redirect: false }).then(() => {
         return <Loader />;
       });

@@ -31,11 +31,12 @@ const Sidebar: FC<TSidebarprop> = ({ children }) => {
   }
   if (
     session.status === "authenticated" &&
-    !session.data?.isVerified) {
+    !session.data?.isVerified
+  ) {
     router.push("/sign-up/verification");
     return <Loader />;
   }
-  else if (session.status == "unauthenticated") {
+ else if (session.status == "unauthenticated") {
     router.push("/sign-in");
     return <Loader />;
   } 

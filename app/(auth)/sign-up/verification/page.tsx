@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Logo from "../../../../public/logo/depSheildLogo.svg";
 import { useRouter } from "next/navigation";
 import AuthPageHeader from "../../_components/authPageHeader";
 import PageTitle from "@/components/PageTitle";
@@ -13,11 +12,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/loader";
 import { Circle } from "@phosphor-icons/react";
-import SmallLogo from '../../../../public/logo/smallLogo.svg';
 import { VerifyEmailSchema } from "@/schema/authSchema";
 import { handleOtp, handleResendOTP } from "@/helpers/Auth/authApi";
 import FooterTexts from "../../_components/footerText";
 import { Button } from "@/components/ui/button";
+
 const Verify = () => {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -106,6 +105,7 @@ const Verify = () => {
   const otpMutation = useMutation({
     mutationFn: handleOtp,
     onSuccess: (data) => {
+      console.log("Data", data);
       update({ isVerified: data.isValidated }).then(() => {
         router.push("/dashboard");
       });
@@ -122,6 +122,7 @@ const Verify = () => {
     setVerifyError(null);
     const email = userEmail || "";
     const payload: TVerifyEmail = {
+      emailAddress: email,
       token: data.token,
     };
     otpMutation.mutate(payload);
@@ -137,7 +138,7 @@ const Verify = () => {
     setVerifyError(null);
   };
 
-  console.log("SignUp Status",status);
+
 
   if (status === "loading") {
     return <Loader />;
@@ -156,6 +157,7 @@ const Verify = () => {
     return <Loader />;
   }
 
+
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
       <PageTitle
@@ -164,7 +166,7 @@ const Verify = () => {
       />
       <div className="bg-blackishBg w-full h-screen md:flex md:flex-col md:justify-between hidden">
         <div className="pl-[36px] pt-[36px]">
-          <Image src={Logo} alt="Ops4Team Logo" />
+          {/* <Image src={Logo} alt="Ops4Team Logo" /> */}
         </div>
         <FooterTexts
           heading="“This library has saved me countless hours of work and helped me deliver
@@ -175,7 +177,7 @@ const Verify = () => {
       <div className="bg-white w-full my-auto">
         <div className="flex justify-center lg:justify-start md:hidden mt-9 mx-4 md:mr-9  md:gap-0">
           <div className="block md:hidden text-center px-3">
-            <Image src={SmallLogo} alt="Ops4Team Logo" />
+            {/* <Image src={SmallLogo} alt="Ops4Team Logo" /> */}
           </div>
         </div>
 

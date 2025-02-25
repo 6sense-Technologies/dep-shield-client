@@ -33,9 +33,10 @@ import {
   
   
   export const handleResendOTP = (data: string) => {
+    console.log("OTP",data) 
     const response = axios.post(
       `${TEMP_BACKEND_URL}/auth/send-otp`,
-      { email: data },
+      { emailAddress: data },
       {
         headers: {
           "Content-Type": "application/json",

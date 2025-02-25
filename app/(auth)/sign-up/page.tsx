@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import OrDivider from '../_components/orDivider';
 import { useRouter } from 'next/navigation';
@@ -84,23 +84,21 @@ const SignUp = () => {
 
   console.log("SignUp Status", session.status);
 
-  if (session.status === 'loading') {
-    return <Loader />;
-  }
+  useEffect(() => {
+    if (session.status === 'loading') {
+      <Loader />;
+    }
 
-  if (session.status === 'authenticated') {
-    if (!session.data?.isVerified) {
-      router.push('/sign-up/verification');
-      return <Loader />;
+    if (session.status === 'authenticated') {
+      if (!session.data?.isVerified) {
+        router.push('/sign-up/verification');
+      } else if (session.data?.isVerified) {
+        router.push('/dashboard');
+      }
+    } else if (session.status === 'unauthenticated') {
+      router.push('/sign-in');
     }
-    if (
-      session.data?.isVerified &&
-      session.status === 'authenticated'
-    ) {
-      router.push('/dashboard');
-      return <Loader />;
-    }
-  }
+  }, [session.status, session.data, router]);
 
   return (
     <div className='grid h-screen w-full grid-cols-1 overflow-y-hidden md:grid-cols-2'>
