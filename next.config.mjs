@@ -12,6 +12,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'trello-members.s3.amazonaws.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'avatar-management--avatars.us-west-2.prod.public.atl-paas.net',
       },
     ],
