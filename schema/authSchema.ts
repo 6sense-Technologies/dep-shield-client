@@ -28,5 +28,5 @@ export const SignupSchema = z
 
 
   export const VerifyEmailSchema = z.object({
-    token: z.string({ required_error: 'OTP is required.' })
+    token: z.string({ required_error: 'OTP is required.' }),
   });

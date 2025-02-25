@@ -13,8 +13,8 @@ const AvatarMenu = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut({ redirect: false });
-    router.push('/sign-in');
+    await signOut({redirectTo:'/sign-in'})
+    // router.replace('/sign-in');
   };
 
   const handleAvatarClick = () => {

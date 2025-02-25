@@ -40,6 +40,8 @@ const SignIn = () => {
 
   const session = useSession();
 
+  console.log("Sign-IN",session);
+ 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorFlag, setErrorFlag] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -93,29 +95,23 @@ const SignIn = () => {
       },
     });
   };
+  if (session.status === "loading") return <Loader />;
 
-  // if (session.status === "loading") return <Loader />;
-
-//   if (session.status === "authenticated") {
-//     if (!session.data?.isVerified && !session.data?.hasOrganization) {
-//       // router.push("/sign-up/verification");
-//       signOut({ redirect: false }).then(() => {
-//         return <Loader />;
-//       });
-//     }
-//     if (session.data?.isVerified && !session.data?.hasOrganization) {
-//       signOut({ redirect: false }).then(() => {
-//         return <Loader />;
-//       });
-//     } else if (
-//       session.data?.isVerified &&
-//       session.data?.hasOrganization &&
-//       session.status === "authenticated"
-//     ) {
-//       router.push("/dashboard");
-//       return <Loader />;
-//     }
-//   }
+  if (session.status === "authenticated") {
+    if (!session.data?.isVerified) {
+      // router.push("/sign-up/verification");
+      signOut({ redirect: false }).then(() => {
+        return <Loader />;
+      });
+    }
+    else if (
+      session.data?.isVerified &&
+      session.status === "authenticated"
+    ) {
+      router.push("/dashboard");
+      return <Loader />;
+    }
+  }
 
   return (
     <div className="w-full h-screen grid grid-cols-1 md:grid-cols-2 overflow-y-hidden">
@@ -142,7 +138,7 @@ const SignIn = () => {
           </Link>
         </div>
 
-        <div className="w-full max-w-[465px] mx-auto px-8 pt-4 xl:pt-20 lg:px-5 lg:pt-0">
+        <div className="w-full max-w-[465px] mx-auto px-8 pt-4 2xl:pt-20 lg:px-5 lg:pt-0">
           <p className="text-3xl text-black font-semibold pt-4 lg:pt-0">
             Sign in
           </p>
