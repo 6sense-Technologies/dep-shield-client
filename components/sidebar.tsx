@@ -36,7 +36,7 @@ const Sidebar: FC<TSidebarprop> = ({ children }) => {
     router.push("/sign-up/verification");
     return <Loader />;
   }
- else if (session.status == "unauthenticated") {
+  else if (session.status == "unauthenticated") {
     router.push("/sign-in");
     return <Loader />;
   } 
