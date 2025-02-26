@@ -42,13 +42,6 @@ const LicensesData = [
 const LicensesDetailsContent = () => {
     const [activeTab, setActiveTab] = useState<string>("overview");
 
-    useEffect(() => {
-        const savedTab = localStorage.getItem("activeTab");
-        if (savedTab) {
-            setActiveTab(savedTab);
-        }
-    }, []);
-
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
         localStorage.setItem("activeTab", tab);

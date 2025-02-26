@@ -31,8 +31,8 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
                                     <RefreshCw size={16}/>
                                 </div>
-                                <span className="hidden md:inline">Disconnect</span>
-                                <Link2Off size={16} className="ml-2" />
+                                <span className="hidden md:inline md:ml-3">Disconnect</span>
+                                <Link2Off size={16}/>
                             </Button>
                         ) : (
                             <Button variant="none" onClick={() => handleConnect("github")}>
