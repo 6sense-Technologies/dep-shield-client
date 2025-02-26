@@ -102,7 +102,7 @@ const SignUp = () => {
 
   const getButtonMarginTopClass = () => {
     if (errors.password && errors.password.message !== 'Password is required.') {
-      return 'lg:mt-[66px]';
+      return 'lg:mt-8';
     }
     return 'lg:mt-8';
   };

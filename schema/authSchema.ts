@@ -23,7 +23,7 @@ export const SignupSchema = z.object({
     .string({ required_error: 'Password is required.' })
     .regex(
       passwordRegex,
-      'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character, and be at least 8 characters long.'
+      'Password needs: 8+ characters, A-Z, a-z, 0-9, & symbol.'
     ),
 });
 
