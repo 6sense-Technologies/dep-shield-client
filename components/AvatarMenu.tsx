@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { signOut, useSession } from 'next-auth/react';
 import { LogOut, User, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const AvatarMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +14,7 @@ const AvatarMenu = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut({redirectTo:'/sign-in'})
+    await signOut({ redirectTo: '/sign-in' })
     // router.replace('/sign-in');
   };
 
@@ -84,9 +85,11 @@ const AvatarMenu = () => {
           </div>
           <ul>
             <li className="px-4 py-2 text-start hover:bg-gray-100 cursor-pointer border-b">
-              <div className='flex items-center gap-x-2 cursor-not-allowed text-gray-400 '>
-                <span><User size={16} /></span> <span className='text-sm'>My profile</span>
-              </div>
+              <Link href="/profile">
+                <div className='flex items-center gap-x-2'>
+                  <span><User size={16} /></span> <span className='text-sm'>My profile</span>
+                </div>
+              </Link>
             </li>
             <li className="px-4 py-2 text-start hover:bg-gray-100 cursor-pointer">
               <div className='flex items-center gap-x-2' onClick={handleLogout}>
