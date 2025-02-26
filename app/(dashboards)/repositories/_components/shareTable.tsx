@@ -27,6 +27,7 @@ import { SharePagination } from "./sharePagination";
 import Image from 'next/image';
 import { Github, Gitlab } from "lucide-react";
 import CustomAlertDialog from "./CustomAlartDialog";
+import Link from "next/link";
 
 type ShareData = {
     sharedBy: { name: string; avatarUrl: string };
@@ -75,7 +76,7 @@ export const columns: ColumnDef<ShareData>[] = [
         enableHiding: false,
         cell: ({ row }) => (
             <div className="flex items-center justify-end space-x-4 pr-4">
-                <Button variant="outline">View</Button>
+                <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
                 <CustomAlertDialog trigger={<Button variant="destructive">Remove</Button>} />
             </div>
         ),
