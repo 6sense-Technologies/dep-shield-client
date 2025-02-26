@@ -171,7 +171,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.refreshToken = response.data?.refreshToken;
       }
       console.log("JWT INVOKED....")
-      // Check if the access token is expired and refresh it if necessary
+      //Check if the access token is expired and refresh it if necessary
       if (token.accessToken && isTokenExpired(token.accessToken as string)) {
         console.log("UPDATED")
         const refreshedTokens = await refreshAccessToken(token.refreshToken as string);

@@ -52,7 +52,6 @@ const SignUp = () => {
   });
   const session = useSession();
 
-
   const basicSignUpMutation = useMutation({
     mutationFn: handleBasicSignup,
     onSuccess: (data, formData: TBasicSignupFormInputs) => {
@@ -69,7 +68,7 @@ const SignUp = () => {
     },
     onError: (error: any) => {
       console.log(error.message);
-      if (error.message === 'User already exists') {
+      if (error.message === 'Request failed with status code 409') {
         setErrorMessage('Email already exists.');
       }
       else
@@ -82,18 +81,16 @@ const SignUp = () => {
     basicSignUpMutation.mutate(data);
   };
 
-  // console.log("SignUp Status", session.status);
-
   if (session.status === 'loading') {
     return <Loader />;
   }
 
   if (session.status === 'authenticated') {
-    if (!session.data?.isVerified ) {
-      router.push('/sign-up/verification');
+    if (!session.data?.isVerified) {
+      router.replace('/sign-up/verification');
       return <Loader />;
     }
-    
+
     if (
       session.data?.isVerified &&
       session.status === 'authenticated'
@@ -103,6 +100,12 @@ const SignUp = () => {
     }
   }
 
+  const getButtonMarginTopClass = () => {
+    if (errors.password && errors.password.message !== 'Password is required.') {
+      return 'lg:mt-[66px]';
+    }
+    return 'lg:mt-8';
+  };
 
   return (
     <div className='grid h-screen w-full grid-cols-1 overflow-y-hidden md:grid-cols-2'>
@@ -139,22 +142,18 @@ const SignUp = () => {
             </p>
           </div>
           <div className='flex gap-x-4 pt-8 pb-3'>
-            {/* <Link href={"/sign-up/sso"}> */}
             <Button
               variant='extralight'
               size='minixl'
-              onClick={() =>
-                comingSoonAlert()}
+              onClick={() => comingSoonAlert()}
             >
               SSO
             </Button>
-            {/* </Link> */}
             <div className='flex gap-x-[16px]'>
               <Button
                 variant='extralight'
                 size='smallest'
-                onClick={() =>
-                  comingSoonAlert()}
+                onClick={() => comingSoonAlert()}
               >
                 <Image
                   src={GoogleLogo}
@@ -166,8 +165,7 @@ const SignUp = () => {
               <Button
                 variant='extralight'
                 size='smallest'
-                onClick={() =>
-                  comingSoonAlert()}
+                onClick={() => comingSoonAlert()}
               >
                 <Image
                   src={FacebookLogo}
@@ -179,8 +177,7 @@ const SignUp = () => {
               <Button
                 variant='extralight'
                 size='smallest'
-                onClick={() =>
-                  comingSoonAlert()}
+                onClick={() => comingSoonAlert()}
               >
                 <Image src={AppleLogo} width={24} height={24} alt='applelogo' />
               </Button>
@@ -259,7 +256,10 @@ const SignUp = () => {
               </div>
             </div>
 
-            <Button variant='dark' className='mt-[52px] w-full lg:mt-8'>
+            <Button
+              variant='dark'
+              className={`mt-[52px] w-full ${getButtonMarginTopClass()}`}
+            >
               {basicSignUpMutation.isPending ? (
                 <Circle className='animate-spin' />
               ) : (
@@ -279,9 +279,7 @@ const SignUp = () => {
           <div>
             <p
               className='px-10 pt-3 text-center text-sm text-textMuted'
-              onClick={() =>
-                comingSoonAlert()
-              }
+              onClick={() => comingSoonAlert()}
             >
               By clicking continue, you agree to our {''}
               <span className='cursor-pointer underline'>

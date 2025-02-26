@@ -1,28 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import AuthPageHeader from "../../_components/authPageHeader";
-import PageTitle from "@/components/PageTitle";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { TVerifyEmail } from "@/types/Auth.types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Otpfields from "./_components/otpfields";
-import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import Loader from "@/components/loader";
+import { useMutation } from "@tanstack/react-query";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle } from "@phosphor-icons/react";
+
+import PageTitle from "@/components/PageTitle";
+import Loader from "@/components/loader";
+import FooterTexts from "../../_components/footerText";
+import AuthPageHeader from "../../_components/authPageHeader";
+import Otpfields from "./_components/otpfields";
+import { Button } from "@/components/ui/button";
+
+import { TVerifyEmail } from "@/types/Auth.types";
 import { VerifyEmailSchema } from "@/schema/authSchema";
 import { handleOtp, handleResendOTP } from "@/helpers/Auth/authApi";
-import FooterTexts from "../../_components/footerText";
-import { Button } from "@/components/ui/button";
 
 const Verify = () => {
   const router = useRouter();
+  const { data: session, status, update } = useSession();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(120); // 2 minutes timer
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [verifyError, setVerifyError] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   useEffect(() => {
     const email = localStorage.getItem("user-email");
@@ -46,7 +49,6 @@ const Verify = () => {
     } else {
       localStorage.setItem("endTime", (Date.now() + timeLeft * 1000).toString());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -100,14 +102,12 @@ const Verify = () => {
     resolver: zodResolver(VerifyEmailSchema),
   });
 
-  const { data: session, status, update } = useSession();
-
   const otpMutation = useMutation({
     mutationFn: handleOtp,
     onSuccess: (data) => {
-      console.log("Data", data);
       update({ isVerified: data.isValidated }).then(() => {
-        router.push("/dashboard");
+        setIsRedirecting(true);
+        router.replace("/dashboard");
       });
       localStorage.removeItem("endTime");
     },
@@ -138,25 +138,21 @@ const Verify = () => {
     setVerifyError(null);
   };
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      if (!session.isVerified) {
+        router.replace("/sign-up/verification");
+      } else if (session.isVerified) {
+        router.replace("/dashboard");
+      }
+    } else if (status === "unauthenticated") {
+      router.replace("/sign-in");
+    }
+  }, [status, session, router]);
 
-
-  if (status === "loading") {
+  if (status === "loading" || isRedirecting) {
     return <Loader />;
   }
-
-  if (status === "authenticated") {
-    if (!session.isVerified) {
-      router.push("/sign-up/verification");
-    }
-    if (session.isVerified) {
-      router.push("/dashboard");
-      return <Loader />;
-    }
-  } else if (status === "unauthenticated") {
-    router.push("/sign-in");
-    return <Loader />;
-  }
-
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
@@ -204,10 +200,10 @@ const Verify = () => {
                   {isExpired
                     ? "OTP is expired."
                     : errors.token
-                      ? errors.token.message
-                      : verifyError
-                        ? verifyError
-                        : ""}
+                    ? errors.token.message
+                    : verifyError
+                    ? verifyError
+                    : ""}
                 </p>
 
                 <p className="text-sm text-textMuted pt-2">
