@@ -138,21 +138,20 @@ const Verify = () => {
     setVerifyError(null);
   };
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      if (!session.isVerified) {
-        router.replace("/sign-up/verification");
-      } else if (session.isVerified) {
-        router.replace("/dashboard");
-      }
-    } else if (status === "unauthenticated") {
-      router.replace("/sign-in");
-    }
-  }, [status, session, router]);
-
-  if (status === "loading" || isRedirecting) {
+  if (status === "loading") {
     return <Loader />;
   }
+
+  if (status === "authenticated") {
+    if (session.isVerified) {
+      router.push("/dashboard");
+      return <Loader />;
+    }
+  } else if (status === "unauthenticated") {
+    router.push("/sign-in");
+    return <Loader />;
+  }
+
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 ">
@@ -200,10 +199,10 @@ const Verify = () => {
                   {isExpired
                     ? "OTP is expired."
                     : errors.token
-                    ? errors.token.message
-                    : verifyError
-                    ? verifyError
-                    : ""}
+                      ? errors.token.message
+                      : verifyError
+                        ? verifyError
+                        : ""}
                 </p>
 
                 <p className="text-sm text-textMuted pt-2">
