@@ -28,15 +28,15 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (
-                            <Button variant="none" onClick={() => handleDisconnect("github")}>
+                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("github")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16} />
+                                    <span onClick={() => handleConnect("github")}><RefreshCw size={16} /></span>
                                 </div>
                                 <span className="hidden md:inline md:ml-3">Disconnect</span>
                                 <Link2Off size={16} />
                             </Button>
                         ) : (
-                            <Button variant="none" onClick={() => handleConnect("github")}>
+                            <Button variant="none" size="minixs" onClick={() => handleConnect("github")}>
                                 <span className="hidden md:inline">Connect</span>
                                 <Link2 size={16} />
                             </Button>
@@ -47,7 +47,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={GitLab} alt="gitLabLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {connections.gitlab ? (
-                            <Button variant="none" onClick={() => handleDisconnect("gitlab")}>
+                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("gitlab")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
                                     <RefreshCw size={16} />
                                 </div>
@@ -55,7 +55,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <Link2Off size={16} className="ml-2" />
                             </Button>
                         ) : (
-                            <Button variant="none" onClick={() => handleConnect("gitlab")}>
+                            <Button variant="none" size="minixs" onClick={() => handleConnect("gitlab")}>
                                 <span className="hidden md:inline">Connect</span>
                                 <Link2 size={16} />
                             </Button>
@@ -66,7 +66,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={Bitbucket} alt="bitBucketLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {connections.bitbucket ? (
-                            <Button variant="none" onClick={() => handleDisconnect("bitbucket")}>
+                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("bitbucket")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
                                     <RefreshCw size={16} />
                                 </div>
@@ -74,7 +74,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <Link2Off size={16} className="ml-2" />
                             </Button>
                         ) : (
-                            <Button variant="none" onClick={() => handleConnect("bitbucket")}>
+                            <Button variant="none" size="minixs" onClick={() => handleConnect("bitbucket")}>
                                 <span className="hidden md:inline">Connect</span>
                                 <Link2 size={16} />
                             </Button>
