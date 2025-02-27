@@ -27,8 +27,8 @@ const ProfileAvatarSection :FC<ProfileAvatarSectionProps> = ({defaultAvatarUrl,s
                 </div>
                 <div className="flex justify-between items-center w-full">
                     <div className='w-full min-w-[200px]'>
-                        <p className="text-sm font-semibold pl-3">Ahsan Aasim</p>
-                        <p className="text-twelve font-normal pl-3">ahsan@example.com</p>
+                        <p className="text-sm font-semibold pl-3 text-miniSubheadingColor">Ahsan Aasim</p>
+                        <p className="text-twelve font-normal pl-3 text-miniSubheadingColor">ahsan@example.com</p>
                     </div>
                     <Button variant="light" className="text-xs pl-3">Edit Profile</Button>
                 </div>
