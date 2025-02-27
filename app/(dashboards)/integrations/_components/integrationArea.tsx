@@ -14,9 +14,10 @@ type IntegrationAreaProps = {
     };
     handleConnect: (integration: string) => void;
     handleDisconnect: (integration: string) => void;
+    gitStatus: boolean;
 };
 
-const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect }) => {
+const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus }) => {
     return (
         <div className="flex-grow flex flex-col items-center md:justify-center pt-20 md:pt-0 px-3 lg:px-6">
             <div className="flex flex-col items-center justify-center h-96 w-full max-w-[512px] p-12 border rounded-lg gap-y-6">
@@ -26,13 +27,13 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                 <div className="border p-4 flex justify-between items-center w-full rounded-md h-14">
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
-                        {connections.github ? (
+                        {gitStatus ? (
                             <Button variant="none" onClick={() => handleDisconnect("github")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16}/>
+                                    <RefreshCw size={16} />
                                 </div>
                                 <span className="hidden md:inline md:ml-3">Disconnect</span>
-                                <Link2Off size={16}/>
+                                <Link2Off size={16} />
                             </Button>
                         ) : (
                             <Button variant="none" onClick={() => handleConnect("github")}>
@@ -48,7 +49,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                         {connections.gitlab ? (
                             <Button variant="none" onClick={() => handleDisconnect("gitlab")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16}/>
+                                    <RefreshCw size={16} />
                                 </div>
                                 <span className="hidden md:inline">Disconnect</span>
                                 <Link2Off size={16} className="ml-2" />
@@ -67,7 +68,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                         {connections.bitbucket ? (
                             <Button variant="none" onClick={() => handleDisconnect("bitbucket")}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16}/>
+                                    <RefreshCw size={16} />
                                 </div>
                                 <span className="hidden md:inline">Disconnect</span>
                                 <Link2Off size={16} className="ml-2" />

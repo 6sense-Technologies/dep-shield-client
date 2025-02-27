@@ -6,10 +6,15 @@ import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
 import PageHeading from "@/components/pageHeading";
 import IntegrationArea from "./_components/integrationArea";
-
+import { GitHub_APP_URL } from "@/config";
+import { useSession } from "next-auth/react";
+import { handleConnection } from "@/helpers/githubApp/githubApi";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Dashboard = () => {
+
+    const session = useSession();
     const [connections, setConnections] = useState({
         github: false,
         gitlab: false,
@@ -21,6 +26,8 @@ const Dashboard = () => {
             ...prevConnections,
             [integration]: true,
         }));
+
+        window.location.href = GitHub_APP_URL || "";
     };
 
     const handleDisconnect = (integration: string) => {
@@ -29,6 +36,22 @@ const Dashboard = () => {
             [integration]: false,
         }));
     };
+
+    let accessToken = null;
+
+    if (session?.status === 'authenticated') {
+        accessToken = session?.data?.accessToken;
+    }
+
+    const {
+        data: gitStatus,
+    } = useQuery<any>({
+        queryKey: ["gitStatus"],
+        queryFn: () => handleConnection(accessToken as string),
+        enabled: !!accessToken,
+    });
+
+    // console.log("Status is", gitStatus)
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -48,6 +71,7 @@ const Dashboard = () => {
                 connections={connections}
                 handleConnect={handleConnect}
                 handleDisconnect={handleDisconnect}
+                gitStatus={gitStatus}
             />
         </div>
     );
