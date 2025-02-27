@@ -1,12 +1,12 @@
 'use client';
 import Loader from '@/components/loader';
-import { GitHub_APP_URL} from '@/config';
+import { GitHub_APP_URL } from '@/config';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 
-const InstallRoute = () => {
+const InstallContent = () => {
   const params = useSearchParams();
   const authCode = params.get('code');
   const installation_id = params.get('installation_id');
@@ -47,6 +47,14 @@ const InstallRoute = () => {
     <div>
       <Loader />
     </div>
+  );
+};
+
+const InstallRoute = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <InstallContent />
+    </Suspense>
   );
 };
 
