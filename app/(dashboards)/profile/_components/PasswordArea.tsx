@@ -3,7 +3,7 @@ import React from 'react'
 
 const PasswordArea = () => {
     return (
-        <div className="px-3 md:px-60 lg:px-72 pt-8 pb-7">
+        <div className="px-3 lg:px-20 xl:px-72 pt-8 pb-7">
             <div>
                 <p className="text-[16px] font-medium pb-4 border-b">Password</p>
                 <div className="flex flex-col gap-4 pt-4">

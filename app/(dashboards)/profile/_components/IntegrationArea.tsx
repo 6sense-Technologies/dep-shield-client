@@ -20,7 +20,7 @@ type IntegrationAreaProps = {
 
 const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, githubEmail, gitlabEmail, bitbucketEmail }) => {
     return (
-        <div className="px-3 md:px-60 lg:px-72 pt-8">
+        <div className="px-3 lg:px-20 xl:px-72 pt-8">
             <div>
                 <p className="text-[16px] font-medium pb-4 border-b">Integrations</p>
                 <div className="flex flex-col gap-4 pt-4">
@@ -31,7 +31,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <span className="text-sm font-medium text-inputFooterColor">{githubEmail}</span>
                             ) : (
                                 <Button variant="none" onClick={() => handleConnect("github")}>
-                                    <span className="hidden md:inline">Connect</span>
+                                    <span className="inline">Connect</span>
                                     <Link2 size={16} />
                                 </Button>
                             )}
@@ -44,7 +44,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <span className="text-sm font-medium text-inputFooterColor">{gitlabEmail}</span>
                             ) : (
                                 <Button variant="none" onClick={() => handleConnect("gitlab")}>
-                                    <span className="hidden md:inline">Connect</span>
+                                    <span className="inline">Connect</span>
                                     <Link2 size={16} />
                                 </Button>
                             )}
@@ -57,7 +57,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                                 <span className="text-sm font-medium text-inputFooterColor">{bitbucketEmail}</span>
                             ) : (
                                 <Button variant="none" onClick={() => handleConnect("bitbucket")}>
-                                    <span className="hidden md:inline">Connect</span>
+                                    <span className="inline">Connect</span>
                                     <Link2 size={16} />
                                 </Button>
                             )}

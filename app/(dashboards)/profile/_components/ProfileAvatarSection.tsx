@@ -14,7 +14,7 @@ type ProfileAvatarSectionProps = {
 
 const ProfileAvatarSection :FC<ProfileAvatarSectionProps> = ({defaultAvatarUrl,session,getInitials}) => {
     return (
-        <div className="md:px-60 lg:px-72 pt-10  pb-6 border-b">
+        <div className="lg:px-20 xl:px-72 pt-10  pb-6 border-b">
             <div className="flex items-center">
                 <div>
                     <Avatar className="w-16 h-16">
