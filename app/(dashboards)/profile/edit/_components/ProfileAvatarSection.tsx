@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link';
 import React, { FC } from 'react'
 
 
@@ -10,13 +9,13 @@ type ProfileAvatarSectionProps = {
     getInitials: (name: string) => string;
 
 
-
+    
 }
 
-const ProfileAvatarSection: FC<ProfileAvatarSectionProps> = ({ defaultAvatarUrl, session, getInitials }) => {
+const ProfileAvatarSection :FC<ProfileAvatarSectionProps> = ({defaultAvatarUrl,session,getInitials}) => {
     return (
         <div className="lg:px-20 xl:px-72 pt-10  pb-6 border-b">
-            <div className="flex items-center">
+            <div className="flex flex-col lg:flex-row lg:justify-between items-center lg:gap-48">
                 <div>
                     <Avatar className="w-16 h-16">
                         <AvatarImage src={defaultAvatarUrl} alt="Avatar" />
@@ -26,13 +25,10 @@ const ProfileAvatarSection: FC<ProfileAvatarSectionProps> = ({ defaultAvatarUrl,
                         </AvatarFallback>
                     </Avatar>
                 </div>
-                <div className="flex justify-between items-center w-full">
-                    <div className='w-full min-w-[200px]'>
-                        <p className="text-sm font-semibold pl-3 text-miniSubheadingColor">Ahsan Aasim</p>
-                        <p className="text-twelve font-normal pl-3 text-miniSubheadingColor">ahsan@example.com</p>
-                    </div>
+                <div className="flex items-center w-full gap-2 justify-center lg:justify-start pt-4 lg:pt-0">
+                    <Button variant="light" className="text-xs pl-3">Change Picture</Button>
+                    <Button variant="lightDestructive" className="text-xs pl-3">Remove Picture</Button>
 
-                    <Link href="/profile/edit"><Button variant="light" className="text-xs pl-3">Edit Profile</Button></Link>
                 </div>
             </div>
         </div>
