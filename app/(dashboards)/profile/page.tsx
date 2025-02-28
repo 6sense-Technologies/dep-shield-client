@@ -7,14 +7,12 @@ import GlobalBreadCrumb from "@/components/globalBreadCrumb";
 import PageHeading from "@/components/pageHeading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import ProfileAvatarSection from "./_components/ProfileAvatarSection";
 import CredentialsArea from "./_components/CredentialsArea";
 import IntegrationArea from "./_components/IntegrationArea";
 import PasswordArea from "./_components/PasswordArea";
 
-const Dashboard = () => {
-
+const Profile = () => {
     const session = useSession();
     const defaultAvatarUrl = 'https://via.placeholder.com/150/0000FF/808080?Text=Default+Avatar';
     const [connections, setConnections] = useState({
@@ -22,13 +20,6 @@ const Dashboard = () => {
         gitlab: false,
         bitbucket: false,
     });
-
-    const handleConnect = (integration: string) => {
-        setConnections((prevConnections) => ({
-            ...prevConnections,
-            [integration]: true,
-        }));
-    };
 
     const getInitials = (name: string) => {
         if (!name) return "NA";
@@ -39,21 +30,15 @@ const Dashboard = () => {
         return (parts[0][0] + parts[1][0]).toUpperCase();
     };
 
-
     return (
         <div>
-            <PageTitle
-                title="Profile • DepShield.io"
-            />
+            <PageTitle title="Profile • DepShield.io" />
             <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
                 <span className="md:hidden"><SidebarTrigger /></span>
                 <AvatarMenu />
             </div>
             <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb
-                    initialData="Profile"
-                    initalLink="/profile"
-                />
+                <GlobalBreadCrumb initialData="Profile" initalLink="/profile" />
                 <span className="hidden md:flex pr-2">
                     <AvatarMenu />
                 </span>
@@ -67,21 +52,18 @@ const Dashboard = () => {
                     getInitials={getInitials}
                 />
 
-                <CredentialsArea/>
+                <CredentialsArea />
 
                 <IntegrationArea
-                    connections={connections}
-                    handleConnect={handleConnect}
-                    githubEmail="aasim124@6sensehq.com"
-                    gitlabEmail="aasim124@6sensehq.com"
-                    bitbucketEmail="aasim124@6sensehq.com"
+                    email1="aasim124@6sensehq.com"
+                    email2="aasim124@6sensehq.com"
+                    email3=""
                 />
 
-                <PasswordArea/>   
-
+                <PasswordArea />
             </div>
         </div>
     );
 };
 
-export default Dashboard;
+export default Profile;
