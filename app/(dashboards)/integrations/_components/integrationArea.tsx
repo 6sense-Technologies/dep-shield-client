@@ -5,6 +5,9 @@ import React, { FC } from 'react';
 import Github from "../../../../public/logo/github.svg";
 import GitLab from "../../../../public/logo/gitlab.svg";
 import Bitbucket from "../../../../public/logo/bit-bucket.svg";
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { TEMP_BACKEND_URL } from '@/config';
 
 type IntegrationAreaProps = {
     connections: {
@@ -15,9 +18,35 @@ type IntegrationAreaProps = {
     handleConnect: (integration: string) => void;
     handleDisconnect: (integration: string) => void;
     gitStatus: boolean;
+    refetchGitStatus: () => void;
 };
 
-const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus }) => {
+const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus,refetchGitStatus }) => {
+    const session = useSession();
+
+    let accessToken = null;
+
+    if (session?.status === 'authenticated') {
+        accessToken = session?.data?.accessToken;
+    }
+
+    const handleDisconnectRoute = async () => {
+
+        const res = await axios.get(`${TEMP_BACKEND_URL}/github-app/disconnect`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }
+        )
+
+        console.log("Response is", res.data)
+        refetchGitStatus()
+        return res.data
+    }
+
+    console.log("Git Status in Integration Component page", gitStatus);
+
     return (
         <div className="flex-grow flex flex-col items-center md:justify-center pt-20 md:pt-0 px-3 lg:px-6">
             <div className="flex flex-col items-center justify-center h-96 w-full max-w-[512px] p-12 border rounded-lg gap-y-6">
@@ -28,7 +57,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (
-                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("github")}>
+                            <Button variant="none" size="minixs" onClick={() => handleDisconnectRoute()}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
                                     <span onClick={() => handleConnect("github")}><RefreshCw size={16} /></span>
                                 </div>
