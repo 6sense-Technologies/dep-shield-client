@@ -42,7 +42,7 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ email1, email2, email3 }) =
                             {email3 ? (
                                 <span className="text-sm font-medium text-inputFooterColor">{email3}</span>
                             ) : (
-                                <span className="text-sm font-medium text-inputFooterColor">None</span>
+                                <span className="text-sm font-medium text-inputFooterColor">Not connected</span>
                             )}
                         </div>
                     </div>
