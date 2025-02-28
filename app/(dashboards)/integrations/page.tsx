@@ -12,7 +12,7 @@ import { handleConnection } from "@/helpers/githubApp/githubApi";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/loader";
 
-const Dashboard = () => {
+const Integration = () => {
     const session = useSession();
     const [connections, setConnections] = useState({
         github: false,
@@ -20,7 +20,7 @@ const Dashboard = () => {
         bitbucket: false,
     });
 
-    const handleConnect = (integration: string, event?: MouseEvent) => {
+    const handleConnect = (integration: string, event?: React.MouseEvent) => {
         if (event) {
             event.stopPropagation();
         }
@@ -32,9 +32,7 @@ const Dashboard = () => {
             }));
 
             window.location.href = GitHub_APP_URL || "";
-        }
-
-        else {
+        } else {
             setConnections((prevConnections) => ({
                 ...prevConnections,
                 [integration]: true,
@@ -96,4 +94,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Integration;
