@@ -1,6 +1,6 @@
 'use client';
 import Loader from '@/components/loader';
-import { GitHub_APP_URL } from '@/config';
+import {TEMP_BACKEND_URL } from '@/config';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ const InstallContent = () => {
     const installGithubApp = async () => {
       try {
         if (authCode && installation_id && accessToken) {
-          const req = await axios.get(`${GitHub_APP_URL}`,
+          const req = await axios.get(`${TEMP_BACKEND_URL}/github-app/install?code=${authCode}&installation_id=${installation_id}`, 
             {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
