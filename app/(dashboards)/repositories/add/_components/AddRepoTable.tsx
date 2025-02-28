@@ -27,7 +27,6 @@ import { AddRepoPagination } from "./AddRepoPagination";
 
 type Repository = {
     name: string;
-    useCase: string;
 };
 
 
@@ -37,15 +36,6 @@ export const columns: ColumnDef<Repository>[] = [
         header: () => <div className="text-bold">Repository Name</div>,
         cell: ({ row }: { row: any }) => (
             <div className="text-medium">{row.getValue("name") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "useCase",
-        header: () => <div className="text-bold">Use Case</div>,
-        cell: ({ row }: { row: any }) => (
-            <Badge className="text-black bg-white border-lightborderColor hover:bg-white font-normal">
-                {row.getValue("useCase")}
-            </Badge>
         ),
     },
     {
@@ -159,9 +149,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                                                     ? "text-right w-[125px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
-                                                        : header.column.id === "useCase"
-                                                            ? "min-w-[200px]"
-                                                            : "min-w-[200px]"
+                                                        : "min-w-[200px]"
                                                     }`}
                                             >
                                                 {header.isPlaceholder
