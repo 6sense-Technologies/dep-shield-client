@@ -20,13 +20,28 @@ const Dashboard = () => {
         bitbucket: false,
     });
 
-    const handleConnect = (integration: string) => {
-        setConnections((prevConnections) => ({
-            ...prevConnections,
-            [integration]: true,
-        }));
+    const handleConnect = (integration: string, event?: MouseEvent) => {
+        if (event) {
+            event.stopPropagation();
+        }
 
-        window.location.href = GitHub_APP_URL || "";
+        if (event && integration === "github") {
+            setConnections((prevConnections) => ({
+                ...prevConnections,
+                [integration]: false,
+            }));
+
+            window.location.href = GitHub_APP_URL || "";
+        }
+
+        else {
+            setConnections((prevConnections) => ({
+                ...prevConnections,
+                [integration]: true,
+            }));
+
+            window.location.href = GitHub_APP_URL || "";
+        }
     };
 
     const handleDisconnect = (integration: string) => {

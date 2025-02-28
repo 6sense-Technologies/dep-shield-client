@@ -15,13 +15,13 @@ type IntegrationAreaProps = {
         gitlab: boolean;
         bitbucket: boolean;
     };
-    handleConnect: (integration: string) => void;
+    handleConnect: (integration: string, event?: React.MouseEvent) => void;
     handleDisconnect: (integration: string) => void;
     gitStatus: boolean;
     refetchGitStatus: () => void;
 };
 
-const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus,refetchGitStatus }) => {
+const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus, refetchGitStatus }) => {
     const session = useSession();
 
     let accessToken = null;
@@ -31,19 +31,16 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
     }
 
     const handleDisconnectRoute = async () => {
-
-        const res = await axios.get(`${TEMP_BACKEND_URL}/github-app/disconnect`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
+        const res = await axios.get(`${TEMP_BACKEND_URL}/github-app/disconnect`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
             }
-        )
+        });
 
-        console.log("Response is", res.data)
-        refetchGitStatus()
-        return res.data
-    }
+        console.log("Response is", res.data);
+        refetchGitStatus();
+        return res.data;
+    };
 
     console.log("Git Status in Integration Component page", gitStatus);
 
@@ -57,9 +54,11 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (
-                            <Button variant="none" size="minixs" onClick={() => handleDisconnectRoute()}>
+                            <Button variant="none" size="minixs" onClick={handleDisconnectRoute}>
                                 <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <span onClick={() => handleConnect("github")}><RefreshCw size={16} /></span>
+                                    <span onClick={(e) => handleConnect("github", e)}>
+                                        <RefreshCw size={16} />
+                                    </span>
                                 </div>
                                 <span className="hidden md:inline md:ml-3">Disconnect</span>
                                 <Link2Off size={16} />
@@ -75,39 +74,25 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                 <div className="border p-4 flex justify-between items-center w-full rounded-md h-14">
                     <Image src={GitLab} alt="gitLabLogo" width={100} height={100} />
                     <div className="w-full text-right">
-                        {connections.gitlab ? (
-                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("gitlab")}>
-                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16} />
-                                </div>
-                                <span className="hidden md:inline">Disconnect</span>
-                                <Link2Off size={16} className="ml-2" />
-                            </Button>
-                        ) : (
-                            <Button variant="none" size="minixs" onClick={() => handleConnect("gitlab")}>
-                                <span className="hidden md:inline">Connect</span>
-                                <Link2 size={16} />
-                            </Button>
-                        )}
+                        <Button variant="none" size="minixs" disabled>
+                            <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
+                                <RefreshCw size={16} />
+                            </div>
+                            <span className="hidden md:inline">Disconnect</span>
+                            <Link2Off size={16} className="ml-2" />
+                        </Button>
                     </div>
                 </div>
                 <div className="border p-4 flex justify-between items-center w-full rounded-md h-14">
                     <Image src={Bitbucket} alt="bitBucketLogo" width={100} height={100} />
                     <div className="w-full text-right">
-                        {connections.bitbucket ? (
-                            <Button variant="none" size="minixs" onClick={() => handleDisconnect("bitbucket")}>
-                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
-                                    <RefreshCw size={16} />
-                                </div>
-                                <span className="hidden md:inline">Disconnect</span>
-                                <Link2Off size={16} className="ml-2" />
-                            </Button>
-                        ) : (
-                            <Button variant="none" size="minixs" onClick={() => handleConnect("bitbucket")}>
-                                <span className="hidden md:inline">Connect</span>
-                                <Link2 size={16} />
-                            </Button>
-                        )}
+                        <Button variant="none" size="minixs" disabled>
+                            <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
+                                <RefreshCw size={16} />
+                            </div>
+                            <span className="hidden md:inline">Disconnect</span>
+                            <Link2Off size={16} className="ml-2" />
+                        </Button>
                     </div>
                 </div>
             </div>
