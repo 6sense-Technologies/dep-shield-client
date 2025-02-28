@@ -5,7 +5,7 @@ const CredentialsArea = () => {
         <div className="px-3 lg:px-20 xl:px-72 pt-10">
             <div>
                 <p className="text-[16px] font-medium pb-4 border-b">Basic Info</p>
-                <div className="flex gap-52 pt-4">
+                <div className="flex gap-24 md:gap-52 pt-4">
                     <div className="flex flex-col">
                         <p className="text-sm text-inputFooterColor ">First Name</p>
                         <p className="text-sm text-medium pt-[2px] text-deepBlackColor">Ahsan</p>
