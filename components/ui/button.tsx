@@ -15,7 +15,7 @@ const buttonVariants = cva(
         secondary: "text-black bg-secondary hover:bg-secondaryHover",
         outline:
           "text-black bg-transparent border-[1px] border-borderColor  focus:outline focus:outline-2 focus:outline-primary focus:outline-offset-2",
-        lightDestructive:"bg-[#FEF2F2] text-destructive",
+        lightDestructive: "bg-[#FEF2F2] text-destructive",
         destructive: "text-white bg-destructive hover:bg-destructiveHover",
         ghost:
           "text-textPrimary bg-transparent hover:bg-disabled focus:bg-disabled focus:outline focus:outline-2 focus:outline-primary focus:outline-offset-2",
@@ -30,7 +30,7 @@ const buttonVariants = cva(
         darkish: 'text-white bg-primary font-normal',
         blackWhite: "text-white bg-black border border-white",
         disable: 'text-destructive underline underline-offset-2  border-none',
-        none:'text-black bg-transparent',
+        none: 'text-black bg-transparent',
         nonedisable: 'text-subHeading bg-transparent border border-gray-100'
       },
       size: {
@@ -41,13 +41,14 @@ const buttonVariants = cva(
         xsTight: "text-sm px-2 h-9 w-full lg:w-[40px]",
         md: "text-sm px-5 h-9",
         xs: "text-sm px-3 h-7",
+        minixs: "text-sm px-0 h-7",
         sm: "text-sm px-5 h-9",
         lg: "text-lg px-[18px] h-9",
         lgExtended: "text-sm px-5 h-9",
         minixl: "text-sm px-5 h-10 w-[80px]",
         xl: "text-lg px-5 h-9",
         icon: "h-9 w-9",
-        sidebaricon : "h-12 w-12",
+        sidebaricon: "h-12 w-12",
         default: "text-sm px-5 h-9",
       },
     },
