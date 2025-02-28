@@ -1,10 +1,11 @@
 'use client';
 import Loader from '@/components/loader';
-import {TEMP_BACKEND_URL } from '@/config';
+import { TEMP_BACKEND_URL } from '@/config';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import React, { Suspense, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 const InstallContent = () => {
   const params = useSearchParams();
@@ -18,30 +19,34 @@ const InstallContent = () => {
   if (session?.status === 'authenticated') {
     accessToken = session?.data?.accessToken;
   }
-  // console.log("ACCESSTOKEN", accessToken);
-  // console.log("SESSION", session);
+
+  const installGithubApp = async () => {
+    if (authCode && installation_id && accessToken) {
+      const req = await axios.get(`${TEMP_BACKEND_URL}/github-app/install?code=${authCode}&installation_id=${installation_id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return req.data;
+    }
+  };
+
+  const installGithubAppMutation = useMutation({
+    mutationFn: installGithubApp,
+    onSuccess: (data) => {
+      console.log("Success", data);
+      router.push('/integrations');
+    },
+    onError: () => {
+      router.push('/integrations');
+    },
+  });
 
   useEffect(() => {
-    const installGithubApp = async () => {
-      try {
-        if (authCode && installation_id && accessToken) {
-          const req = await axios.get(`${TEMP_BACKEND_URL}/github-app/install?code=${authCode}&installation_id=${installation_id}`, 
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
-          console.log("Success", req.data);
-          router.push('/integrations');
-        }
-      } catch (error) {
-        router.push('/integrations');
-      }
-    };
-
-    installGithubApp();
-  }, [authCode, installation_id, accessToken, router]);
+    if (authCode && installation_id && accessToken) {
+      installGithubAppMutation.mutate();
+    }
+  }, [authCode, installation_id, accessToken, installGithubAppMutation]);
 
   return (
     <div>
