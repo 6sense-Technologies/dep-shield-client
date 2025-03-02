@@ -99,7 +99,6 @@ const SignIn = () => {
 
   if (session.status === "authenticated") {
     if (!session.data?.isVerified) {
-      // router.push("/sign-up/verification");
       signOut({ redirect: false }).then(() => {
         return <Loader />;
       });
