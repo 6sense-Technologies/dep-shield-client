@@ -40,7 +40,7 @@ const EditProfile = () => {
                 </span>
             </div>
             <div className="px-3 lg:px-6">
-                <PageHeading title="My Profile" className="pl-2 pt-3" />
+                <PageHeading title="Edit Profile" className="pl-2 pt-3" />
 
                 <ProfileAvatarSection
                     defaultAvatarUrl={defaultAvatarUrl}
