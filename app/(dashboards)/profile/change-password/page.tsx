@@ -6,8 +6,8 @@ import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
 import PageHeading from "@/components/pageHeading";
 import { useSession } from "next-auth/react";
+import PasswordCredentialsArea from "./_components/PasswordCredentialArea";
 import ProfileAvatarSection from "./_components/ProfileAvatarSection";
-import CredentialsArea from "./_components/CredentialsArea";
 
 
 
@@ -26,21 +26,21 @@ const EditProfile = () => {
 
     return (
         <div>
-            <PageTitle title="Edit Profile • DepShield.io" />
+            <PageTitle title="Change Password • DepShield.io" />
             <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
                 <span className="md:hidden"><SidebarTrigger /></span>
                 <AvatarMenu />
             </div>
             <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
                 <GlobalBreadCrumb initialData="Profile" initalLink="/profile"
-                    secondayData="Edit Profile" secondayLink="/profile/edit"
+                    secondayData="Change Password" secondayLink="/profile/change-password"
                 />
                 <span className="hidden md:flex pr-2">
                     <AvatarMenu />
                 </span>
             </div>
             <div className="px-3 lg:px-6">
-                <PageHeading title="My Profile" className="pl-2 pt-3" />
+                <PageHeading title="Change Password" className="pl-2 pt-3" />
 
                 <ProfileAvatarSection
                     defaultAvatarUrl={defaultAvatarUrl}
@@ -48,7 +48,7 @@ const EditProfile = () => {
                     getInitials={getInitials}
                 />
 
-                <CredentialsArea />
+                <PasswordCredentialsArea />
 
             </div>
         </div>

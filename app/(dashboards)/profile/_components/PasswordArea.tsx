@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import React from 'react'
 
 const PasswordArea = () => {
@@ -9,9 +10,11 @@ const PasswordArea = () => {
                 <div className="flex flex-col gap-4 pt-4">
                     <div className="flex justify-between items-center w-full rounded-md h-14">
                         <div className="w-full text-left">
-                            <Button variant="default">
-                                <span className="inline">Change</span>
-                            </Button>
+                            <Link href="/profile/change-password">
+                                <Button variant="default">
+                                    <span className="inline">Change</span>
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

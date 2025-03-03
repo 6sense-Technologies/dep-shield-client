@@ -5,7 +5,6 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
 import PageHeading from "@/components/pageHeading";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
 import ProfileAvatarSection from "./_components/ProfileAvatarSection";
 import CredentialsArea from "./_components/CredentialsArea";
@@ -15,12 +14,6 @@ import PasswordArea from "./_components/PasswordArea";
 const Profile = () => {
     const session = useSession();
     const defaultAvatarUrl = 'https://via.placeholder.com/150/0000FF/808080?Text=Default+Avatar';
-    const [connections, setConnections] = useState({
-        github: false,
-        gitlab: false,
-        bitbucket: false,
-    });
-
     const getInitials = (name: string) => {
         if (!name) return "NA";
         const parts = name.split(" ");
