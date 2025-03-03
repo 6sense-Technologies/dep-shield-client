@@ -57,13 +57,15 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (
-                            <Button variant="none" size="minixs" onClick={() => handleDisconnectRoute()}>
-                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2">
+                            <div className='flex items-center justify-end gap-2'>
+                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2 cursor-pointer">
                                     <span onClick={(e) => handleConnect("github", e)}><RefreshCw size={16} /></span>
                                 </div>
-                                <span className="hidden md:inline md:ml-3">Disconnect</span>
-                                <Link2Off size={16} />
-                            </Button>
+                                <Button variant="none" size="minixs" onClick={() => handleDisconnectRoute()}>
+                                    <span className="hidden md:inline">Disconnect</span>
+                                    <Link2Off size={16} />
+                                </Button>
+                            </div>
                         ) : (
                             <Button variant="none" size="minixs" onClick={() => handleConnect("github")}>
                                 <span className="hidden md:inline">Connect</span>

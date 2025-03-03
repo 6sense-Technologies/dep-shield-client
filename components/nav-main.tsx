@@ -33,8 +33,10 @@ export function NavMain({
   const activeItems = ['Dashboard', 'Repositories', 'Vulnerabilities', 'Dependencies', 'Licenses', 'Integrations'];
   const pathname = usePathname();
 
-  // If the current path is /profile, set selectedItem to null
-  const currentSelectedItem = pathname === '/profile' ? null : selectedItem;
+  // If the current path is /profile, /profile/edit, or /profile/change-password, set selectedItem to null
+  const currentSelectedItem = ['/profile', '/profile/edit', '/profile/change-password'].includes(pathname)
+    ? null
+    : selectedItem;
 
   return (
     <SidebarGroup>
