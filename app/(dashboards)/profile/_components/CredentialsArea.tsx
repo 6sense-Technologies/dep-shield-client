@@ -2,7 +2,7 @@ import React from 'react'
 
 const CredentialsArea = () => {
     return (
-        <div className="px-3 lg:px-20 xl:px-72 pt-10">
+        <div className="px-3 lg:px-20 xl:px-72 py-6">
             <div>
                 <p className="text-[16px] font-medium pb-4 border-b">Basic Info</p>
                 <div className="flex gap-24 md:gap-52 pt-4">

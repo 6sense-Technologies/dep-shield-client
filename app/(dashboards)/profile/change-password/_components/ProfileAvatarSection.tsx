@@ -31,8 +31,6 @@ const ProfileAvatarSection: FC<ProfileAvatarSectionProps> = ({ defaultAvatarUrl,
                         <p className="text-sm font-semibold pl-3 text-miniSubheadingColor">Ahsan Aasim</p>
                         <p className="text-twelve font-normal pl-3 text-miniSubheadingColor">ahsan@example.com</p>
                     </div>
-
-                    <Link href="/profile/edit"><Button variant="light" className="text-xs pl-3">Edit Profile</Button></Link>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -11,36 +11,50 @@ import Image from "next/image";
 import Github from "../../../../public/logo/grayGithub.svg";
 import AddRepoSearchArea from "./_components/AddRepoSearchArea";
 import Loader from "@/components/loader";
-
-const addRepoData = [
-    {
-        name: "6senseEV/6sense-ev-admin",
-        useCase: "Non-distributed"
-    },
-    {
-        name: "6senseEV/6sense-ev-frontend",
-        useCase: "Distributed"
-    },
-    {
-        name: "6senseEV/6sense-ev-backend",
-        useCase: "Unknown"
-    },
-    {
-        name: "6senseEV/6sense-ev-analytics",
-        useCase: "Non-distributed"
-    },
-    {
-        name: "6senseEV/6sense-ev-mobile",
-        useCase: "Distributed"
-    },
-    {
-        name: "6senseEV/6sense-ev-database",
-        useCase: "Unknown"
-    }
-];
+import { useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getGitRepositories } from "@/helpers/githubApp/githubApi";
 
 const AddRepositoryContent = () => {
-    const hasData = addRepoData.length > 0;
+    const [showTable, setShowTable] = useState(false);
+    const searchParams = useSearchParams();
+    const provider = searchParams.get("provider");
+    const page = searchParams.get("page");
+
+    const [pages, setPages] = useState<number>(1);
+    const [limit] = useState<number>(10);
+    const session = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (page) {
+            setShowTable(true);
+        }
+    }, [provider, page]);
+
+    useEffect(() => {
+        const newPage = searchParams.get("page")
+            ? Number(searchParams.get("page"))
+            : 1;
+
+        setPages(newPage);
+    }, [searchParams]);
+
+    const {
+        data: addRepoData,
+        isFetching: addRepoLoading,
+    } = useQuery<any>({
+        queryKey: ["addRepoData", session, pages, limit],
+        queryFn: () => getGitRepositories(session, pages, limit),
+    });
+    
+    const handlePlatformClick = (platform: string) => {
+        if (platform === "GitHub") {
+            router.push("/repositories/add?provider=github&page=1");
+            setShowTable(true);
+        }
+    };
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -57,20 +71,21 @@ const AddRepositoryContent = () => {
             </div>
             <div className="flex items-center pl-4 md:pl-7 pt-3">
                 <PageHeading title="Add Repositories" className="mr-4" />
-                {hasData && <Image src={Github} alt="GitHub Logo" width={20} height={20} />}
+                {showTable && <Image src={Github} alt="GitHub Logo" width={20} height={20} />}
             </div>
-            {hasData ? (
+            {showTable ? (
                 <div className="pt-4 px-4 md:pt-4 md:px-6">
                     <AddRepoSearchArea />
                     <AddRepoTable
-                        repositories={addRepoData}
-                        totalCountAndLimit={{ totalCount: addRepoData.length, size: 10 }}
-                        currentPage={1}
-                        loading={false}
+                        repositories={addRepoData?.repositories}
+                        totalCountAndLimit={{ totalCount: addRepoData?.totalCount, size: 10 }}
+                        currentPage={pages}
+                        loading={addRepoLoading}
+                        session={session}
                     />
                 </div>
             ) : (
-                <EmptyAddRepoView />
+                <EmptyAddRepoView onPlatformClick={handlePlatformClick} />
             )}
         </div>
     );

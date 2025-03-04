@@ -21,32 +21,53 @@ import {
 } from "@/components/ui/table";
 import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { AddRepoPagination } from "./AddRepoPagination";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { AddRepositories, getRepoAddStatus } from "@/helpers/githubApp/githubApi";
+import { AccessControlPagination } from "./accessControlPagination";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
-type Repository = {
-    _id: string;
+type AccessControl = {
     name: string;
+    email: string;
+    shareTime: string;
+    avatarUrl?: string;
 };
 
-type TAddRepoTableProps = {
-    repositories?: Repository[];
+const getInitials = (name: string) => {
+    const parts = name.split(" ");
+    if (parts.length === 1) {
+        return parts[0][0].toUpperCase();
+    }
+    if (parts.length === 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+};
+
+const formatShareTime = (shareTime: string) => {
+    const [time, date] = shareTime.split(".");
+    return (
+        <div className="flex flex-col">
+            <span className="text-black">{time}</span>
+            <span className="text-inputFooterColor pt-1">{date}</span>
+        </div>
+    );
+};
+
+type TAccessControlTableProps = {
+    controls?: AccessControl[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;
     loading?: boolean;
-    session?: any;
 };
 
-export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
-    repositories = [],
+export const AccessControlTable: React.FC<TAccessControlTableProps> = ({
+    controls = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
     loading,
-    session,
 }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -60,81 +81,71 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
     const page = parseInt(searchParams?.get("page") || "1");
     const [currentPageState, setCurrentPageState] = useState(page);
     const [isLoading, setIsLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<AccessControl | null>(null);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
 
-    const [addedRepos, setAddedRepos] = useState<{ [key: string]: boolean }>({});
+    const handleRemoveClick = (user: AccessControl) => {
+        setSelectedUser(user);
+        setIsModalOpen(true);
+    };
 
-    const {
-        data: repoStatus,
-        isFetching: repoStatusLoading,
-    } = useQuery<any>({
-        queryKey: ["repoStatus"],
-        queryFn: () => getRepoAddStatus(session),
-    });
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedUser(null);
+    };
 
-    useEffect(() => {
-        if (repoStatus?.repositories) {
-            const initialAddedRepos: { [key: string]: boolean } = {};
-            repoStatus.repositories.forEach((repo: any) => {
-                if (repo.isSelected) {
-                    initialAddedRepos[repo._id] = true;
-                }
-            });
-            setAddedRepos(initialAddedRepos);
-        }
-    }, [repoStatus]);
+    const handleConfirmRemove = () => {
+        // Add your logic to remove access for the selected user here
+        setIsModalOpen(false);
+        setSelectedUser(null);
+    };
 
-    const addRepoMutation = useMutation({
-        mutationFn: (data: string) => AddRepositories(session, data),
-        onSuccess: (data, variables) => {
-            console.log("Added");
-            setAddedRepos((prev) => ({ ...prev, [variables]: true }));
-        },
-        onError: (error) => {
-            console.error("Error adding repository:", error);
-        },
-    });
-
-    const columns: ColumnDef<Repository>[] = [
+    const columns: ColumnDef<AccessControl>[] = [
         {
-            accessorKey: "repoName",
-            header: () => <div className="text-bold">Repository Name</div>,
+            accessorKey: "name",
+            header: () => <div className="text-bold">Name</div>,
             cell: ({ row }: { row: any }) => (
-                <div className="text-medium">{row.getValue("repoName") || "-"}</div>
+                <div className="flex items-center">
+                    <Avatar className="w-8 h-8 mr-2">
+                        {row.original.avatarUrl ? (
+                            <AvatarImage src={row.original.avatarUrl} alt={row.original.name} />
+                        ) : (
+                            <AvatarFallback>{getInitials(row.original.name)}</AvatarFallback>
+                        )}
+                    </Avatar>
+                    <span className="text-medium">{row.getValue("name") || "-"}</span>
+                </div>
             ),
+        },
+        {
+            accessorKey: "email",
+            header: () => <div className="text-bold">Email</div>,
+            cell: ({ row }: { row: any }) => (
+                <div className="text-medium">{row.getValue("email") || "-"}</div>
+            ),
+        },
+        {
+            accessorKey: "shareTime",
+            header: () => <div className="text-bold">Share Time</div>,
+            cell: ({ row }: { row: any }) => formatShareTime(row.getValue("shareTime")),
         },
         {
             id: "actions",
             header: () => <div className="text-bold text-start pr-4">Actions</div>,
             enableHiding: false,
-            cell: ({ row }) => {
-                const repoId = row.original._id;
-                const added = addedRepos[repoId] || false;
-
-                const handleAddClick = () => {
-                    addRepoMutation.mutate(repoId);
-                };
-
-                return (
-                    <div className="flex items-center justify-end space-x-4 pr-4">
-                        <Button
-                            variant={added ? "nonedisable" : "outline"}
-                            size="xsExtended"
-                            onClick={handleAddClick}
-                            disabled={added}
-                        >
-                            {added ? "Added" : "Add"}
-                        </Button>
-                    </div>
-                );
-            },
+            cell: ({ row }) => (
+                <div className="flex items-center justify-end space-x-4 pr-4">
+                    <Button variant="destructive" onClick={() => handleRemoveClick(row.original)}>Remove</Button>
+                </div>
+            ),
         },
     ];
 
     const table = useReactTable({
-        data: repositories,
+        data: controls,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -170,16 +181,30 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
 
     const displayedRowsCount =
         currentPageState > 1
-            ? (currentPageState - 1) * pagination.pageSize + repositories.length
-            : repositories.length;
+            ? (currentPageState - 1) * pagination.pageSize + controls.length
+            : controls.length;
 
     return (
         <div className="w-full">
-            {loading ? (
+            {isLoading ? (
                 <EmptyTableSkeleton />
             ) : (
                 <>
-                    <div className="overflow-hidden rounded-lg border border-lightborderColor mt-6 lg:mt-0">
+                    <AlertDialog open={isModalOpen} onOpenChange={handleCloseModal}>
+                        <AlertDialogContent className='bg-white'>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle className="text-destructive">Remove access</AlertDialogTitle>
+                                <AlertDialogDescription className="text-inputFooterColor">
+                                    Are you sure you want to revoke access for the selected user?
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel onClick={handleCloseModal}>Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-destructive text-white" onClick={handleConfirmRemove}>Remove</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                    <div className="overflow-hidden rounded-lg border border-lightborderColor mt-4 lg:mt-0">
                         <Table className="!rounded-lg !min-w-[600px]">
                             <TableHeader className="border-b-[1px] text-inputFooterColor">
                                 {table.getHeaderGroups().map((headerGroup: any) => (
@@ -188,10 +213,14 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                                             <TableHead
                                                 key={header.id}
                                                 className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right w-[125px]"
+                                                    ? "text-right w-[115px]"
                                                     : header.column.id === "name"
                                                         ? "min-w-[300px]"
-                                                        : "min-w-[200px]"
+                                                        : header.column.id === "email"
+                                                            ? "min-w-[200px]"
+                                                            : header.column.id === "shareTime"
+                                                                ? "min-w-[200px]"
+                                                                : "min-w-[200px]"
                                                     }`}
                                             >
                                                 {header.isPlaceholder
@@ -220,9 +249,11 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                                                         ? "text-right"
                                                         : cell.column.id === "name"
                                                             ? "pl-4 text-start"
-                                                            : cell.column.id === "useCase"
+                                                            : cell.column.id === "email"
                                                                 ? "text-start pl-4"
-                                                                : "pl-4 text-start"
+                                                                : cell.column.id === "shareTime"
+                                                                    ? "pl-4 text-start"
+                                                                    : "pl-4 text-start"
                                                         }`}
                                                 >
                                                     {flexRender(
@@ -252,7 +283,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <AddRepoPagination
+                            <AccessControlPagination
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}

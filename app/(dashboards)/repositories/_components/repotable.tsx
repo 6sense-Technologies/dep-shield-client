@@ -55,10 +55,10 @@ const getSeverityCount = (vulnerabilities: { id: number; name: string; severity:
 
 export const columns: ColumnDef<Repository>[] = [
   {
-    accessorKey: "repositoryName",
+    accessorKey: "repoName",
     header: () => <div className="text-bold">Repository Name</div>,
     cell: ({ row }: { row: any }) => (
-      <div className="text-medium">{row.getValue("repositoryName") || "-"}</div>
+      <div className="text-medium">{row.getValue("repoName") || "-"}</div>
     ),
   },
   {
@@ -73,6 +73,9 @@ export const columns: ColumnDef<Repository>[] = [
     header: () => <div className="text-bold">Vulnerabilities</div>,
     cell: ({ row }: { row: any }) => {
       const vulnerabilities = row.original.vulnerabilities;
+      if (!vulnerabilities || vulnerabilities.length === 0) {
+        return <div className="text-medium">-</div>;
+      }
       const severities = ["Critical", "High", "Medium", "Low", "Unknown"];
       return (
         <div className="flex flex-wrap gap-2">
@@ -91,16 +94,22 @@ export const columns: ColumnDef<Repository>[] = [
   {
     accessorKey: "sharingDetails",
     header: () => <div className="text-bold">Sharing Details</div>,
-    cell: ({ row }: { row: any }) => (
-      <div className="flex -space-x-2">
-        {row.original.sharingDetails.map((user: any) => (
-          <Avatar key={user.id} className="w-8 h-8">
-            <AvatarImage src={user.avatarUrl} alt={user.name} />
-            <AvatarFallback>{user.name[0]}</AvatarFallback>
-          </Avatar>
-        ))}
-      </div>
-    ),
+    cell: ({ row }: { row: any }) => {
+      const sharingDetails = row.original.sharingDetails;
+      if (!sharingDetails || sharingDetails.length === 0) {
+        return <div className="text-medium">-</div>;
+      }
+      return (
+        <div className="flex -space-x-2">
+          {sharingDetails.map((user: any) => (
+            <Avatar key={user.id} className="w-8 h-8">
+              <AvatarImage src={user.avatarUrl} alt={user.name} />
+              <AvatarFallback>{user.name[0]}</AvatarFallback>
+            </Avatar>
+          ))}
+        </div>
+      );
+    },
   },
   {
     id: "actions",

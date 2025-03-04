@@ -69,7 +69,7 @@ const defaultData = {
     },
     {
       title: 'Access Control',
-      url: '#',
+      url: '/access-control',
       icon: FolderKey,
     },
     {

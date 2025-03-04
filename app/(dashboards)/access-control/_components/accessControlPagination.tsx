@@ -20,7 +20,7 @@ import {
     return <div>{children}</div>;
   };
   
-  export function RepoPagination({
+  export function AccessControlPagination({
     currentPage,
     totalPage,
     onPageChange,
@@ -75,7 +75,7 @@ import {
                 e.preventDefault();
                 if (currentPage > 1) {
                   onPageChange(currentPage - 1);
-                  router.push(`/repositories?tab=all&page=${currentPage - 1}`);
+                  router.push(`/members?page=${currentPage - 1}`);
                 }
               }}
             />
@@ -91,7 +91,7 @@ import {
                   onClick={(e) => {
                     e.preventDefault();
                     onPageChange(page);
-                    router.push(`/repositories?tab=all&page=${page}`);
+                    router.push(`/members?page=${page}`);
                   }}
                 >
                   {page}
@@ -110,7 +110,7 @@ import {
                 e.preventDefault();
                 if (currentPage < totalPage) {
                   onPageChange(currentPage + 1);
-                  router.push(`/repositories?tab=all&page=${currentPage + 1}`);
+                  router.push(`/members?page=${currentPage + 1}`);
                 }
               }}
             />
