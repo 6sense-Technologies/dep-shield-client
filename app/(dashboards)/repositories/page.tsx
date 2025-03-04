@@ -15,6 +15,10 @@ import PageHeadingwithButton from './_components/PageHeadingwithButton';
 import { MyRepoTable } from './_components/myRepoTable';
 import { ShareTable } from './_components/shareTable';
 import Loader from '@/components/loader';
+import { useQuery } from '@tanstack/react-query';
+import { getAllRepositories } from '@/helpers/githubApp/githubApi';
+import { useSession } from 'next-auth/react';
+import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
 
 // Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
@@ -26,6 +30,13 @@ const Repositories = () => {
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<string>("");
+  const searchParams = useSearchParams();
+  const provider = searchParams.get("provider");
+  const page = searchParams.get("page");
+
+  const [pages, setPages] = useState<number>(1);
+  const [limit] = useState<number>(10);
+  const session = useSession();
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -33,44 +44,22 @@ const Repositories = () => {
     router.push(newUrl);
   };
 
-  const dummyData = [
-    {
-      repositoryName: "6senseEV/6sense-ev-accounting-service",
-      totalVulnerabilities: 13,
-      vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 1", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-      ],
-    },
-    {
-      repositoryName: "6senseEV/6sense-ev-billing-service",
-      totalVulnerabilities: 3,
-      vulnerabilities: [
-        { id: 1, name: "Low", severity: "Low" },
-        { id: 2, name: "Medium", severity: "Medium" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 4", avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg" },
-        { id: 2, name: "User 5", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-      ],
-    },
-    {
-      repositoryName: "6senseEV/6sense-ev-customer-service",
-      totalVulnerabilities: 2,
-      vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-        { id: 2, name: "User 7", avatarUrl: "url7" },
-        { id: 3, name: "User 8", avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg" },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const newPage = searchParams.get("page")
+      ? Number(searchParams.get("page"))
+      : 1;
+
+    setPages(newPage);
+  }, [searchParams]);
+
+  const {
+    data: RepoData,
+    isFetching: RepoDataLoading,
+  } = useQuery<any>({
+    queryKey: ["addRepoData", session, pages, limit],
+    queryFn: () => getAllRepositories(session, pages, limit),
+  });
+    console.log("🚀 ~ Repositories ~ RepoData:", RepoData)
 
   const additionalDummyData = [
     {
@@ -216,28 +205,34 @@ const Repositories = () => {
                 <div className="">
                   {activeTab === 'all' && (
                     <>
-                      <RepoSearchArea/>
-                      {dummyData.length === 0 ? (
-                        <div className='flex flex-col items-center justify-center h-96 '>
-                          <span><FolderOpen size={32} strokeWidth={1} /></span>
-                          <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
-                          <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>Get started by adding a new repository.</p>
-                          <Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button>
-                        </div>
+                      <RepoSearchArea />
+                      {RepoDataLoading ? (
+                        <EmptyTableSkeleton />
                       ) : (
-                        <RepoTable
-                          repos={dummyData}
-                          totalCountAndLimit={{ totalCount: dummyData.length, size: 10 }}
-                          currentPage={1}
-                          loading={false}
-                        />
+                        <>
+                          {RepoData?.totalCount === 0 ? (
+                            <div className='flex flex-col items-center justify-center h-96 '>
+                              <span><FolderOpen size={32} strokeWidth={1} /></span>
+                              <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
+                              <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>Get started by adding a new repository.</p>
+                              <Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button>
+                            </div>
+                          ) : (
+                            <RepoTable
+                              repos={RepoData?.repositories}
+                              totalCountAndLimit={{ totalCount: RepoData?.totalCount, size: 10 }}
+                              currentPage={1}
+                              loading={false}
+                            />
+                          )}
+                        </>
                       )}
                     </>
                   )}
                   {activeTab === 'myrepositories' && (
                     <>
                       <MyRepoSearchArea />
-                      {dummyData.length === 0 ? (
+                      {additionalDummyData.length === 0 ? (
                         <div className='flex flex-col items-center justify-center h-96 '>
                           <span><FolderOpen size={32} strokeWidth={1} /></span>
                           <p className="text-xl font-medium text-deepBlackColor">No Shared Repositories</p>

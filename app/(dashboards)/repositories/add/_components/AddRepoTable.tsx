@@ -21,44 +21,15 @@ import {
 } from "@/components/ui/table";
 import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AddRepoPagination } from "./AddRepoPagination";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AddRepositories, getRepoAddStatus } from "@/helpers/githubApp/githubApi";
 
 type Repository = {
+    _id: string;
     name: string;
 };
-
-
-export const columns: ColumnDef<Repository>[] = [
-    {
-        accessorKey: "name",
-        header: () => <div className="text-bold">Repository Name</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("name") || "-"}</div>
-        ),
-    },
-    {
-        id: "actions",
-        header: () => <div className="text-bold text-start pr-4">Actions</div>,
-        enableHiding: false,
-        cell: ({ row }) => {
-            const [added, setAdded] = useState(false);
-
-            return (
-                <div className="flex items-center justify-end space-x-4 pr-4">
-                    <Button
-                        variant={added ? "nonedisable" : "outline"}
-                        size="xsExtended"
-                        onClick={() => setAdded(true)}
-                    >
-                        {added ? "Added" : "Add"}
-                    </Button>
-                </div>
-            );
-        },
-    },
-];
 
 type TAddRepoTableProps = {
     repositories?: Repository[];
@@ -66,6 +37,7 @@ type TAddRepoTableProps = {
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;
     loading?: boolean;
+    session?: any;
 };
 
 export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
@@ -74,6 +46,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
     loading,
+    session,
 }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -90,6 +63,75 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
+
+    const [addedRepos, setAddedRepos] = useState<{ [key: string]: boolean }>({});
+
+    const {
+        data: repoStatus,
+        isFetching: repoStatusLoading,
+    } = useQuery<any>({
+        queryKey: ["repoStatus"],
+        queryFn: () => getRepoAddStatus(session),
+    });
+
+    useEffect(() => {
+        if (repoStatus?.repositories) {
+            const initialAddedRepos: { [key: string]: boolean } = {};
+            repoStatus.repositories.forEach((repo: any) => {
+                if (repo.isSelected) {
+                    initialAddedRepos[repo._id] = true;
+                }
+            });
+            setAddedRepos(initialAddedRepos);
+        }
+    }, [repoStatus]);
+
+    const addRepoMutation = useMutation({
+        mutationFn: (data: string) => AddRepositories(session, data),
+        onSuccess: (data, variables) => {
+            console.log("Added");
+            setAddedRepos((prev) => ({ ...prev, [variables]: true }));
+        },
+        onError: (error) => {
+            console.error("Error adding repository:", error);
+        },
+    });
+
+    const columns: ColumnDef<Repository>[] = [
+        {
+            accessorKey: "repoName",
+            header: () => <div className="text-bold">Repository Name</div>,
+            cell: ({ row }: { row: any }) => (
+                <div className="text-medium">{row.getValue("repoName") || "-"}</div>
+            ),
+        },
+        {
+            id: "actions",
+            header: () => <div className="text-bold text-start pr-4">Actions</div>,
+            enableHiding: false,
+            cell: ({ row }) => {
+                const repoId = row.original._id;
+                const added = addedRepos[repoId] || false;
+
+                const handleAddClick = () => {
+                    addRepoMutation.mutate(repoId);
+                };
+
+                return (
+                    <div className="flex items-center justify-end space-x-4 pr-4">
+                        <Button
+                            variant={added ? "nonedisable" : "outline"}
+                            size="xsExtended"
+                            onClick={handleAddClick}
+                            disabled={added}
+                        >
+                            {added ? "Added" : "Add"}
+                        </Button>
+                    </div>
+                );
+            },
+        },
+    ];
 
     const table = useReactTable({
         data: repositories,
@@ -133,7 +175,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
 
     return (
         <div className="w-full">
-            {isLoading ? (
+            {loading ? (
                 <EmptyTableSkeleton />
             ) : (
                 <>
