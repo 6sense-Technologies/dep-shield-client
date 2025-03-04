@@ -117,7 +117,7 @@ export const columns: ColumnDef<Repository>[] = [
     enableHiding: false,
     cell: ({ row }) => (
       <div className="flex items-center justify-end space-x-4 pr-4">
-        <Link href={`/repositories/${row.original.id}/details`}><Button variant="outline">View</Button></Link>
+        <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
       </div>
     ),
   },
