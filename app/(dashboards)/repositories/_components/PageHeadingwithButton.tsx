@@ -3,15 +3,9 @@ import { cn } from '@/lib/utils';
 import { Users, X } from 'lucide-react';
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { IHeadingProps } from '@/types/repo.types';
 
-interface IHeadingProps {
-    title: string;
-    subTitle?: string;
-    titleclassName?: string;
-    subTitleClassName?: string;
-    className?: string;
-    showButton?: boolean;
-}
+
 
 const PageHeadingwithButton: FC<IHeadingProps> = ({ title, subTitle, titleclassName, subTitleClassName, className, showButton = true }) => {
     const [menuVisible, setMenuVisible] = useState(false);

@@ -26,44 +26,13 @@ import { Button } from "@/components/ui/button";
 import { Flame, Handshake } from "lucide-react";
 import Link from "next/link";
 import { AllDependenciesPagination } from "./AllDependenciesPagination";
+import { getBadgeVariant, getHealthBadgeVariant } from "@/constants/globalFunctions";
+import { Dependency, TDependenciesTableProps } from "@/types/dependencies.types";
 
 
-type Dependency = {
-    name: string;
-    totalVulnerabilities: number;
-    vulnerabilityPriority: string[];
-    licenses: string;
-    health: {
-        popularity: number;
-        contribution: number;
-    };
-};
 
-const getBadgeVariant = (priority: string) => {
-    switch (priority) {
-        case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
-        case "High":
-            return "text-[#B45309] bg-[#FDEBDD]  hover:bg-[#FDEBDD] font-normal";
-        case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD]  font-normal";
-        case "Low":
-            return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
-        default:
-            return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-    }
-};
 
-const getHealthBadgeVariant = (value: number) => {
-    if (value === null) {
-        return "text-[#020617] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-    } else if (value >= 0 && value <= 30) {
-        return "text-[#FFFFFF] bg-[#B91C1C] hover:bg-[#B91C1C] font-normal";
-    } else if (value >= 31 && value <= 70) {
-        return "text-[#FFFFFF] bg-[#B45309] hover:bg-[#B45309] font-normal";
-    }
-    return "text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal";
-};
+
 
 export const columns: ColumnDef<Dependency>[] = [
     {
@@ -126,13 +95,7 @@ export const columns: ColumnDef<Dependency>[] = [
     },
 ];
 
-type TDependenciesTableProps = {
-    dependencies?: Dependency[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+
 
 export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
     dependencies = [],

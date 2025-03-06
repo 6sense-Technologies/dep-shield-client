@@ -1,10 +1,8 @@
 import React from 'react';
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog';
+import { DisableModalProps } from '@/types/repo.types';
 
-interface DisableModalProps {
-    trigger: React.ReactNode;
-    // togglefn: (data: string) => any;
-}
+
 
 const CustomAlertDialog: React.FC<DisableModalProps> = ({ trigger }) => {
     return (

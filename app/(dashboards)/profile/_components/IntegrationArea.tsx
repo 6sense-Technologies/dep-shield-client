@@ -3,12 +3,8 @@ import React, { FC } from 'react';
 import Github from "../../../../public/logo/github.svg";
 import GitLab from "../../../../public/logo/gitlab.svg";
 import Bitbucket from "../../../../public/logo/bit-bucket.svg";
+import { IntegrationAreaProps } from '@/types/profile.types';
 
-type IntegrationAreaProps = {
-    email1: string;
-    email2: string;
-    email3: string;
-};
 
 const IntegrationArea: FC<IntegrationAreaProps> = ({ email1, email2, email3 }) => {
     return (

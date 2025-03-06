@@ -18,10 +18,8 @@ import {
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Button } from "@/components/ui/button";
 import { SingleRepoPagination } from "./SingleRepoPagination";
+import { Repository, TSingleRepoTableProps } from "@/types/tableprops.types";
 
-type Repository = {
-    repositoryName: string;
-};
 
 export const columns: ColumnDef<Repository>[] = [
     {
@@ -43,13 +41,7 @@ export const columns: ColumnDef<Repository>[] = [
     },
 ];
 
-type TSingleRepoTableProps = {
-    repos?: Repository[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+
 
 export const SingleRepoTable: React.FC<TSingleRepoTableProps> = ({
     repos = [],

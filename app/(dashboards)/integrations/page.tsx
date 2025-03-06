@@ -66,7 +66,7 @@ const Integration = () => {
         enabled: !!accessToken,
     });
 
-    console.log("Git Status in Int page", gitStatus?.isConnected);
+    // console.log("Git Status in Int page", gitStatus?.isConnected);
     return (
         <div className="flex flex-col min-h-screen">
             <PageTitle title="Integrations • DepShield.io" />

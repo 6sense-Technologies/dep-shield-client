@@ -8,18 +8,9 @@ import Bitbucket from "../../../../public/logo/bit-bucket.svg";
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { TEMP_BACKEND_URL } from '@/config';
+import { IntegrationAreaProps } from '@/types/integration.types';
 
-type IntegrationAreaProps = {
-    connections: {
-        github: boolean;
-        gitlab: boolean;
-        bitbucket: boolean;
-    };
-    handleConnect: (integration: string, event?: React.MouseEvent) => void;
-    handleDisconnect: (integration: string) => void;
-    gitStatus: boolean;
-    refetchGitStatus: () => void;
-};
+
 
 const IntegrationArea: FC<IntegrationAreaProps> = ({ handleConnect, gitStatus, refetchGitStatus }) => {
     const session = useSession();

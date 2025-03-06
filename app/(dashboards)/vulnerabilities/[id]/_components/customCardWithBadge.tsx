@@ -1,15 +1,10 @@
 import React, { FC } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { CustomCardPropsWithBadge } from '@/types/Vulnerability.types';
 
-interface CustomCardProps {
-    bgColor: string;
-    Heading: string;
-    subheading: string;
-    icon?: boolean;
-}
 
-const CustomCardWithBadge: FC<CustomCardProps> = ({ bgColor, subheading, Heading, icon }) => {
+const CustomCardWithBadge: FC<CustomCardPropsWithBadge> = ({ bgColor, subheading, Heading, icon }) => {
     return (
         <div className={`w-full max-w-200px h-[100px] ${bgColor} flex justify-between items-center rounded-md`}>
             <div className='mx-auto'>

@@ -28,12 +28,8 @@ import Image from 'next/image';
 import { Github, Gitlab } from "lucide-react";
 import CustomAlertDialog from "./CustomAlartDialog";
 import Link from "next/link";
+import { ShareData } from "@/types/repo.types";
 
-type ShareData = {
-    sharedBy: { name: string; avatarUrl: string };
-    sharedRepositories: number;
-    platform: string;
-};
 
 export const columns: ColumnDef<ShareData>[] = [
     {

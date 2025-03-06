@@ -52,7 +52,7 @@ export function NavUser({
     Router.push('/sign-in');
   };
 
-  const getInitials = (name: string) => {
+  const getInitialsData = (name: string) => {
     const nameParts = name.split(' ');
     const initials = nameParts.length > 1
       ? `${nameParts[0][0]}${nameParts[1][0]}`
@@ -72,7 +72,7 @@ export function NavUser({
               <Avatar className='h-8 w-8 rounded-lg'>
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className='rounded-full bg-primary text-white'>
-                  {getInitials(user.name)}
+                  {getInitialsData(user.name)}
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
@@ -93,7 +93,7 @@ export function NavUser({
                 <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className='rounded-full bg-primary text-white'>
-                    {getInitials(user.name)}
+                    {getInitialsData(user.name)}
                   </AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
