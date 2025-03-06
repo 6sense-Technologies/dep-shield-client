@@ -75,7 +75,9 @@ const AddRepositoryContent = () => {
             </div>
             {showTable ? (
                 <div className="pt-4 px-4 md:pt-4 md:px-6">
-                    <AddRepoSearchArea />
+                    <AddRepoSearchArea 
+                    session={session}
+                    />
                     <AddRepoTable
                         repositories={addRepoData?.repositories}
                         totalCountAndLimit={{ totalCount: addRepoData?.totalCount, size: 10 }}
