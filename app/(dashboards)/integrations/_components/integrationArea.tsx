@@ -10,8 +10,6 @@ import axios from 'axios';
 import { TEMP_BACKEND_URL } from '@/config';
 import { IntegrationAreaProps } from '@/types/integration.types';
 
-
-
 const IntegrationArea: FC<IntegrationAreaProps> = ({ handleConnect, gitStatus, refetchGitStatus }) => {
     const session = useSession();
 
@@ -43,21 +41,21 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ handleConnect, gitStatus, r
                 <p className="text-sm font-normal text-inputFooterColor">
                     Connect an integration to effortlessly scan your repositories for vulnerabilities, license compliance, and community health.
                 </p>
-                <div className="border p-4 flex justify-between items-center w-full rounded-md h-14 cursor-pointer hover:bg-[#E6E6E6]" onClick={() => gitStatus ? handleDisconnectRoute() : handleConnect("github")}>
+                <div className="border p-4 flex justify-between items-center w-full rounded-md h-14 cursor-pointer hover:bg-[#E6E6E6]" onClick={() => handleConnect("github")}>
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (
-                            <div className='flex items-center justify-end gap-2'>
-                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2 cursor-pointer">
-                                    <span onClick={(e) => handleConnect("github", e)}><RefreshCw size={16} /></span>
+                            <div className='flex items-center justify-end gap-4 md:gap-2'>
+                                <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-lightAquaBg p-2 cursor-pointer" onClick={(e) => { e.stopPropagation(); handleConnect("github", e); }}>
+                                    <RefreshCw size={16} />
                                 </div>
-                                <Button variant="none" size="minixs">
+                                <Button variant="none" size="minixs" onClick={(e) => { e.stopPropagation(); handleDisconnectRoute(); }}>
                                     <span className="hidden md:inline">Disconnect</span>
                                     <Link2Off size={16} />
                                 </Button>
                             </div>
                         ) : (
-                            <Button variant="none" size="minixs">
+                            <Button variant="none" size="minixs" onClick={(e) => { e.stopPropagation(); handleConnect("github", e); }}>
                                 <span className="inline">Connect</span>
                                 <Link2 size={16} />
                             </Button>

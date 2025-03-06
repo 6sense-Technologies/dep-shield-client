@@ -8,79 +8,9 @@ import PageHeading from "@/components/pageHeading";
 import Loader from "@/components/loader";
 import VulnerabilitySearhArea from "./_components/vulnerabilitySearhArea";
 import { VulnerabilityTable } from "../repositories/[id]/details/_components/VulnabilitiesTable";
+import { vulnerabilitiesData } from "@/constants/DummyDataFactory";
 
-const vulnerabilitiesData = [
-    {
-        name: "CVE-2023-42282",
-        discovered: "24-01-2025",
-        severity: "Critical",
-        dependency: "follow-redirects (npm)",
-        exploited: "NO"
-    },
-    {
-        name: "CVE-2023-42283",
-        discovered: "25-01-2025",
-        severity: "Critical",
-        dependency: "lp (npm)",
-        exploited: "NO"
-    },
-    {
-        name: "CVE-2023-42284",
-        discovered: "26-01-2025",
-        severity: "Low",
-        dependency: "lp (npm)",
-        exploited: "YES"
-    },
-    {
-        name: "CVE-2023-42285",
-        discovered: "27-01-2025",
-        severity: "High",
-        dependency: "mongoose (npm)",
-        exploited: "YES"
-    },
-    {
-        name: "CVE-2023-42286",
-        discovered: "28-01-2025",
-        severity: "Medium",
-        dependency: "traverse (npm)",
-        exploited: "YES"
-    },
-    {
-        name: "CVE-2023-42287",
-        discovered: "29-01-2025",
-        severity: "Unknown",
-        dependency: "cross-spawn (npm)",
-        exploited: "NO"
-    },
-    {
-        name: "CVE-2023-42288",
-        discovered: "30-01-2025",
-        severity: "Critical",
-        dependency: "express (npm)",
-        exploited: "NO"
-    },
-    {
-        name: "CVE-2023-42289",
-        discovered: "31-01-2025",
-        severity: "High",
-        dependency: "react (npm)",
-        exploited: "YES"
-    },
-    {
-        name: "CVE-2023-42290",
-        discovered: "01-02-2025",
-        severity: "Medium",
-        dependency: "axios (npm)",
-        exploited: "NO"
-    },
-    {
-        name: "CVE-2023-42291",
-        discovered: "02-02-2025",
-        severity: "Low",
-        dependency: "lodash (npm)",
-        exploited: "YES"
-    }
-];
+
 
 const VulnerabilitiesContent = () => {
 

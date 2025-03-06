@@ -32,3 +32,19 @@ export interface SLPaginationProps {
       licenseRisk: string;
       licenseFamily: string;
   };
+
+  export type SubLicense = {
+      name: string;
+      licenseRisk: string;
+      dependencies: number;
+      licenseFamily: string;
+  };
+  
+  export type TLicensesTableProps = {
+      licenses?: SubLicense[];
+      refetch?: () => void;
+      totalCountAndLimit?: { totalCount: number; size: number };
+      currentPage: number;
+      loading?: boolean;
+  };
+  

@@ -61,3 +61,10 @@ export  type MyRepository = {
       platform: string;
   };
   
+  export type TShareTableProps = {
+      data?: ShareData[];
+      refetch?: () => void;
+      totalCountAndLimit?: { totalCount: number; size: number };
+      currentPage: number;
+      loading?: boolean;
+  };
