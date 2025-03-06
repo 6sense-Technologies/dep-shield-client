@@ -42,3 +42,5 @@ export interface SingDepPaginationProps {
       currentPage: number;
       loading?: boolean;
   };
+
+  

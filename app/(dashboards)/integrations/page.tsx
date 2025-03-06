@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -25,10 +25,10 @@ const Integration = () => {
             event.stopPropagation();
         }
 
-        if (event && integration === "github") {
+        if (integration === "github") {
             setConnections((prevConnections) => ({
                 ...prevConnections,
-                [integration]: false,
+                [integration]: true,
             }));
 
             window.location.href = GitHub_APP_URL || "";
@@ -37,8 +37,6 @@ const Integration = () => {
                 ...prevConnections,
                 [integration]: true,
             }));
-
-            window.location.href = GitHub_APP_URL || "";
         }
     };
 
@@ -66,7 +64,20 @@ const Integration = () => {
         enabled: !!accessToken,
     });
 
-    // console.log("Git Status in Int page", gitStatus?.isConnected);
+    useEffect(() => {
+        if (gitStatus?.isConnected) {
+            setConnections((prevConnections) => ({
+                ...prevConnections,
+                github: true,
+            }));
+        } else {
+            setConnections((prevConnections) => ({
+                ...prevConnections,
+                github: false,
+            }));
+        }
+    }, [gitStatus]);
+
     return (
         <div className="flex flex-col min-h-screen">
             <PageTitle title="Integrations • DepShield.io" />

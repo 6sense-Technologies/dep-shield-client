@@ -20,6 +20,7 @@ import { getAllRepositories } from '@/helpers/githubApp/githubApi';
 import { useSession } from 'next-auth/react';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
 import Link from 'next/link';
+import { additionalDummyData, shareData } from '@/constants/DummyDataFactory';
 
 // Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
@@ -67,95 +68,7 @@ const Repositories = () => {
   });
   console.log("🚀 ~ Repositories ~ RepoData:", AllRepoData);
 
-  const additionalDummyData = [
-    {
-      repositoryName: "6senseEV/6sense-ev-accounting-service",
-      totalVulnerabilities: 13,
-      vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 1", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-      ],
-    },
-    {
-      repositoryName: "6senseEV/6sense-ev-billing-service",
-      totalVulnerabilities: 3,
-      vulnerabilities: [
-        { id: 1, name: "Low", severity: "Low" },
-        { id: 2, name: "Medium", severity: "Medium" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 4", avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg" },
-        { id: 2, name: "User 5", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-      ],
-    },
-    {
-      repositoryName: "6senseEV/6sense-ev-customer-service",
-      totalVulnerabilities: 2,
-      vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
-      ],
-      sharingDetails: [
-        { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
-        { id: 2, name: "User 7", avatarUrl: "url7" },
-        { id: 3, name: "User 8", avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg" },
-      ],
-    },
-  ];
 
-  const shareData = [
-    {
-      sharedBy: {
-        name: "User 1",
-        avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg",
-      },
-      sharedRepositories: 12,
-      platform: "GitHub",
-    },
-    {
-      sharedBy: {
-        name: "User 2",
-        avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
-      },
-      sharedRepositories: 13,
-      platform: "GitLab",
-    },
-    {
-      sharedBy: {
-        name: "User 3",
-        avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg",
-      },
-      sharedRepositories: 10,
-      platform: "BitBucket",
-    },
-    {
-      sharedBy: {
-        name: "User 4",
-        avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg",
-      },
-      sharedRepositories: 15,
-      platform: "GitHub",
-    },
-    {
-      sharedBy: {
-        name: "User 5",
-        avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg",
-      },
-      sharedRepositories: 8,
-      platform: "GitLab",
-    },
-    {
-      sharedBy: {
-        name: "User 6",
-        avatarUrl: "https://randomuser.me/api/portraits/women/6.jpg",
-      },
-      sharedRepositories: 20,
-      platform: "BitBucket",
-    },
-  ];
 
   return (
     <Suspense fallback={<Loader />}>

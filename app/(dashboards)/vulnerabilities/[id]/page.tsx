@@ -17,74 +17,11 @@ import CustomRadialGraph from "./_components/CustomRadialGraph";
 import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
-
-const RepoData = [
-    {
-        repositoryName: "CVE-2023-42282",
-
-    },
-    {
-        repositoryName: "CVE-2023-42283",
-
-    },
-    {
-        repositoryName: "CVE-2023-42284",
-
-    },
-    {
-        repositoryName: "CVE-2023-42285",
-
-    },
-    {
-        repositoryName: "CVE-2023-42286",
-    },
-    {
-        repositoryName: "CVE-2023-42287",
-    },
-    {
-        repositoryName: "CVE-2023-42288",
-
-    },
-    {
-        repositoryName: "CVE-2023-42289",
-
-    },
-    {
-        repositoryName: "CVE-2023-42290",
-
-    },
-    {
-        repositoryName: "CVE-2023-42291",
-
-    }
-];
-
-const secondTabData = [
-    { key: "Attack Vector", value: "Network" },
-    { key: "Attack Complexity", value: "Medium" },
-    { key: "Privileges Required", value: "None" },
-    { key: "User Interaction", value: "Required" },
-    { key: "Scope", value: "Unchanged" },
-    { key: "Confidentiality", value: "High" },
-    { key: "Integrity", value: "High" },
-    { key: "Availability", value: "High" },
-];
-
-const firstTabData = [
-    { key: "Attack Vector", value: "Network" },
-    { key: "Attack Complexity", value: "Medium" },
-    { key: "Authentication", value: "None" },
-    { key: "Confidentiality", value: "Partial" },
-    { key: "Integrity", value: "None" },
-    { key: "Availability", value: "None" },
-];
+import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
 ];
-
-
-
 
 const VulnerabilitiesDetailsContent = () => {
     const [activeTab, setActiveTab] = useState('cv');

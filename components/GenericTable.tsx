@@ -19,73 +19,32 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { SharePagination } from "./sharePagination";
-import Image from 'next/image';
-import { Github, Gitlab } from "lucide-react";
-import CustomAlertDialog from "./CustomAlartDialog";
-import Link from "next/link";
-import { ShareData, TShareTableProps } from "@/types/repo.types";
+import { VulnabilitiesPagination } from "@/app/(dashboards)/repositories/[id]/details/_components/VulnabilitiesPagination";
+import { Repository } from "@/types/repo.types";
 
+interface GenericTableProps<T> {
+    columns: ColumnDef<T>[];
+    data: T[] | Repository[] | any[];
+    refetch?: () => void;
+    totalCountAndLimit: { totalCount: number; size: number };
+    currentPage: number;
+    loading: boolean;
+    headerClassNames?: { [key: string]: string };
+    cellClassNames?: { [key: string]: string };
+    PaginationComponent?: React.ComponentType<{ currentPage: number; totalPage: number; onPageChange: (page: number) => void }>;
+}
 
-export const columns: ColumnDef<ShareData>[] = [
-    {
-        accessorKey: "sharedBy",
-        header: () => <div className="text-bold">Shared By</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="flex items-center">
-                <Avatar className="w-8 h-8 rounded-full mr-2">
-                    <AvatarImage src={row.original.sharedBy.avatarUrl} alt={row.original.sharedBy.name} />
-                    <AvatarFallback>{row.original.sharedBy.name[0]}</AvatarFallback>
-                </Avatar>
-                <span>{row.original.sharedBy.name}</span>
-            </div>
-        ),
-    },
-    {
-        accessorKey: "sharedRepositories",
-        header: () => <div className="text-bold">Shared Repositories</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("sharedRepositories") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "platform",
-        header: () => <div className="text-bold">Platform</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="flex items-center">
-                {row.original.platform === "GitHub" && <Github size={16} className="mr-2" />}
-                {row.original.platform === "GitLab" && <Gitlab size={16} className="mr-2" />}
-                {row.original.platform === "BitBucket" && (
-                    <Image src="/logo/Bitbucket.svg" alt="BitBucket" width={16} height={16} className="mr-2" />
-                )}
-                {/* <span>{row.original.platform}</span> */}
-            </div>
-        ),
-    },
-    {
-        id: "actions",
-        header: () => <div className="text-bold text-start pr-4">Actions</div>,
-        enableHiding: false,
-        cell: () => (
-            <div className="flex items-center justify-end space-x-4 pr-4">
-                <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
-                <CustomAlertDialog trigger={<Button variant="destructive">Remove</Button>} />
-            </div>
-        ),
-    },
-];
-
-export const ShareTable: React.FC<TShareTableProps> = ({
-    data = [],
+export const GenericTable = <T,>({
+    columns,
+    data,
     refetch,
-    totalCountAndLimit = { totalCount: 0, size: 10 },
+    totalCountAndLimit,
     currentPage,
     loading,
-}) => {
+    headerClassNames = {},
+    cellClassNames = {},
+}: GenericTableProps<T>) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -94,9 +53,7 @@ export const ShareTable: React.FC<TShareTableProps> = ({
         pageIndex: currentPage - 1,
         pageSize: 10,
     });
-    const searchParams = useSearchParams();
-    const page = parseInt(searchParams?.get("page") || "1");
-    const [currentPageState, setCurrentPageState] = useState(page);
+    const [currentPageState, setCurrentPageState] = useState(currentPage);
     const [isLoading, setIsLoading] = useState(false);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
@@ -156,16 +113,7 @@ export const ShareTable: React.FC<TShareTableProps> = ({
                                         {headerGroup.headers.map((header: any) => (
                                             <TableHead
                                                 key={header.id}
-                                                className={`text-left h-[51px] pl-4 leading-none ${header.column.id === "actions"
-                                                    ? "text-right w-[225px]"
-                                                    : header.column.id === "sharedBy"
-                                                        ? "min-w-[300px]"
-                                                        : header.column.id === "sharedRepositories"
-                                                            ? "min-w-[200px]"
-                                                            : header.column.id === "platform"
-                                                                ? "min-w-[200px]"
-                                                                : "min-w-[200px]"
-                                                    }`}
+                                                className={`text-left h-[51px] pl-4 leading-none ${headerClassNames[header.column.id] || ""}`}
                                             >
                                                 {header.isPlaceholder
                                                     ? null
@@ -189,16 +137,7 @@ export const ShareTable: React.FC<TShareTableProps> = ({
                                             {row.getVisibleCells().map((cell: any) => (
                                                 <TableCell
                                                     key={cell.id}
-                                                    className={`py-1 leading-none ${cell.column.id === "actions"
-                                                        ? "text-right"
-                                                        : cell.column.id === "sharedBy"
-                                                            ? "pl-4 text-start"
-                                                            : cell.column.id === "sharedRepositories"
-                                                                ? "text-start pl-4"
-                                                                : cell.column.id === "platform"
-                                                                    ? "pl-4 text-start"
-                                                                    : "pl-4 text-start"
-                                                        }`}
+                                                    className={`py-1 leading-none ${cellClassNames[cell.column.id] || ""}`}
                                                 >
                                                     {flexRender(
                                                         cell.column.columnDef.cell as React.ReactNode,
@@ -227,7 +166,7 @@ export const ShareTable: React.FC<TShareTableProps> = ({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <SharePagination
+                            <VulnabilitiesPagination
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
