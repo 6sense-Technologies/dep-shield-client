@@ -6,7 +6,6 @@ import AvatarMenu from '@/components/AvatarMenu';
 import GlobalBreadCrumb from '@/components/globalBreadCrumb';
 import PageTitle from '@/components/PageTitle';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
 import PageHeadingWithDeleteButton from './_components/PageHeadingWithDeleteButton';
 import VulnabalitiesSearchArea from './_components/vulnabilitiesSearchArea';
 import Loader from '@/components/loader';
@@ -16,6 +15,7 @@ import DependenciesSearchArea from './_components/DependenciesSearchArea';
 import { DependenciesTable } from './_components/DependencyTable';
 import LicensesSearchArea from './_components/LicensesSearchArea';
 import { LicensesTable } from './_components/LicensesTable';
+import { dependenciesData, licensesData, vulnerabilitiesData } from '@/constants/DummyDataFactory';
 
 const SearchParamsWrapper = ({ children }: { children: (params: URLSearchParams) => React.ReactNode }) => {
     const searchParams = useSearchParams();
@@ -42,152 +42,7 @@ const RepositoriesDetails = () => {
         router.push(newUrl);
     };
 
-    const vulnerabilitiesData = [
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "Critical",
-            dependency: "follow-redirects (npm)",
-            exploited: "NO"
-        },
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "Critical",
-            dependency: "lp (npm)",
-            exploited: "NO"
-        },
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "Low",
-            dependency: "lp (npm)",
-            exploited: "YES"
-        },
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "High",
-            dependency: "mongoose (npm)",
-            exploited: "YES"
-        },
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "Medium",
-            dependency: "traverse (npm)",
-            exploited: "YES"
-        },
-        {
-            name: "CVE-2023-42282",
-            discovered: "24-01-2025",
-            severity: "Unknown",
-            dependency: "cross-spawn (npm)",
-            exploited: "NO"
-        }
-    ];
 
-    const dependenciesData = [
-        {
-            name: "aio-pika (pip)",
-            totalVulnerabilities: 5,
-            vulnerabilityPriority: ["Critical", "High"],
-            licenses: "Apache-2.0",
-            health: {
-                popularity: 85,
-                contribution: 70
-            }
-        },
-        {
-            name: "requests (pip)",
-            totalVulnerabilities: 3,
-            vulnerabilityPriority: ["Medium", "Low"],
-            licenses: "MIT",
-            health: {
-                popularity: 90,
-                contribution: 60
-            }
-        },
-        {
-            name: "express (npm)",
-            totalVulnerabilities: 7,
-            vulnerabilityPriority: ["High", "Medium"],
-            licenses: "MIT",
-            health: {
-                popularity: 75,
-                contribution: 50
-            }
-        },
-        {
-            name: "lodash (npm)",
-            totalVulnerabilities: 2,
-            vulnerabilityPriority: ["Low", "-"],
-            licenses: "MIT",
-            health: {
-                popularity: 95,
-                contribution: 80
-            }
-        },
-        {
-            name: "django (pip)",
-            totalVulnerabilities: 4,
-            vulnerabilityPriority: ["Critical", "Unknown"],
-            licenses: "BSD-3-Clause",
-            health: {
-                popularity: 80,
-                contribution: 65
-            }
-        },
-        {
-            name: "react (npm)",
-            totalVulnerabilities: 1,
-            vulnerabilityPriority: ["Low", "-"],
-            licenses: "MIT",
-            health: {
-                popularity: 98,
-                contribution: 85
-            }
-        }
-    ];
-
-    const licensesData = [
-        {
-            name: "Apache-2.0",
-            licenseRisk: "Low",
-            dependencies: 12,
-            licenseFamily: "Permissive"
-        },
-        {
-            name: "MIT",
-            licenseRisk: "Medium",
-            dependencies: 8,
-            licenseFamily: "Permissive"
-        },
-        {
-            name: "GPL-3.0",
-            licenseRisk: "High",
-            dependencies: 5,
-            licenseFamily: "Strong Copyleft"
-        },
-        {
-            name: "BSD-3-Clause",
-            licenseRisk: "Low",
-            dependencies: 10,
-            licenseFamily: "Permissive"
-        },
-        {
-            name: "LGPL-2.1",
-            licenseRisk: "Medium",
-            dependencies: 7,
-            licenseFamily: "Weak Copyleft"
-        },
-        {
-            name: "MPL-2.0",
-            licenseRisk: "Unknown",
-            dependencies: 4,
-            licenseFamily: "Weak Copyleft"
-        }
-    ];
 
     return (
         <Suspense fallback={<Loader />}>
