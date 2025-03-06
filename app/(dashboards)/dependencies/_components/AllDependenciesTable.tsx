@@ -23,7 +23,7 @@ import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Flame, Handshake } from "lucide-react";
+import {Flame, Handshake } from "lucide-react";
 import Link from "next/link";
 import { AllDependenciesPagination } from "./AllDependenciesPagination";
 
