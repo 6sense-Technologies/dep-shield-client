@@ -6,14 +6,10 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination";
+import { MyRepoPaginationProps } from "@/types/repo.types";
   import { useRouter } from "next/navigation";
   
-  interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-  }
-  
+
   const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,
   }) => {
@@ -24,7 +20,7 @@ import {
     currentPage,
     totalPage,
     onPageChange,
-  }: PaginationProps) {
+  }: MyRepoPaginationProps) {
     const router = useRouter();
   
     const getPagination = (): (number | string)[] => {

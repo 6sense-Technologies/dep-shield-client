@@ -6,13 +6,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PaginationProps } from "@/types/Vulnerability.types";
 import { useRouter } from "next/navigation";
 
-interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-}
+
 
 const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,

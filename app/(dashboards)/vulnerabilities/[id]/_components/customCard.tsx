@@ -1,10 +1,7 @@
+import { CustomCardProps } from '@/types/Vulnerability.types'
 import React, { FC } from 'react'
 
-interface CustomCardProps {
-    bgColor: string;
-    Heading: string;
-    subheading: string;
-}
+
 const CustomCard :FC<CustomCardProps> = ({bgColor, subheading,Heading}) => {
     return (
         <div className={`w-full max-w-200px h-[100px] ${bgColor} flex justify-between items-center rounded-md`}>

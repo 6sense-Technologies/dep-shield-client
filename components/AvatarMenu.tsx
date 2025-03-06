@@ -3,15 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 import { signOut, useSession } from 'next-auth/react';
 import { LogOut, User, X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getInitials } from '@/constants/globalFunctions';
 
 const AvatarMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
   const defaultAvatarUrl = 'https://via.placeholder.com/150/0000FF/808080?Text=Default+Avatar';
-
-  const router = useRouter();
 
   const handleLogout = async () => {
     await signOut({ redirectTo: '/sign-in' })
@@ -43,18 +41,10 @@ const AvatarMenu = () => {
     };
   }, [isMenuOpen]);
 
-  const capitalizeFirstLetter = (string: string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+  // const capitalizeFirstLetter = (string: string) => {
+  //   return string.charAt(0).toUpperCase() + string.slice(1);
+  // };
 
-  const getInitials = (name: string) => {
-    if (!name) return "NA";
-    const parts = name.split(" ");
-    if (parts.length === 1) {
-      return parts[0][0].toUpperCase();
-    }
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-  };
 
   // console.log(session);
 

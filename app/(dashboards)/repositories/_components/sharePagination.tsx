@@ -6,14 +6,10 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination";
+import { SharePaginationProps } from "@/types/repo.types";
   import { useRouter } from "next/navigation";
   
-  interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-  }
-  
+
   const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,
   }) => {
@@ -24,41 +20,41 @@ import {
     currentPage,
     totalPage,
     onPageChange,
-  }: PaginationProps) {
+  }: SharePaginationProps) {
     const router = useRouter();
   
     const getPagination = (): (number | string)[] => {
-      const pagination: (number | string)[] = [];
-      const maxPagesToShow = 3;
-      let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      const shpagination: (number | string)[] = [];
+      const shmaxPagesToShow = 3;
+      let startPage = Math.max(1, currentPage - Math.floor(shmaxPagesToShow / 2));
       let endPage = Math.min(
         totalPage,
-        currentPage + Math.floor(maxPagesToShow / 2)
+        currentPage + Math.floor(shmaxPagesToShow / 2)
       );
   
-      if (endPage - startPage + 1 < maxPagesToShow) {
-        if (currentPage < Math.ceil(maxPagesToShow / 2)) {
-          endPage = Math.min(maxPagesToShow, totalPage);
-        } else if (currentPage > totalPage - Math.floor(maxPagesToShow / 2)) {
-          startPage = Math.max(totalPage - maxPagesToShow + 1, 1);
+      if (endPage - startPage + 1 < shmaxPagesToShow) {
+        if (currentPage < Math.ceil(shmaxPagesToShow / 2)) {
+          endPage = Math.min(shmaxPagesToShow, totalPage);
+        } else if (currentPage > totalPage - Math.floor(shmaxPagesToShow / 2)) {
+          startPage = Math.max(totalPage - shmaxPagesToShow + 1, 1);
         }
       }
   
       for (let i = startPage; i <= endPage; i++) {
-        pagination.push(i);
+        shpagination.push(i);
       }
   
       if (startPage > 1) {
-        pagination.unshift("...");
-        pagination.unshift(1);
+        shpagination.unshift("...");
+        shpagination.unshift(1);
       }
   
       if (endPage < totalPage) {
-        pagination.push("...");
-        pagination.push(totalPage);
+        shpagination.push("...");
+        shpagination.push(totalPage);
       }
   
-      return pagination;
+      return shpagination;
     };
   
     const pagination = getPagination();

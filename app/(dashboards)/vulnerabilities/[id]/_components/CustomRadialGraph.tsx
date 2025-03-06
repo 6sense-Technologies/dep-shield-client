@@ -14,12 +14,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { CustomRadialGraphProps } from "@/types/Vulnerability.types";
 
-type CustomRadialGraphProps = {
-    chartData: { browser: string; visitors: number; fill: string }[];
-    heading: string;
-    subHeading: string;
-};
 
 
 export default function CustomRadialGraph({ chartData, heading, subHeading }: CustomRadialGraphProps) {

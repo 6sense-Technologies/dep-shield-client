@@ -10,18 +10,11 @@ import ProfileAvatarSection from "./_components/ProfileAvatarSection";
 import CredentialsArea from "./_components/CredentialsArea";
 import IntegrationArea from "./_components/IntegrationArea";
 import PasswordArea from "./_components/PasswordArea";
+import { getInitials } from "@/constants/globalFunctions";
 
 const Profile = () => {
     const session = useSession();
     const defaultAvatarUrl = 'https://via.placeholder.com/150/0000FF/808080?Text=Default+Avatar';
-    const getInitials = (name: string) => {
-        if (!name) return "NA";
-        const parts = name.split(" ");
-        if (parts.length === 1) {
-            return parts[0][0].toUpperCase();
-        }
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-    };
 
     return (
         <div>

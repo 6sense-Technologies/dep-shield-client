@@ -1,11 +1,7 @@
 import React from 'react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { RemoveAllModalProps } from '@/types/AccessControl.types';
 
-type RemoveAllModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-};
 
 const RemoveAllModal: React.FC<RemoveAllModalProps> = ({ isOpen, onClose, onConfirm }) => {
   return (

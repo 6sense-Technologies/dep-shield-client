@@ -18,13 +18,12 @@ import {
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Button } from "@/components/ui/button";
 import { SingleDepPagination } from "./SingleDepPagination";
+import { SingleDependencies, TSingleDepTableProps } from "@/types/dependencies.types";
 
 
-type Dependencies = {
-    repositoryName: string;
-};
 
-export const columns: ColumnDef<Dependencies>[] = [
+
+export const columns: ColumnDef<SingleDependencies>[] = [
     {
         accessorKey: "repositoryName",
         header: () => <div className="text-bold">Repository Name</div>,
@@ -44,13 +43,7 @@ export const columns: ColumnDef<Dependencies>[] = [
     },
 ];
 
-type TSingleDepTableProps = {
-    repos?: Dependencies[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+
 
 export const SingleDepTable: React.FC<TSingleDepTableProps> = ({
     repos = [],

@@ -27,34 +27,18 @@ import { Button } from "@/components/ui/button";
 import { ScanText } from "lucide-react";
 import { MyRepoPagination } from "./MyRepoPagination";
 import Link from "next/link";
+import { getBadgeVariant } from "@/constants/globalFunctions";
+import { MyRepository } from "@/types/repo.types";
 
-type Repository = {
-  repositoryName: string;
-  totalVulnerabilities: number;
-  vulnerabilities: { id: number; name: string; severity: string }[];
-  sharingDetails: { id: number; name: string; avatarUrl: string }[];
-};
 
-const getBadgeVariant = (severity: string) => {
-  switch (severity) {
-    case "Critical":
-      return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
-    case "High":
-      return "text-[#B45309] bg-[#FDEBDD] hover:bg-[#FDEBDD] font-normal";
-    case "Medium":
-      return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD] font-normal";
-    case "Low":
-      return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
-    default:
-      return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-  }
-};
+
+
 
 const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
   return vulnerabilities.filter(vuln => vuln.severity === severity).length;
 };
 
-export const columns: ColumnDef<Repository>[] = [
+export const columns: ColumnDef<MyRepository>[] = [
   {
     accessorKey: "repositoryName",
     header: () => <div className="text-bold">Repository Name</div>,
@@ -117,7 +101,7 @@ export const columns: ColumnDef<Repository>[] = [
 ];
 
 type TMyRepoTableProps = {
-  repos?: Repository[];
+  repos?: MyRepository[];
   refetch?: () => void;
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage: number;

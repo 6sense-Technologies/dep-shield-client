@@ -25,24 +25,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { AccessControlPagination } from "./accessControlPagination";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { getInitials } from "@/constants/globalFunctions";
+import { AccessControl } from "@/types/AccessControl.types";
 
-type AccessControl = {
-    name: string;
-    email: string;
-    shareTime: string;
-    avatarUrl?: string;
-};
 
-const getInitials = (name: string) => {
-    const parts = name.split(" ");
-    if (parts.length === 1) {
-        return parts[0][0].toUpperCase();
-    }
-    if (parts.length === 2) {
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-    }
-    return (parts[0][0] + parts[1][0]).toUpperCase();
-};
+
 
 const formatShareTime = (shareTime: string) => {
     const [time, date] = shareTime.split(".");

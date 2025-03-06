@@ -27,31 +27,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getBadgeVariant } from "@/constants/globalFunctions";
+import { License, TAllLicensesTableProps } from "@/types/licenses.types";
 
-type License = {
-    name: string;
-    licenseRisk: string;
-    dependencies: number;
-    licenseFamily: string;
-    affectedRepositories: string[];
-};
-
-const getBadgeVariant = (risk: string) => {
-    switch (risk) {
-        case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] font-normal hover:bg-[#FEF2F2]";
-        case "High":
-            return "text-[#B45309] bg-[#FDEBDD] font-normal hover:bg-[#FDEBDD]";
-        case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] font-normal hover:bg-[#DDF3FD]";
-        case "Low":
-            return "text-[#166534] bg-[#DCFCE7] font-normal hover:bg-[#DCFCE7]";
-        case "Unknown":
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal  hover:bg-[#F1F5F9]";
-        default:
-            return "text-[#0F172A] bg-[#F1F5F9] font-normal hover:bg-[#F1F5F9]";
-    }
-};
 
 export const columns: ColumnDef<License>[] = [
     {
@@ -127,13 +105,7 @@ export const columns: ColumnDef<License>[] = [
     },
 ];
 
-type TAllLicensesTableProps = {
-    licenses?: License[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+
 
 export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     licenses = [],

@@ -2,12 +2,9 @@ import React, { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import RepositorySearchbar from '../../repositories/_components/repositorySearchbar';
 import RemoveAllModal from './RemoveAllModal';
+import { AccessControlSearchAreaProps } from '@/types/AccessControl.types';
 
-type AccessControlSearchAreaProps = {
 
-    empty?: boolean;
-
-};
 
 
 const AccessControlSearchArea: FC<AccessControlSearchAreaProps> = ({ empty }) => {
