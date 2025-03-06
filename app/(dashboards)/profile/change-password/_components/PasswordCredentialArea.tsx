@@ -9,10 +9,7 @@ const PasswordCredentialsArea = () => {
 
 
     const {
-        handleSubmit,
-        control,
-        setValue,
-        formState: { errors },
+        control
     } = useForm<any>({
         resolver: zodResolver(SignupSchema),
     });

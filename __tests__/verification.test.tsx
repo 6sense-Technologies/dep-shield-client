@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent} from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Verify from '../app/(auth)/sign-up/verification/page';
 import { useSession } from 'next-auth/react';
@@ -46,7 +46,7 @@ jest.mock('@phosphor-icons/react', () => ({
 
 // Mock Otpfields component
 jest.mock('../app/(auth)/sign-up/verification/_components/otpfields', () => {
-  return jest.fn(({ control }) => (
+  return jest.fn(() => (
     <div>
       {Array.from({ length: 6 }).map((_, index) => (
         <input key={index} aria-label={`otp-${index}`} />

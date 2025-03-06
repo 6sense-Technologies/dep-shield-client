@@ -35,7 +35,7 @@ export const columns: ColumnDef<Repository>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Button variant="outline">View</Button>
             </div>

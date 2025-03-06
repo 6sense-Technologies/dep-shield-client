@@ -74,7 +74,7 @@ export const columns: ColumnDef<ShareData>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
                 <CustomAlertDialog trigger={<Button variant="destructive">Remove</Button>} />
