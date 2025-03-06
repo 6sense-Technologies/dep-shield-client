@@ -18,10 +18,8 @@ import {
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Button } from "@/components/ui/button";
 import { SingleRepoPagination } from "./SingleRepoPagination";
+import { Repository, TSingleRepoTableProps } from "@/types/tableprops.types";
 
-type Repository = {
-    repositoryName: string;
-};
 
 export const columns: ColumnDef<Repository>[] = [
     {
@@ -35,7 +33,7 @@ export const columns: ColumnDef<Repository>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Button variant="outline">View</Button>
             </div>
@@ -43,13 +41,7 @@ export const columns: ColumnDef<Repository>[] = [
     },
 ];
 
-type TSingleRepoTableProps = {
-    repos?: Repository[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+
 
 export const SingleRepoTable: React.FC<TSingleRepoTableProps> = ({
     repos = [],

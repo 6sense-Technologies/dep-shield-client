@@ -6,13 +6,10 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { LPaginationProps } from "@/types/licenses.types";
 import { useRouter } from "next/navigation";
 
-interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-}
+
 
 const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -24,7 +21,7 @@ export function AllLicensesPagination({
     currentPage,
     totalPage,
     onPageChange,
-}: PaginationProps) {
+}: LPaginationProps) {
     const router = useRouter();
 
     const getPagination = (): (number | string)[] => {

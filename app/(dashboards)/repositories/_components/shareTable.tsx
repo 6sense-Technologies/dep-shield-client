@@ -28,12 +28,8 @@ import Image from 'next/image';
 import { Github, Gitlab } from "lucide-react";
 import CustomAlertDialog from "./CustomAlartDialog";
 import Link from "next/link";
+import { ShareData } from "@/types/repo.types";
 
-type ShareData = {
-    sharedBy: { name: string; avatarUrl: string };
-    sharedRepositories: number;
-    platform: string;
-};
 
 export const columns: ColumnDef<ShareData>[] = [
     {
@@ -74,7 +70,7 @@ export const columns: ColumnDef<ShareData>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
                 <CustomAlertDialog trigger={<Button variant="destructive">Remove</Button>} />

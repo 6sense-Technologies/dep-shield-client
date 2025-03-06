@@ -1,17 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { ProfileAvatarSectionProps } from '@/types/profile.types';
 import Link from 'next/link';
 import React, { FC } from 'react'
 
 
-type ProfileAvatarSectionProps = {
-    defaultAvatarUrl: string;
-    session: any;
-    getInitials: (name: string) => string;
-
-
-
-}
 
 const ProfileAvatarSection: FC<ProfileAvatarSectionProps> = ({ defaultAvatarUrl, session, getInitials }) => {
     return (

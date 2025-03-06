@@ -6,13 +6,9 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { LPaginationProps } from "@/types/licenses.types";
 import { useRouter } from "next/navigation";
 
-interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-}
 
 const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -24,44 +20,44 @@ export function LicensesPagination({
     currentPage,
     totalPage,
     onPageChange,
-}: PaginationProps) {
+}: LPaginationProps) {
     const router = useRouter();
 
     const getPagination = (): (number | string)[] => {
-        const pagination: (number | string)[] = [];
-        const maxPagesToShow = 3;
-        let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-        let endPage = Math.min(
+        const lpagination: (number | string)[] = [];
+        const lmaxPagesToShow = 3;
+        let lstartPage = Math.max(1, currentPage - Math.floor(lmaxPagesToShow / 2));
+        let lendPage = Math.min(
             totalPage,
-            currentPage + Math.floor(maxPagesToShow / 2)
+            currentPage + Math.floor(lmaxPagesToShow / 2)
         );
 
-        if (endPage - startPage + 1 < maxPagesToShow) {
-            if (currentPage < Math.ceil(maxPagesToShow / 2)) {
-                endPage = Math.min(maxPagesToShow, totalPage);
-            } else if (currentPage > totalPage - Math.floor(maxPagesToShow / 2)) {
-                startPage = Math.max(totalPage - maxPagesToShow + 1, 1);
+        if (lendPage - lstartPage + 1 < lmaxPagesToShow) {
+            if (currentPage < Math.ceil(lmaxPagesToShow / 2)) {
+                lendPage = Math.min(lmaxPagesToShow, totalPage);
+            } else if (currentPage > totalPage - Math.floor(lmaxPagesToShow / 2)) {
+                lstartPage = Math.max(totalPage - lmaxPagesToShow + 1, 1);
             }
         }
 
-        for (let i = startPage; i <= endPage; i++) {
-            pagination.push(i);
+        for (let i = lstartPage; i <= lendPage; i++) {
+            lpagination.push(i);
         }
 
-        if (startPage > 1) {
-            pagination.unshift("...");
-            pagination.unshift(1);
+        if (lstartPage > 1) {
+            lpagination.unshift("...");
+            lpagination.unshift(1);
         }
 
-        if (endPage < totalPage) {
-            pagination.push("...");
-            pagination.push(totalPage);
+        if (lendPage < totalPage) {
+            lpagination.push("...");
+            lpagination.push(totalPage);
         }
 
-        return pagination;
+        return lpagination;
     };
 
-    const pagination = getPagination();
+    const lpagination = getPagination();
 
     return (
         <CustomPagination>
@@ -79,7 +75,7 @@ export function LicensesPagination({
                         }}
                     />
                 </PaginationItem>
-                {pagination.map((page, index) => (
+                {lpagination.map((page, index) => (
                     <PaginationItem key={index}>
                         {typeof page === "number" ? (
                             <PaginationLink

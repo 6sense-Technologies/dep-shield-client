@@ -6,7 +6,7 @@ import AvatarMenu from '@/components/AvatarMenu';
 import GlobalBreadCrumb from '@/components/globalBreadCrumb';
 import PageTitle from '@/components/PageTitle';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { FolderOpen, Plus } from 'lucide-react';
+import { FolderOpen} from 'lucide-react';
 import AccessControlSearchArea from './_components/accessControlSearchArea';
 import PageHeadingwithButton from '../repositories/_components/PageHeadingwithButton';
 import Loader from '@/components/loader';

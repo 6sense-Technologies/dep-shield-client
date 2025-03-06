@@ -8,20 +8,11 @@ import Bitbucket from "../../../../public/logo/bit-bucket.svg";
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { TEMP_BACKEND_URL } from '@/config';
+import { IntegrationAreaProps } from '@/types/integration.types';
 
-type IntegrationAreaProps = {
-    connections: {
-        github: boolean;
-        gitlab: boolean;
-        bitbucket: boolean;
-    };
-    handleConnect: (integration: string, event?: React.MouseEvent) => void;
-    handleDisconnect: (integration: string) => void;
-    gitStatus: boolean;
-    refetchGitStatus: () => void;
-};
 
-const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus, refetchGitStatus }) => {
+
+const IntegrationArea: FC<IntegrationAreaProps> = ({ handleConnect, gitStatus, refetchGitStatus }) => {
     const session = useSession();
 
     let accessToken = null;
@@ -47,12 +38,12 @@ const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect,
     console.log("Git Status in Integration Component page", gitStatus);
 
     return (
-        <div className="flex-grow flex flex-col items-center md:justify-center pt-20 md:pt-0 px-3 lg:px-6">
+        <div className="flex-grow flex flex-col items-center md:justify-center pt-10 md:pt-0 px-3 lg:px-6">
             <div className="flex flex-col items-center justify-center h-96 w-full max-w-[512px] p-6 md:p-12 border rounded-lg gap-y-6">
                 <p className="text-sm font-normal text-inputFooterColor">
                     Connect an integration to effortlessly scan your repositories for vulnerabilities, license compliance, and community health.
                 </p>
-                <div className="border p-4 flex justify-between items-center w-full rounded-md h-14 cursor-pointer" onClick={() => gitStatus ? handleDisconnectRoute() : handleConnect("github")}>
+                <div className="border p-4 flex justify-between items-center w-full rounded-md h-14 cursor-pointer hover:bg-[#E6E6E6]" onClick={() => gitStatus ? handleDisconnectRoute() : handleConnect("github")}>
                     <Image src={Github} alt="githubLogo" width={100} height={100} />
                     <div className="w-full text-right">
                         {gitStatus ? (

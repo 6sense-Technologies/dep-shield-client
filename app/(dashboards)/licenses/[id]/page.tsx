@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState} from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -160,7 +160,7 @@ const LicensesDetailsContent = () => {
                         </p>
                         <p className="text-sm font-medium text-deepBlackColor pt-4">
                             Permission is hereby granted, free of charge, to any person obtaining a copy
-                            of this software and associated documentation files (the "Software"), to deal
+                            of this software and associated documentation files (the &quot;Software&quot;), to deal
                             in the Software without restriction, including without limitation the rights
                             to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
                             copies of the Software, and to permit persons to whom the Software is
@@ -171,7 +171,7 @@ const LicensesDetailsContent = () => {
                             all copies or substantial portions of the Software.
                         </p>
                         <p className="text-sm font-medium text-deepBlackColor pt-4">
-                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
                             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
                             FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
                             AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER

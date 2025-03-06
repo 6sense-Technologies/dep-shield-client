@@ -7,11 +7,10 @@
   "ignorePatterns": ["next.config.mjs", "next.config.js"],
   "extends": [
     "eslint:recommended",
-    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
-    "next",
-    "prettier"
+    "next"
+    // "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,7 +19,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react-hooks"],
   "globals": {
     "process": "readonly"
   },
@@ -87,6 +85,7 @@
     "prefer-template": "warn",
     "yoda": "warn",
     "no-unsafe-optional-chaining": "warn",
-    "@typescript-eslint/no-empty-object-type": "warn"
+    "@typescript-eslint/no-empty-object-type": "warn",
+    "typescript-eslint/no-unsafe-call": "off"
   }
 }

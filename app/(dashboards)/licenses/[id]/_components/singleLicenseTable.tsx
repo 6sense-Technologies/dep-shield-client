@@ -16,33 +16,15 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { SingleLicensesPagination } from "./singleLicensesPagination";
+import { getBadgeVariant } from "@/constants/globalFunctions";
+import { SingleLicenses } from "@/types/licenses.types";
 
-type Licenses = {
-    repositoryName: string;
-    licenseRisk: string;
-    licenseFamily: string;
-};
 
-const getBadgeVariant = (priority: string) => {
-    switch (priority) {
-        case "Critical":
-            return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
-        case "High":
-            return "text-[#B45309] bg-[#FDEBDD]  hover:bg-[#FDEBDD] font-normal";
-        case "Medium":
-            return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD]  font-normal";
-        case "Low":
-            return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
-        default:
-            return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-    }
-};
 
-export const columns: ColumnDef<Licenses>[] = [
+export const columns: ColumnDef<SingleLicenses>[] = [
     {
         accessorKey: "repositoryName",
         header: () => <div className="text-bold">Repositories</div>,
@@ -73,7 +55,7 @@ export const columns: ColumnDef<Licenses>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
 
                 <ExternalLink size={16} className="cursor-pointer"/>
@@ -84,7 +66,7 @@ export const columns: ColumnDef<Licenses>[] = [
 ];
 
 type TSingleLicenseTableProps = {
-    licenses?: Licenses[];
+    licenses?: SingleLicenses[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;

@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { useState } from "react";
+import React from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -8,6 +8,7 @@ import PageHeading from "@/components/pageHeading";
 import { useSession } from "next-auth/react";
 import ProfileAvatarSection from "./_components/ProfileAvatarSection";
 import CredentialsArea from "./_components/CredentialsArea";
+import { getInitials } from "@/constants/globalFunctions";
 
 
 
@@ -15,14 +16,6 @@ const EditProfile = () => {
     const session = useSession();
     const defaultAvatarUrl = 'https://via.placeholder.com/150/0000FF/808080?Text=Default+Avatar';
 
-    const getInitials = (name: string) => {
-        if (!name) return "NA";
-        const parts = name.split(" ");
-        if (parts.length === 1) {
-            return parts[0][0].toUpperCase();
-        }
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-    };
 
     return (
         <div>

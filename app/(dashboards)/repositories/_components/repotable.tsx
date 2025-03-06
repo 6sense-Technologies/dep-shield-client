@@ -26,28 +26,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RepoPagination } from "./repoPagination";
 import Link from "next/link";
+import { getBadgeVariant } from "@/constants/globalFunctions";
+import { Repository } from "@/types/repo.types";
 
-type Repository = {
-  repositoryName: string;
-  totalVulnerabilities: number;
-  vulnerabilities: { id: number; name: string; severity: string }[];
-  sharingDetails: { id: number; name: string; avatarUrl: string }[];
-};
 
-const getBadgeVariant = (severity: string) => {
-  switch (severity) {
-    case "Critical":
-      return "text-[#B91C1C] bg-[#FEF2F2] hover:bg-[#FEF2F2] font-normal";
-    case "High":
-      return "text-[#B45309] bg-[#FDEBDD] hover:bg-[#FDEBDD] font-normal";
-    case "Medium":
-      return "text-[#0284C7] bg-[#DDF3FD] hover:bg-[#DDF3FD] font-normal";
-    case "Low":
-      return "text-[#166534] bg-[#DCFCE7] hover:bg-[#DCFCE7] font-normal";
-    default:
-      return "text-[#0F172A] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal";
-  }
-};
 
 const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
   return vulnerabilities.filter(vuln => vuln.severity === severity).length;
@@ -115,7 +97,7 @@ export const columns: ColumnDef<Repository>[] = [
     id: "actions",
     header: () => <div className="text-bold text-start pr-4">Actions</div>,
     enableHiding: false,
-    cell: ({ row }) => (
+    cell: () => (
       <div className="flex items-center justify-end space-x-4 pr-4">
         <Link href={`/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
       </div>

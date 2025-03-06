@@ -1,6 +1,6 @@
 "use client";
 import PageTitle from "@/components/PageTitle";
-import React, { Suspense, useState, useRef, useEffect } from "react";
+import React, { Suspense} from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AvatarMenu from "@/components/AvatarMenu";
 import GlobalBreadCrumb from "@/components/globalBreadCrumb";
@@ -11,7 +11,7 @@ import CustomCardWithBadge from "../../vulnerabilities/[id]/_components/customCa
 import { SingleDepTable } from "./_components/SingleDepTable";
 import DepSearchSection from "./_components/DepSearchSection";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, House } from "lucide-react";
+import { ExternalLink, House } from "lucide-react";
 import miniGit from "../../../../public/logo/miniGithub.svg";
 import miniNPM from "../../../../public/logo/mininpm.svg";
 import Image from "next/image";

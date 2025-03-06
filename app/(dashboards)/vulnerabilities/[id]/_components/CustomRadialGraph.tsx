@@ -14,23 +14,9 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { CustomRadialGraphProps } from "@/types/Vulnerability.types";
 
-type CustomRadialGraphProps = {
-    chartData: { browser: string; visitors: number; fill: string }[];
-    heading: string;
-    subHeading: string;
-};
 
-const chartConfig = {
-    visitors: {
-        label: "Visitors",
-    },
-    safari: {
-        label: "Safari",
-        color: "hsl(var(--chart-2))",
-    },
-} satisfies ChartConfig;
 
 export default function CustomRadialGraph({ chartData, heading, subHeading }: CustomRadialGraphProps) {
     return (

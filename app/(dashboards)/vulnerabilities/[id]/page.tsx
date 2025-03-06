@@ -15,7 +15,6 @@ import CustomSummary from "./_components/CustomSummary";
 import SecondTabTable from "./_components/secondTabTable";
 import CustomRadialGraph from "./_components/CustomRadialGraph";
 import FristTabTable from "./_components/FirstTabTable";
-import { ChartConfig } from "@/components/ui/chart";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
 

@@ -3,11 +3,9 @@
 import * as React from "react";
 import { ShieldCheck, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Version } from "@/types/Vulnerability.types";
 
-interface Version {
-    number: string;
-    status: "success" | "error";
-}
+
 
 // Sample version data - this can be modified as needed
 const versions: Version[] = [

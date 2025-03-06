@@ -6,14 +6,10 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination";
+import {RepoPaginationProps } from "@/types/repo.types";
   import { useRouter } from "next/navigation";
   
-  interface PaginationProps {
-    currentPage: number;
-    totalPage: number;
-    onPageChange: (page: number) => void;
-  }
-  
+
   const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
     children,
   }) => {
@@ -24,44 +20,44 @@ import {
     currentPage,
     totalPage,
     onPageChange,
-  }: PaginationProps) {
+  }: RepoPaginationProps) {
     const router = useRouter();
   
     const getPagination = (): (number | string)[] => {
-      const pagination: (number | string)[] = [];
-      const maxPagesToShow = 3;
-      let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      const Repopagination: (number | string)[] = [];
+      const RepomaxPagesToShow = 3;
+      let startPage = Math.max(1, currentPage - Math.floor(RepomaxPagesToShow / 2));
       let endPage = Math.min(
         totalPage,
-        currentPage + Math.floor(maxPagesToShow / 2)
+        currentPage + Math.floor(RepomaxPagesToShow / 2)
       );
   
-      if (endPage - startPage + 1 < maxPagesToShow) {
-        if (currentPage < Math.ceil(maxPagesToShow / 2)) {
-          endPage = Math.min(maxPagesToShow, totalPage);
-        } else if (currentPage > totalPage - Math.floor(maxPagesToShow / 2)) {
-          startPage = Math.max(totalPage - maxPagesToShow + 1, 1);
+      if (endPage - startPage + 1 < RepomaxPagesToShow) {
+        if (currentPage < Math.ceil(RepomaxPagesToShow / 2)) {
+          endPage = Math.min(RepomaxPagesToShow, totalPage);
+        } else if (currentPage > totalPage - Math.floor(RepomaxPagesToShow / 2)) {
+          startPage = Math.max(totalPage - RepomaxPagesToShow + 1, 1);
         }
       }
   
       for (let i = startPage; i <= endPage; i++) {
-        pagination.push(i);
+        Repopagination.push(i);
       }
   
       if (startPage > 1) {
-        pagination.unshift("...");
-        pagination.unshift(1);
+        Repopagination.unshift("...");
+        Repopagination.unshift(1);
       }
   
       if (endPage < totalPage) {
-        pagination.push("...");
-        pagination.push(totalPage);
+        Repopagination.push("...");
+        Repopagination.push(totalPage);
       }
   
-      return pagination;
+      return Repopagination;
     };
   
-    const pagination = getPagination();
+    const Repopagination = getPagination();
   
     return (
       <CustomPagination>
@@ -80,7 +76,7 @@ import {
               }}
             />
           </PaginationItem>
-          {pagination.map((page, index) => (
+          {Repopagination.map((page, index) => (
             <PaginationItem key={index}>
               {typeof page === "number" ? (
                 <PaginationLink

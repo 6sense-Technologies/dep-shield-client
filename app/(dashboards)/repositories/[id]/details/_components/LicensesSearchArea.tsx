@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { Button } from '@/components/ui/button'
-import { ScanText, Share } from 'lucide-react'
 import RepositorySearchbar from '../../../_components/repositorySearchbar'
 import { VulnabalitiesDropdown } from './VulnabalitiesDropdown'
 

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @next/next/no-img-element */
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent} from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SignUp from '../app/(auth)/sign-up/page';
 import { useSession } from 'next-auth/react';
