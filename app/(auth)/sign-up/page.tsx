@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import OrDivider from '../_components/orDivider';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,6 @@ import { signIn, useSession } from 'next-auth/react';
 import Loader from '@/components/loader';
 import { Eye, EyeOff } from 'lucide-react';
 import SmallLogo from '../../../public/logo/smallLogo.svg';
-import axios from 'axios';
 import { Toaster } from '@/components/ui/toaster';
 import { SignupSchema } from '@/schema/authSchema';
 import { handleBasicSignup } from '@/helpers/Auth/authApi';
@@ -33,7 +32,7 @@ const SignUp = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [inviteData, setInviteData] = useState<{
+  const [inviteData] = useState<{
     displayName: string;
     emailAddress: string;
   } | null>(null);
@@ -45,7 +44,6 @@ const SignUp = () => {
   const {
     handleSubmit,
     control,
-    setValue,
     formState: { errors },
   } = useForm<TBasicSignupFormInputs>({
     resolver: zodResolver(SignupSchema),
