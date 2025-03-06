@@ -19,6 +19,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllRepositories } from '@/helpers/githubApp/githubApi';
 import { useSession } from 'next-auth/react';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
+import Link from 'next/link';
 
 // Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
@@ -189,14 +190,16 @@ const Repositories = () => {
                       All
                     </button>
                     <button
-                      className={`py-2 px-4 text-nowrap ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                      className={`py-2 px-4 text-nowrap ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'text-gray-300 font-semibold cursor-not-allowed'}`}
                       onClick={() => handleTabChange('myrepositories')}
+                      disabled
                     >
                       My repositories
                     </button>
                     <button
-                      className={`py-2 px-4 text-nowrap ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
+                      className={`py-2 px-4 text-nowrap ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'text-gray-300 font-semibold cursor-not-allowed'}`}
                       onClick={() => handleTabChange('sharedwithme')}
+                      disabled
                     >
                       Shared with me
                     </button>
@@ -215,7 +218,7 @@ const Repositories = () => {
                               <span><FolderOpen size={32} strokeWidth={1} /></span>
                               <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
                               <p className='text-sm font-normal text-inputFooterColor pt-1 pb-7'>Get started by adding a new repository.</p>
-                              <Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button>
+                              <Link href="/repositories/add"><Button className='w-20'>Add <span className='text-white'><Plus size={16} /></span></Button></Link> 
                             </div>
                           ) : (
                             <RepoTable
