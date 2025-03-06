@@ -59,7 +59,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
     const searchParams = useSearchParams();
     const page = parseInt(searchParams?.get("page") || "1");
     const [currentPageState, setCurrentPageState] = useState(page);
-    const [, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
@@ -68,6 +68,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
 
     const {
         data: repoStatus,
+        isFetching: repoStatusLoading,
     } = useQuery<any>({
         queryKey: ["repoStatus"],
         queryFn: () => getRepoAddStatus(session),
@@ -87,8 +88,8 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
 
     const addRepoMutation = useMutation({
         mutationFn: (data: string) => AddRepositories(session, data),
-        onSuccess: (variables) => {
-            // console.log("Added");
+        onSuccess: (data, variables) => {
+            console.log("Added");
             setAddedRepos((prev) => ({ ...prev, [variables]: true }));
         },
         onError: (error) => {
