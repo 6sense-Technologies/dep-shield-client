@@ -82,7 +82,7 @@ export const AccessControlTable: React.FC<TAccessControlTableProps> = ({
     const [currentPageState, setCurrentPageState] = useState(page);
     const [isLoading, setIsLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<AccessControl | null>(null);
+    const [, setSelectedUser] = useState<AccessControl | null>(null);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;

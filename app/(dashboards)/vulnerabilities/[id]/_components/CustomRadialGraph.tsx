@@ -14,7 +14,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 type CustomRadialGraphProps = {
     chartData: { browser: string; visitors: number; fill: string }[];
@@ -22,15 +21,6 @@ type CustomRadialGraphProps = {
     subHeading: string;
 };
 
-const chartConfig = {
-    visitors: {
-        label: "Visitors",
-    },
-    safari: {
-        label: "Safari",
-        color: "hsl(var(--chart-2))",
-    },
-} satisfies ChartConfig;
 
 export default function CustomRadialGraph({ chartData, heading, subHeading }: CustomRadialGraphProps) {
     return (

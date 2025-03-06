@@ -16,7 +16,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { SingleLicensesPagination } from "./singleLicensesPagination";
@@ -73,7 +72,7 @@ export const columns: ColumnDef<Licenses>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
 
                 <ExternalLink size={16} className="cursor-pointer"/>

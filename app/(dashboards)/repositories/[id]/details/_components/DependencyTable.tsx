@@ -23,7 +23,7 @@ import { useSearchParams } from "next/navigation";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Flame, Handshake } from "lucide-react";
+import { Flame, Handshake } from "lucide-react";
 import Link from "next/link";
 import { DependenciesPagination } from "./DependenciesPagination";
 
@@ -60,9 +60,8 @@ const getHealthBadgeVariant = (value: number) => {
         return "text-[#FFFFFF] bg-[#B91C1C] hover:bg-[#B91C1C] font-normal";
     } else if (value >= 31 && value <= 70) {
         return "text-[#FFFFFF] bg-[#B45309] hover:bg-[#B45309] font-normal";
-    } else {
-        return "text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal";
     }
+    return "text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal";
 };
 
 export const columns: ColumnDef<Dependency>[] = [
@@ -118,7 +117,7 @@ export const columns: ColumnDef<Dependency>[] = [
         id: "actions",
         header: () => <div className="text-bold text-start pr-4">Actions</div>,
         enableHiding: false,
-        cell: ({ row }) => (
+        cell: () => (
             <div className="flex items-center justify-end space-x-4 pr-4">
                 <Link href={`http://localhost:3000/repositories/${12}/details`}><Button variant="outline">View</Button></Link>
             </div>

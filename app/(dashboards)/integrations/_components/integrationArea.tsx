@@ -21,7 +21,7 @@ type IntegrationAreaProps = {
     refetchGitStatus: () => void;
 };
 
-const IntegrationArea: FC<IntegrationAreaProps> = ({ connections, handleConnect, handleDisconnect, gitStatus, refetchGitStatus }) => {
+const IntegrationArea: FC<IntegrationAreaProps> = ({ handleConnect, gitStatus, refetchGitStatus }) => {
     const session = useSession();
 
     let accessToken = null;

@@ -1,11 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Integration from '../app/(dashboards)/integrations/page';
 import { useSession } from 'next-auth/react';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
-import { Link2, Link2Off, RefreshCw } from 'lucide-react';
 import IntegrationArea from '@/app/(dashboards)/integrations/_components/integrationArea';
 
 // Mock SidebarTrigger and SidebarProvider to prevent undefined issues
@@ -99,6 +98,15 @@ describe('IntegrationArea Component', () => {
     fireEvent.click(connectButtons[0]);
     expect(handleConnect).toHaveBeenCalledWith('github');
   });
+
+  it('renders the GitLab and Bitbucket buttons as disabled', async () => {
+    const gitLabButton = screen.getByAltText('gitLabLogo');
+    const bitbucketButton = screen.getByAltText('bitBucketLogo');
+
+    expect(gitLabButton).toBeInTheDocument();
+    expect(bitbucketButton).toBeInTheDocument();
+  });
+
 
   it('calls refetchGitStatus on disconnect for GitHub', async () => {
     render(

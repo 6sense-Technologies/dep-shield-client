@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -25,7 +26,7 @@ const Verify = () => {
   const [timeLeft, setTimeLeft] = useState<number>(120); // 2 minutes timer
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [verifyError, setVerifyError] = useState<string | null>(null);
-  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+  const [, setIsRedirecting] = useState<boolean>(false);
 
   useEffect(() => {
     const email = localStorage.getItem("user-email");
