@@ -87,6 +87,7 @@
     "prefer-template": "warn",
     "yoda": "warn",
     "no-unsafe-optional-chaining": "warn",
-    "@typescript-eslint/no-empty-object-type": "warn"
+    "@typescript-eslint/no-empty-object-type": "warn",
+    "typescript-eslint/no-unsafe-call": "off"
   }
 }
