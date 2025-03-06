@@ -8,9 +8,6 @@ import PageHeading from "@/components/pageHeading";
 import { FolderOpen } from "lucide-react";
 
 const Dashboard = () => {
-  // const session = useSession();
-
-  // console.log("Session Data", session.data);
 
   return (
     <div>

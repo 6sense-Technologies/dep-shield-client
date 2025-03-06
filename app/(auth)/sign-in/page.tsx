@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import OrDivider from "../_components/orDivider";
 import { useRouter } from "next/navigation";
-import AuthPageHeader from "../_components/authPageHeader";
 import { TBasicSignInFormInputs } from "@/types/Auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
