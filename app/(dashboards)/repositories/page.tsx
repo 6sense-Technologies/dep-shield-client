@@ -54,13 +54,13 @@ const Repositories = () => {
   }, [searchParams]);
 
   const {
-    data: RepoData,
+    data: AllRepoData,
     isFetching: RepoDataLoading,
   } = useQuery<any>({
-    queryKey: ["addRepoData", session, pages, limit],
+    queryKey: ["AllRepo", session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
-    console.log("🚀 ~ Repositories ~ RepoData:", RepoData)
+    console.log("🚀 ~ Repositories ~ RepoData:", AllRepoData)
 
   const additionalDummyData = [
     {
@@ -213,7 +213,7 @@ const Repositories = () => {
                         <EmptyTableSkeleton />
                       ) : (
                         <>
-                          {RepoData?.totalCount === 0 ? (
+                          {AllRepoData?.totalCount === 0 ? (
                             <div className='flex flex-col items-center justify-center h-96 '>
                               <span><FolderOpen size={32} strokeWidth={1} /></span>
                               <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
@@ -222,8 +222,8 @@ const Repositories = () => {
                             </div>
                           ) : (
                             <RepoTable
-                              repos={RepoData?.repositories}
-                              totalCountAndLimit={{ totalCount: RepoData?.totalCount, size: 10 }}
+                              repos={AllRepoData?.repositories}
+                              totalCountAndLimit={{ totalCount: AllRepoData?.totalCount, size: 10 }}
                               currentPage={1}
                               loading={false}
                             />
