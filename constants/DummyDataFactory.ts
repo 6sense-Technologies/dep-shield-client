@@ -374,3 +374,31 @@ export const EffectedlicensesData = [
         affectedRepositories: ["repo10"]
     }
 ];
+
+export const LicensesData = [
+    {
+        repositoryName: "6senseEV/6sense-ev-admin",
+        licenseRisk: "Critical",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-api",
+        licenseRisk: "High",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-web",
+        licenseRisk: "Medium",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-mobile",
+        licenseRisk: "Low",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-desktop",
+        licenseRisk: "Unknown",
+        licenseFamily: "Permissive",
+    },
+];
