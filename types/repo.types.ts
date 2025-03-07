@@ -10,12 +10,7 @@ export interface MyRepoPaginationProps {
     onPageChange: (page: number) => void;
   }
   
-export  type MyRepository = {
-    repositoryName: string;
-    totalVulnerabilities: number;
-    vulnerabilities: { id: number; name: string; severity: string }[];
-    sharingDetails: { id: number; name: string; avatarUrl: string }[];
-  };
+
 
 
   export interface IHeadingProps {
@@ -70,7 +65,7 @@ export  type MyRepository = {
   };
 
   export type TMyRepoTableProps = {
-    repos?: MyRepository[];
+    repos?: Repository[];
     refetch?: () => void;
     totalCountAndLimit?: { totalCount: number; size: number };
     currentPage: number;

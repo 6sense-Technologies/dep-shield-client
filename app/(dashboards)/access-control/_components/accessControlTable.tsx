@@ -59,7 +59,7 @@ export const AccessControlTable: React.FC<TAccessControlTableProps> = ({
         },
         {
             accessorKey: "shareTime",
-            header: () => <div className="text-bold">Share Time</div>,
+            header: () => <div className="text-bold">Shared Time</div>,
             cell: ({ row }: { row: any }) => formatShareTime(row.getValue("shareTime")),
         },
         {
