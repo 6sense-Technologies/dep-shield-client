@@ -3,7 +3,7 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-accounting-service",
       totalVulnerabilities: 13,
       vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 1, name: "Critical", severity: "Low" },
         { id: 2, name: "High", severity: "High" },
       ],
       sharingDetails: [
@@ -14,7 +14,7 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-billing-service",
       totalVulnerabilities: 3,
       vulnerabilities: [
-        { id: 1, name: "Low", severity: "Low" },
+        { id: 1, name: "Low", severity: "Critical" },
         { id: 2, name: "Medium", severity: "Medium" },
       ],
       sharingDetails: [
@@ -26,8 +26,8 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-customer-service",
       totalVulnerabilities: 2,
       vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
+        { id: 1, name: "Critical", severity: "Low" },
+        { id: 2, name: "High", severity: "Medium" },
       ],
       sharingDetails: [
         { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
@@ -297,38 +297,6 @@ export const firstTabData = [
     { key: "Availability", value: "None" },
 ];
 
-export const DepData = [
-  {
-      repositoryName: "CVE-2023-42282",
-  },
-  {
-      repositoryName: "CVE-2023-42283",
-  },
-  {
-      repositoryName: "CVE-2023-42284",
-  },
-  {
-      repositoryName: "CVE-2023-42285",
-  },
-  {
-      repositoryName: "CVE-2023-42286",
-  },
-  {
-      repositoryName: "CVE-2023-42287",
-  },
-  {
-      repositoryName: "CVE-2023-42288",
-  },
-  {
-      repositoryName: "CVE-2023-42289",
-  },
-  {
-      repositoryName: "CVE-2023-42290",
-  },
-  {
-      repositoryName: "CVE-2023-42291",
-  }
-];
 
 export const EffectedlicensesData = [
     {

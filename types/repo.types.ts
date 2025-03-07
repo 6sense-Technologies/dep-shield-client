@@ -84,3 +84,12 @@ export  type MyRepository = {
     currentPage: number;
     loading?: boolean;
   };
+
+  export interface IHeadingProps {
+    title: string;
+    subTitle?: string;
+    titleclassName?: string;
+    subTitleClassName?: string;
+    className?: string;
+    hoverTitle?: string;
+}

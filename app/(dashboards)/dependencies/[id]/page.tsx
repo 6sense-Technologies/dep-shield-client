@@ -8,7 +8,7 @@ import CustomCardWithBadge from "../../vulnerabilities/[id]/_components/customCa
 import { SingleDepTable } from "./_components/SingleDepTable";
 import DepSearchSection from "./_components/DepSearchSection";
 import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
-import { DepData } from "@/constants/DummyDataFactory";
+import {RepoData } from "@/constants/DummyDataFactory";
 import LinkSection from "./_components/LinkSection";
 
 
@@ -56,8 +56,8 @@ const DependenciesDetailsContent = () => {
                 <div>
                     <DepSearchSection />
                     <SingleDepTable
-                        repos={DepData ?? []}
-                        totalCountAndLimit={{ totalCount: DepData.length, size: 10 }}
+                        repos={RepoData ?? []}
+                        totalCountAndLimit={{ totalCount: RepoData.length, size: 10 }}
                         currentPage={1}
                         loading={false}
                     />

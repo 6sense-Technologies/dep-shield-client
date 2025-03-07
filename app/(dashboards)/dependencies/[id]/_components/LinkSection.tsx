@@ -1,8 +1,8 @@
 import React from "react";
 import { ExternalLink, House } from "lucide-react";
 import Image from "next/image";
-import miniGit from "../../../../public/logo/miniGithub.svg";
-import miniNPM from "../../../../public/logo/mininpm.svg";
+import miniGit from "../../../../../public/logo/miniGithub.svg";
+import miniNPM from "../../../../../public/logo/mininpm.svg";
 import { Badge } from "@/components/ui/badge";
 
 interface LinkSectionProps {
