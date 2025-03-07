@@ -1,22 +1,9 @@
 import React from "react";
-import {
-    flexRender,
-    useReactTable,
-    ColumnDef,
-    getCoreRowModel,
-} from "@tanstack/react-table";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-} from "@/components/ui/table";
-import { SecondTableData } from "@/types/tableprops.types";
+import { ColumnDef } from "@tanstack/react-table";
+
 import { getColor } from "@/constants/globalFunctions";
-
-
-
-
+import { SecondTableData } from "@/types/tableprops.types";
+import DynamicTable from "@/components/DynamicTable";
 
 const columns: ColumnDef<SecondTableData>[] = [
     {
@@ -43,32 +30,7 @@ type SecondTabTableProps = {
 };
 
 const SecondTabTable: React.FC<SecondTabTableProps> = ({ data }) => {
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-    });
-
-    return (
-        <div className="w-[390px]">
-            <Table className="border-none">
-                <TableBody>
-                    {table.getRowModel().rows.map((row: any) => (
-                        <TableRow key={row.id} className="border-none">
-                            {row.getVisibleCells().map((cell: any) => (
-                                <TableCell key={cell.id} className="border-none">
-                                    {flexRender(
-                                        cell.column.columnDef.cell as React.ReactNode,
-                                        cell.getContext()
-                                    )}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </div>
-    );
+    return <DynamicTable<SecondTableData> data={data} columns={columns} />;
 };
 
 export default SecondTabTable;
