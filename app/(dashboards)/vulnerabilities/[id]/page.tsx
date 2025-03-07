@@ -1,10 +1,6 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
 import React, { Suspense, useState, useRef, useEffect } from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
-import PageHeading from "@/components/pageHeading";
+import PageHeader from "@/components/PageHeader";
 import Loader from "@/components/loader";
 import CustomCard from "./_components/customCard";
 import CustomCardWithBadge from "./_components/customCardWithBadge";
@@ -18,6 +14,8 @@ import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
 import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import PageHeading from "@/components/pageHeading";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
@@ -56,17 +54,8 @@ const VulnerabilitiesDetailsContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="CVE-2023-42282 Details • Vulnerabilities • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Vulnerabilities" initalLink="/vulnerabilities" secondayData="Details" secondayLink="/vulnerabilities/12" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="CVE-2023-42282 Details • Vulnerabilities • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Vulnerabilities" initialLink="/vulnerabilities" secondaryData="Details" secondaryLink="/vulnerabilities/12" />
             <div className="flex items-center pl-4 md:pl-8 pt-3">
                 <PageHeading title="CVE-2023-42282" className="mr-4" />
             </div>
@@ -174,9 +163,7 @@ const VulnerabilitiesDetailsContent = () => {
                         totalCountAndLimit={{ totalCount: RepoData.length, size: 10 }}
                         currentPage={1}
                         loading={false}
-
                     />
-
                 </div>
             </div>
         </div>

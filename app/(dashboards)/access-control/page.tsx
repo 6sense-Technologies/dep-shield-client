@@ -2,15 +2,14 @@
 
 import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import AvatarMenu from '@/components/AvatarMenu';
-import GlobalBreadCrumb from '@/components/globalBreadCrumb';
-import PageTitle from '@/components/PageTitle';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { FolderOpen} from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
+
+import { FolderOpen } from 'lucide-react';
 import AccessControlSearchArea from './_components/accessControlSearchArea';
 import PageHeadingwithButton from '../repositories/_components/PageHeadingwithButton';
 import Loader from '@/components/loader';
 import { AccessControlTable } from './_components/accessControlTable';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 
 // Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
@@ -44,22 +43,11 @@ const AccessControl = () => {
         <Suspense fallback={<Loader />}>
             <SearchParamsWrapper>
                 <div>
-                    <PageTitle title="Access Control • DepShield.io" />
-                    <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                        <span className="md:hidden"><SidebarTrigger /></span>
-                        <AvatarMenu />
-                    </div>
-                    <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                        <GlobalBreadCrumb initialData="Access Control" initalLink="/access-control" />
-                        <span className="hidden md:flex pr-2">
-                            <AvatarMenu />
-                        </span>
-                    </div>
+                    <PageHeader title="Access Control • DepShield.io" />
+                    <BreadcrumbWithAvatar initialData="Access Control" initialLink="/access-control" />
                     <div className="px-3 lg:px-6">
                         <PageHeadingwithButton title="Access Control" className="pl-2 pt-3" showButton={false} />
-                        <AccessControlSearchArea
-                            empty={dummyData.length === 0}
-                        />
+                        <AccessControlSearchArea empty={dummyData.length === 0} />
                         {dummyData.length === 0 ? (
                             <div className='flex flex-col items-center justify-center h-96 '>
                                 <span><FolderOpen size={32} strokeWidth={1} /></span>
@@ -71,7 +59,8 @@ const AccessControl = () => {
                                 totalCountAndLimit={{ totalCount: dummyData.length, size: 10 }}
                                 currentPage={1}
                                 loading={false}
-                            />)}
+                            />
+                        )}
                     </div>
                 </div>
             </SearchParamsWrapper>

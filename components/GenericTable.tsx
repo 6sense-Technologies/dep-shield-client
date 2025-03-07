@@ -20,8 +20,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import EmptyTableSkeleton from "@/components/emptyTableSkeleton";
-import { VulnabilitiesPagination } from "@/app/(dashboards)/repositories/[id]/details/_components/VulnabilitiesPagination";
 import { Repository } from "@/types/repo.types";
+import { GenericPagination } from "./GenericPagination";
 
 interface GenericTableProps<T> {
     columns: ColumnDef<T>[];
@@ -54,7 +54,7 @@ export const GenericTable = <T,>({
         pageSize: 10,
     });
     const [currentPageState, setCurrentPageState] = useState(currentPage);
-    const [isLoading, setIsLoading] = useState(false);
+    const [,setIsLoading] = useState(false);
     const totalPages = totalCountAndLimit.totalCount
         ? Math.ceil(totalCountAndLimit.totalCount / totalCountAndLimit.size)
         : 0;
@@ -101,7 +101,7 @@ export const GenericTable = <T,>({
 
     return (
         <div className="w-full">
-            {isLoading ? (
+            {loading ? (
                 <EmptyTableSkeleton />
             ) : (
                 <>
@@ -166,10 +166,11 @@ export const GenericTable = <T,>({
                             showing
                         </div>
                         <div className="flex items-center md:justify-end mb-4 pt-4 md:pt-0">
-                            <VulnabilitiesPagination
+                            <GenericPagination
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
+                                basePath="/repositories/add?provider=github"
                             />
                         </div>
                     </div>

@@ -1,16 +1,15 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
 import React from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
-import PageHeading from "@/components/pageHeading";
+import PageHeader from "@/components/PageHeader";
+
 import { useSession } from "next-auth/react";
 import ProfileAvatarSection from "./_components/ProfileAvatarSection";
 import CredentialsArea from "./_components/CredentialsArea";
 import IntegrationArea from "./_components/IntegrationArea";
 import PasswordArea from "./_components/PasswordArea";
 import { getInitials } from "@/constants/globalFunctions";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import PageHeading from "@/components/pageHeading";
 
 const Profile = () => {
     const session = useSession();
@@ -18,17 +17,8 @@ const Profile = () => {
 
     return (
         <div>
-            <PageTitle title="Profile • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Profile" initalLink="/profile" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="Profile • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Profile" initialLink="/profile" />
             <div className="px-3 lg:px-6">
                 <PageHeading title="My Profile" className="pl-2 pt-3" />
 

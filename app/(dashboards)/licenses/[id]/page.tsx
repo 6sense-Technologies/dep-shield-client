@@ -1,15 +1,13 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
-import React, { Suspense, useState} from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
+import React, { Suspense, useState } from "react";
+import PageHeader from "@/components/PageHeader";
 import PageHeading from "@/components/pageHeading";
 import Loader from "@/components/loader";
 import { Badge } from "@/components/ui/badge";
 import { Check, CircleAlert, ExternalLink, X } from "lucide-react";
 import CustomAlert from "./_components/customAlert";
 import { SingleLicenseTable } from "./_components/singleLicenseTable";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
 
 const LicensesData = [
     {
@@ -49,17 +47,8 @@ const LicensesDetailsContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="MIT Details • Licenses • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Licenses" initalLink="/licenses" secondayData="Details" secondayLink="/licenses/12" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="MIT Details • Licenses • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Licenses" initialLink="/licenses" secondaryData="Details" secondaryLink="/licenses/12" />
             <div className="flex items-center pl-4 md:pl-8 pt-3">
                 <PageHeading title="MIT" className="mr-4" />
             </div>
