@@ -68,3 +68,19 @@ export  type MyRepository = {
       currentPage: number;
       loading?: boolean;
   };
+
+  export type TMyRepoTableProps = {
+    repos?: MyRepository[];
+    refetch?: () => void;
+    totalCountAndLimit?: { totalCount: number; size: number };
+    currentPage: number;
+    loading?: boolean;
+  };
+
+  export type TRepoTableProps = {
+    repos?: Repository[];
+    refetch?: () => void;
+    totalCountAndLimit?: { totalCount: number; size: number };
+    currentPage: number;
+    loading?: boolean;
+  };

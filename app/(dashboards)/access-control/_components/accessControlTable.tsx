@@ -25,29 +25,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { AccessControlPagination } from "./accessControlPagination";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { getInitials } from "@/constants/globalFunctions";
-import { AccessControl } from "@/types/AccessControl.types";
-
-
-
-
-const formatShareTime = (shareTime: string) => {
-    const [time, date] = shareTime.split(".");
-    return (
-        <div className="flex flex-col">
-            <span className="text-black">{time}</span>
-            <span className="text-inputFooterColor pt-1">{date}</span>
-        </div>
-    );
-};
-
-type TAccessControlTableProps = {
-    controls?: AccessControl[];
-    refetch?: () => void;
-    totalCountAndLimit?: { totalCount: number; size: number };
-    currentPage: number;
-    loading?: boolean;
-};
+import { formatShareTime, getInitials } from "@/constants/globalFunctions";
+import { AccessControl, TAccessControlTableProps } from "@/types/AccessControl.types";
 
 export const AccessControlTable: React.FC<TAccessControlTableProps> = ({
     controls = [],
