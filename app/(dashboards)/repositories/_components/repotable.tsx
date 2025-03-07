@@ -5,13 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RepoPagination } from "./repoPagination";
 import Link from "next/link";
-import { getBadgeVariant } from "@/constants/globalFunctions";
+import { getBadgeVariant, getSeverityCount } from "@/constants/globalFunctions";
 import { Repository, TRepoTableProps } from "@/types/repo.types";
 import { GenericTable } from "@/components/GenericTable";
 
-const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
-    return vulnerabilities.filter(vuln => vuln.severity === severity).length;
-};
+
 
 export const RepoTable: React.FC<TRepoTableProps> = ({
     repos = [],
@@ -46,8 +44,8 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                 const severities = ["Critical", "High", "Medium", "Low", "Unknown"];
                 return (
                     <div className="flex flex-wrap gap-2">
-                        {severities.map(severity => {
-                            const count = getSeverityCount(vulnerabilities, severity);
+                        {severities.map((severity: string) => {
+                            const count: number = getSeverityCount(vulnerabilities, severity);
                             return count > 0 ? (
                                 <Badge key={severity} className={getBadgeVariant(severity)}>
                                     {severity} {count}
