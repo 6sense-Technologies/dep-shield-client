@@ -21,3 +21,11 @@ export type RemoveAllModalProps = {
   onConfirm: () => void;
 };
 
+export type TAccessControlTableProps = {
+    controls?: AccessControl[];
+    refetch?: () => void;
+    totalCountAndLimit?: { totalCount: number; size: number };
+    currentPage: number;
+    loading?: boolean;
+};
+
