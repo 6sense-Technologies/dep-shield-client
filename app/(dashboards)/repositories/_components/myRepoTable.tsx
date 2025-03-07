@@ -7,7 +7,7 @@ import { ScanText } from "lucide-react";
 import { MyRepoPagination } from "./MyRepoPagination";
 import Link from "next/link";
 import { getBadgeVariant, getSeverityCount } from "@/constants/globalFunctions";
-import { MyRepository, TMyRepoTableProps } from "@/types/repo.types";
+import { Repository, TMyRepoTableProps } from "@/types/repo.types";
 import { GenericTable } from "@/components/GenericTable";
 import { cellClassNames } from "@/constants/TableItems";
 
@@ -19,7 +19,7 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
     currentPage,
     loading=false,
 }) => {
-    const columns: ColumnDef<MyRepository>[] = [
+    const columns: ColumnDef<Repository>[] = [
         {
             accessorKey: "repositoryName",
             header: () => <div className="text-bold">Repository Name</div>,
