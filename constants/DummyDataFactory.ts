@@ -297,3 +297,80 @@ export const firstTabData = [
     { key: "Availability", value: "None" },
 ];
 
+export const DepData = [
+  {
+      repositoryName: "CVE-2023-42282",
+  },
+  {
+      repositoryName: "CVE-2023-42283",
+  },
+  {
+      repositoryName: "CVE-2023-42284",
+  },
+  {
+      repositoryName: "CVE-2023-42285",
+  },
+  {
+      repositoryName: "CVE-2023-42286",
+  },
+  {
+      repositoryName: "CVE-2023-42287",
+  },
+  {
+      repositoryName: "CVE-2023-42288",
+  },
+  {
+      repositoryName: "CVE-2023-42289",
+  },
+  {
+      repositoryName: "CVE-2023-42290",
+  },
+  {
+      repositoryName: "CVE-2023-42291",
+  }
+];
+
+export const EffectedlicensesData = [
+    {
+        name: "Apache-2.0",
+        licenseRisk: "Low",
+        dependencies: 12,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["6senseEV/6sense-ev-oc", "pp-server"]
+    },
+    {
+        name: "MIT",
+        licenseRisk: "Medium",
+        dependencies: 8,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["repo1", "repo2", "repo3"]
+    },
+    {
+        name: "GPL-3.0",
+        licenseRisk: "High",
+        dependencies: 5,
+        licenseFamily: "Strong Copyleft",
+        affectedRepositories: ["repo4"]
+    },
+    {
+        name: "BSD-3-Clause",
+        licenseRisk: "Low",
+        dependencies: 10,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["repo5", "repo6"]
+    },
+    {
+        name: "LGPL-2.1",
+        licenseRisk: "Medium",
+        dependencies: 7,
+        licenseFamily: "Weak Copyleft",
+        affectedRepositories: ["repo7", "repo8", "repo9"]
+    },
+    {
+        name: "MPL-2.0",
+        licenseRisk: "Unknown",
+        dependencies: 4,
+        licenseFamily: "Weak Copyleft",
+        affectedRepositories: ["repo10"]
+    }
+];

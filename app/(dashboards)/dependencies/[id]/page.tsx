@@ -1,9 +1,6 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
-import React, { Suspense} from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
+import React, { Suspense } from "react";
+import PageHeader from "@/components/PageHeader";
 import PageHeading from "@/components/pageHeading";
 import Loader from "@/components/loader";
 import CustomCard from "../../vulnerabilities/[id]/_components/customCard";
@@ -15,63 +12,16 @@ import { ExternalLink, House } from "lucide-react";
 import miniGit from "../../../../public/logo/miniGithub.svg";
 import miniNPM from "../../../../public/logo/mininpm.svg";
 import Image from "next/image";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import { DepData } from "@/constants/DummyDataFactory";
 
-const DepData = [
-    {
-        repositoryName: "CVE-2023-42282",
 
-    },
-    {
-        repositoryName: "CVE-2023-42283",
-
-    },
-    {
-        repositoryName: "CVE-2023-42284",
-
-    },
-    {
-        repositoryName: "CVE-2023-42285",
-
-    },
-    {
-        repositoryName: "CVE-2023-42286",
-    },
-    {
-        repositoryName: "CVE-2023-42287",
-    },
-    {
-        repositoryName: "CVE-2023-42288",
-
-    },
-    {
-        repositoryName: "CVE-2023-42289",
-
-    },
-    {
-        repositoryName: "CVE-2023-42290",
-
-    },
-    {
-        repositoryName: "CVE-2023-42291",
-
-    }
-];
 
 const DependenciesDetailsContent = () => {
-
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="@types/react (npm) Details • Dependencies • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Dependencies" initalLink="/dependencies" secondayData="Details" secondayLink="/dependencies/12" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="@types/react (npm) Details • Dependencies • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Dependencies" initialLink="/dependencies" secondaryData="Details" secondaryLink="/dependencies/12" />
             <div className="flex items-center pl-4 md:pl-8 pt-3">
                 <PageHeading title="@types/react (npm)" className="mr-4" />
             </div>
@@ -114,12 +64,10 @@ const DependenciesDetailsContent = () => {
                             GitHub
                         </span>
 
-
                         <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniNPM} alt="mini-NPM-Logo" width={14} />
                             NPM
                         </span>
                     </div>
-
                 </div>
             </div>
 
@@ -144,7 +92,6 @@ const DependenciesDetailsContent = () => {
                             GitHub
                         </span>
 
-
                         <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniNPM} alt="mini-NPM-Logo" width={14} />
                             NPM
                         </span>
@@ -163,9 +110,7 @@ const DependenciesDetailsContent = () => {
                         totalCountAndLimit={{ totalCount: DepData.length, size: 10 }}
                         currentPage={1}
                         loading={false}
-
                     />
-
                 </div>
             </div>
         </div>
