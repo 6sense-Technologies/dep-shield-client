@@ -6,13 +6,10 @@ import { Button } from "@/components/ui/button";
 import { ScanText } from "lucide-react";
 import { MyRepoPagination } from "./MyRepoPagination";
 import Link from "next/link";
-import { getBadgeVariant } from "@/constants/globalFunctions";
+import { getBadgeVariant, getSeverityCount } from "@/constants/globalFunctions";
 import { MyRepository, TMyRepoTableProps } from "@/types/repo.types";
 import { GenericTable } from "@/components/GenericTable";
 
-const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
-    return vulnerabilities.filter(vuln => vuln.severity === severity).length;
-};
 
 export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
     repos = [],

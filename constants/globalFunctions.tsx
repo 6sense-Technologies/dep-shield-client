@@ -147,3 +147,7 @@ export const formatShareTime = (shareTime: string) => {
         </div>
     );
 }
+
+export const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
+    return vulnerabilities.filter(vuln => vuln.severity === severity).length;
+};
