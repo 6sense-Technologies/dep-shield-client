@@ -29,8 +29,8 @@ const AddRepoSearchArea : FC<AddRepoSearchAreaProps> = ({session}) => {
         <div className='flex flex-col lg:flex-row justify-between w-full'>
             <RepositorySearchbar
                 placeholder="Search by repository name"
-                name="search"
-                btntext="Search"
+                name="Addreposearch"
+                btntext="AddrepoSearch"
                 className="mt-4 mb-[26px] gap-x-2 w-full lg:max-w-[300px] relative placeholder:font-normal"
                 variant="light"
             />
