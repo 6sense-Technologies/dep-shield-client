@@ -39,9 +39,9 @@ export interface MyRepoPaginationProps {
   
   export type Repository = {
     repositoryName: string;
-    totalVulnerabilities: number;
-    vulnerabilities: { id: number; name: string; severity: string }[];
-    sharingDetails: { id: number; name: string; avatarUrl: string }[];
+    totalVulnerabilities?: number;
+    vulnerabilities?: { id: number; name: string; severity: string }[];
+    sharingDetails?: { id: number; name: string; avatarUrl: string }[];
   };
   
   export interface SharePaginationProps {
