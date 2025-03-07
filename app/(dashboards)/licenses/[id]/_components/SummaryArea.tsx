@@ -1,5 +1,7 @@
-import { Badge, Check, CircleAlert, X } from 'lucide-react'
-import React from 'react'
+import React from 'react';
+import { Check, CircleAlert, X } from 'lucide-react';
+import CustomBadge from './CustomBadge';
+
 
 const SummaryArea = () => {
     return (
@@ -7,66 +9,27 @@ const SummaryArea = () => {
             <div>
                 <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Permissions</h1>
                 <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                    <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Commercial use
-                            </span>
-                        </div>
-                    </Badge>
-                    <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Modification
-
-                            </span>
-                        </div>
-                    </Badge>
-                    <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Distribution
-                            </span>
-                        </div>
-                    </Badge>
-                    <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">
-                                Private use
-                            </span>
-                        </div>
-                    </Badge>
+                    <CustomBadge label="Commercial use" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                    <CustomBadge label="Modification" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                    <CustomBadge label="Distribution" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                    <CustomBadge label="Private use" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
                 </div>
             </div>
             <div>
                 <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Limitations</h1>
                 <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                    <Badge className="inline-flex items-center gap-1 bg-[#FEF2F2]  hover:bg-[#FEF2F2] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <X size={14} className="mb-[2px] text-[#DC2626]" />  <span className="text-twelve font-normal text-[#DC2626]">Liability
-                            </span>
-                        </div>
-                    </Badge>
-                    <Badge className="inline-flex items-center gap-1 bg-[#FEF2F2]  hover:bg-[#FEF2F2] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <X size={14} className="mb-[2px] text-[#DC2626]" />  <span className="text-twelve font-normal text-[#DC2626]">
-                                Warranty
-                            </span>
-                        </div>
-                    </Badge>
-
+                    <CustomBadge label="Liability" bgColor="bg-[#FEF2F2]" textColor="text-[#DC2626]" icon={<X size={14} className="mb-[2px] text-[#DC2626]" />} />
+                    <CustomBadge label="Warranty" bgColor="bg-[#FEF2F2]" textColor="text-[#DC2626]" icon={<X size={14} className="mb-[2px] text-[#DC2626]" />} />
                 </div>
             </div>
             <div>
                 <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Conditions</h1>
                 <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                    <Badge className="inline-flex items-center gap-1 bg-[#F1F5F9]  hover:bg-[#F1F5F9] text-nowrap font-normal">
-                        <div className="flex items-center gap-1">
-                            <CircleAlert size={14} className="mb-[2px] text-[#0F172A]" />  <span className="text-twelve font-normal text-[#0F172A]">License and copyright notice
-                            </span>
-                        </div>
-                    </Badge>
+                    <CustomBadge label="License and copyright notice" bgColor="bg-[#F1F5F9]" textColor="text-[#0F172A]" icon={<CircleAlert size={14} className="mb-[2px] text-[#0F172A]" />} />
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SummaryArea
+export default SummaryArea;
