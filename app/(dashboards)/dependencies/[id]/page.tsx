@@ -7,14 +7,9 @@ import CustomCard from "../../vulnerabilities/[id]/_components/customCard";
 import CustomCardWithBadge from "../../vulnerabilities/[id]/_components/customCardWithBadge";
 import { SingleDepTable } from "./_components/SingleDepTable";
 import DepSearchSection from "./_components/DepSearchSection";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, House } from "lucide-react";
-import miniGit from "../../../../public/logo/miniGithub.svg";
-import miniNPM from "../../../../public/logo/mininpm.svg";
-import Image from "next/image";
 import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
 import { DepData } from "@/constants/DummyDataFactory";
-
+import LinkSection from "./_components/LinkSection";
 
 
 const DependenciesDetailsContent = () => {
@@ -45,57 +40,12 @@ const DependenciesDetailsContent = () => {
             </div>
 
             <div className="pt-6 px-4 md:pt-6 md:px-6 hidden lg:flex">
-                <p className="text-sm font-normal text-deepBlackColor mt-2 mr-5">Current Version</p>
-                <div className="flex items-center gap-3 mt-1">
-                    <div className="mr-4">
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor">18.2.21</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
-
-                    <div className="mt-1 flex items-center gap-3">
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><House size={14} />
-                            Homepage
-                        </span>
-
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniGit} alt="miniGitLogo" width={14} />
-                            GitHub
-                        </span>
-
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniNPM} alt="mini-NPM-Logo" width={14} />
-                            NPM
-                        </span>
-                    </div>
-                </div>
+                <LinkSection version="18.2.21" />
             </div>
 
             <div className="pt-6 px-4 md:pt-6 md:px-6 flex flex-col lg:hidden">
                 <div className="flex flex-row gap-x-12 lg:hidden border-b pb-4 items-center justify-center">
-                    <p className="text-sm font-normal text-deepBlackColor mt-2 mr-5">Current Version</p>
-                    <div className="mt-1">
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor">18.2.21</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
-                </div>
-                <div>
-                    <div className="mt-1 flex items-center gap-3 justify-center pt-4">
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><House size={14} />
-                            Homepage
-                        </span>
-
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniGit} alt="miniGitLogo" width={14} />
-                            GitHub
-                        </span>
-
-                        <span className="flex text-twelve font-normal text-deepBlackColor gap-x-[6px]"><Image src={miniNPM} alt="mini-NPM-Logo" width={14} />
-                            NPM
-                        </span>
-                    </div>
+                    <LinkSection version="18.2.21" />
                 </div>
             </div>
 
