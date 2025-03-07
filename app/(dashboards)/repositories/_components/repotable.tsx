@@ -8,6 +8,7 @@ import Link from "next/link";
 import { getBadgeVariant, getSeverityCount } from "@/constants/globalFunctions";
 import { Repository, TRepoTableProps } from "@/types/repo.types";
 import { GenericTable } from "@/components/GenericTable";
+import { cellClassNames, headerClassNames } from "@/constants/TableItems";
 
 
 
@@ -88,19 +89,7 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
         },
     ];
 
-    const headerClassNames = {
-        actions: "text-right w-[115px]",
-        repoName: "min-w-[300px]",
-        totalVulnerabilities: "min-w-[200px]",
-        sharingDetails: "min-w-[200px]",
-    };
 
-    const cellClassNames = {
-        actions: "text-right",
-        repoName: "pl-4 text-start",
-        totalVulnerabilities: "text-start pl-4",
-        vulnerabilities: "pl-4 text-start",
-    };
 
     return (
         <GenericTable

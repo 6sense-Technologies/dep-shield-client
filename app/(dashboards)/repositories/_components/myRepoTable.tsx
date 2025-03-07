@@ -9,6 +9,7 @@ import Link from "next/link";
 import { getBadgeVariant, getSeverityCount } from "@/constants/globalFunctions";
 import { MyRepository, TMyRepoTableProps } from "@/types/repo.types";
 import { GenericTable } from "@/components/GenericTable";
+import { cellClassNames } from "@/constants/TableItems";
 
 
 export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
@@ -87,12 +88,6 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
         sharingDetails: "min-w-[200px]",
     };
 
-    const cellClassNames = {
-        actions: "text-right",
-        repositoryName: "pl-4 text-start",
-        totalVulnerabilities: "text-start pl-4",
-        vulnerabilities: "pl-4 text-start",
-    };
 
     return (
         <GenericTable
