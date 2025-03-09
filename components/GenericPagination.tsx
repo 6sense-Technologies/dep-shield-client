@@ -66,6 +66,10 @@ export const GenericPagination: React.FC<PaginationProps> = ({
 
     const pagination = getPagination();
 
+    const getPageUrl = (page: number) => {
+        return basePath.includes('?') ? `${basePath}&page=${page}` : `${basePath}?page=${page}`;
+    };
+
     return (
         <CustomPagination>
             <PaginationContent>
@@ -77,7 +81,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                             e.preventDefault();
                             if (currentPage > 1) {
                                 onPageChange(currentPage - 1);
-                                router.push(`${basePath}?page=${currentPage - 1}`);
+                                router.push(getPageUrl(currentPage - 1));
                             }
                         }}
                     />
@@ -92,7 +96,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                                 onClick={(e) => {
                                     e.preventDefault();
                                     onPageChange(page);
-                                    router.push(`${basePath}?page=${page}`);
+                                    router.push(getPageUrl(page));
                                 }}
                             >
                                 {page}
@@ -110,7 +114,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                             e.preventDefault();
                             if (currentPage < totalPage) {
                                 onPageChange(currentPage + 1);
-                                router.push(`${basePath}?page=${currentPage + 1}`);
+                                router.push(getPageUrl(currentPage + 1));
                             }
                         }}
                     />

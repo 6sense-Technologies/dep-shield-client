@@ -7,7 +7,7 @@ import { RemoveAllModalProps } from '@/types/AccessControl.types';
 const RemoveModal: React.FC<RemoveAllModalProps> = ({ isOpen, onClose, onConfirm }) => {
     return (
         <AlertDialog open={isOpen} onOpenChange={onClose}>
-            <AlertDialogContent className='bg-white'>
+            <AlertDialogContent className='bg-white' >
                 <AlertDialogHeader>
                     <AlertDialogTitle className="text-destructive">Remove access</AlertDialogTitle>
                     <AlertDialogDescription className="text-inputFooterColor">

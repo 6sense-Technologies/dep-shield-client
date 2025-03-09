@@ -1,9 +1,9 @@
 import React from "react";
 import { GenericTable } from "@/components/GenericTable";
 import { Button } from "@/components/ui/button";
-import { TSingleRepoTableProps } from "@/types/tableprops.types";
 import { SingleRepoPagination } from "./SingleRepoPagination";
 import { createColumns } from "@/components/ColumnDefinations";
+import { TMyRepoTableProps } from "@/types/repo.types";
 
 const columnsProps = [
     {
@@ -32,7 +32,7 @@ const cellClassNames = {
     repositoryName: "pl-4 text-start",
 };
 
-export const SingleRepoTable: React.FC<TSingleRepoTableProps> = ({
+export const SingleRepoTable: React.FC<TMyRepoTableProps> = ({
     repos = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },

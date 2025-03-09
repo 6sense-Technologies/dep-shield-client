@@ -48,3 +48,13 @@ export interface SLPaginationProps {
       loading?: boolean;
   };
   
+  export type TSingleLicenseTableProps = {
+      licenses?: SingleLicenses[];
+      refetch?: () => void;
+      totalCountAndLimit?: { totalCount: number; size: number };
+      currentPage: number;
+      loading?: boolean;
+  };
+
+
+  

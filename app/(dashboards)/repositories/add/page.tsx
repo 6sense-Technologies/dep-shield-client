@@ -1,10 +1,6 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
 import React, { useState, useEffect, Suspense } from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
-import PageHeading from "@/components/pageHeading";
+import PageHeader from "@/components/PageHeader";
 import EmptyAddRepoView from "./_components/EmptyAddRepoView";
 import { AddRepoTable } from "./_components/AddRepoTable";
 import Image from "next/image";
@@ -15,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getGitRepositories } from "@/helpers/githubApp/githubApi";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import PageHeading from "@/components/pageHeading";
 
 const AddRepositoryContent = () => {
     const [showTable, setShowTable] = useState(false);
@@ -58,17 +56,8 @@ const AddRepositoryContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="Add • Repositories • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Repositories" initalLink="/repositories" secondayData="Add Repositories" secondayLink="/repositories/add" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="Add • Repositories • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Repositories" initialLink="/repositories" secondaryData="Add Repositories" secondaryLink="/repositories/add" />
             <div className="flex items-center pl-4 md:pl-7 pt-3">
                 <PageHeading title="Add Repositories" className="mr-4" />
                 {showTable && <Image src={Github} alt="GitHub Logo" width={20} height={20} />}
@@ -76,7 +65,7 @@ const AddRepositoryContent = () => {
             {showTable ? (
                 <div className="pt-4 px-4 md:pt-4 md:px-6">
                     <AddRepoSearchArea 
-                    session={session}
+                        session={session}
                     />
                     <AddRepoTable
                         repositories={addRepoData?.repositories}

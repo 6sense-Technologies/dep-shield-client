@@ -2,10 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import AvatarMenu from '@/components/AvatarMenu';
-import GlobalBreadCrumb from '@/components/globalBreadCrumb';
-import PageTitle from '@/components/PageTitle';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+import PageHeader from '@/components/PageHeader';
 import { FolderOpen, Plus, Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RepoTable } from './_components/repotable';
@@ -21,6 +18,7 @@ import { useSession } from 'next-auth/react';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
 import Link from 'next/link';
 import { additionalDummyData, shareData } from '@/constants/DummyDataFactory';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 
 // Need this for next build
 const SearchParamsWrapper = ({ children }: { children: ((params: URLSearchParams) => React.ReactNode) | React.ReactNode }) => {
@@ -68,24 +66,13 @@ const Repositories = () => {
   });
   console.log("🚀 ~ Repositories ~ RepoData:", AllRepoData);
 
-
-
   return (
     <Suspense fallback={<Loader />}>
       <SearchParamsWrapper>
         {() => (
           <div>
-            <PageTitle title="Repositories • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-              <span className="md:hidden"><SidebarTrigger /></span>
-              <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-              <GlobalBreadCrumb initialData="Repositories" initalLink="/repositories" />
-              <span className="hidden md:flex pr-2">
-                <AvatarMenu />
-              </span>
-            </div>
+            <PageHeader title="Repositories • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Repositories" initialLink="/repositories" />
             <div className="px-3 lg:px-6">
               <PageHeadingwithButton title="All Repositories" className="pl-2 pt-3" showButton={activeTab !== 'all'} />
               <div className="tab pt-4">

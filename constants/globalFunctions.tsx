@@ -137,3 +137,17 @@ export const getHealthBadgeVariant = (value: number) => {
     }
     return "text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal";
 };
+
+export const formatShareTime = (shareTime: string) => {
+    const [time, date] = shareTime.split(".");
+    return (
+        <div className="flex flex-col">
+            <span className="text-black">{time}</span>
+            <span className="text-inputFooterColor pt-1">{date}</span>
+        </div>
+    );
+}
+
+export const getSeverityCount = (vulnerabilities: { id: number; name: string; severity: string }[], severity: string) => {
+    return vulnerabilities.filter(vuln => vuln.severity === severity).length;
+};

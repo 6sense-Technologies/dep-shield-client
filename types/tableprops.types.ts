@@ -8,15 +8,6 @@ export interface SinglePaginationProps {
     repositoryName: string;
 };
 
-  export type TSingleRepoTableProps = {
-      repos?: Repository[];
-      refetch?: () => void;
-      totalCountAndLimit?: { totalCount: number; size: number };
-      currentPage: number;
-      loading?: boolean;
-  };
-
-
   export type SecondTableData = {
     key: string;
     value: string;
