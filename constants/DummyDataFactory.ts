@@ -3,7 +3,7 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-accounting-service",
       totalVulnerabilities: 13,
       vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
+        { id: 1, name: "Critical", severity: "Low" },
         { id: 2, name: "High", severity: "High" },
       ],
       sharingDetails: [
@@ -14,7 +14,7 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-billing-service",
       totalVulnerabilities: 3,
       vulnerabilities: [
-        { id: 1, name: "Low", severity: "Low" },
+        { id: 1, name: "Low", severity: "Critical" },
         { id: 2, name: "Medium", severity: "Medium" },
       ],
       sharingDetails: [
@@ -26,8 +26,8 @@ export const additionalDummyData = [
       repositoryName: "6senseEV/6sense-ev-customer-service",
       totalVulnerabilities: 2,
       vulnerabilities: [
-        { id: 1, name: "Critical", severity: "Critical" },
-        { id: 2, name: "High", severity: "High" },
+        { id: 1, name: "Critical", severity: "Low" },
+        { id: 2, name: "High", severity: "Medium" },
       ],
       sharingDetails: [
         { id: 1, name: "User 6", avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg" },
@@ -297,3 +297,76 @@ export const firstTabData = [
     { key: "Availability", value: "None" },
 ];
 
+
+export const EffectedlicensesData = [
+    {
+        name: "Apache-2.0",
+        licenseRisk: "Low",
+        dependencies: 12,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["6senseEV/6sense-ev-oc", "pp-server"]
+    },
+    {
+        name: "MIT",
+        licenseRisk: "Medium",
+        dependencies: 8,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["repo1", "repo2", "repo3"]
+    },
+    {
+        name: "GPL-3.0",
+        licenseRisk: "High",
+        dependencies: 5,
+        licenseFamily: "Strong Copyleft",
+        affectedRepositories: ["repo4"]
+    },
+    {
+        name: "BSD-3-Clause",
+        licenseRisk: "Low",
+        dependencies: 10,
+        licenseFamily: "Permissive",
+        affectedRepositories: ["repo5", "repo6"]
+    },
+    {
+        name: "LGPL-2.1",
+        licenseRisk: "Medium",
+        dependencies: 7,
+        licenseFamily: "Weak Copyleft",
+        affectedRepositories: ["repo7", "repo8", "repo9"]
+    },
+    {
+        name: "MPL-2.0",
+        licenseRisk: "Unknown",
+        dependencies: 4,
+        licenseFamily: "Weak Copyleft",
+        affectedRepositories: ["repo10"]
+    }
+];
+
+export const LicensesData = [
+    {
+        repositoryName: "6senseEV/6sense-ev-admin",
+        licenseRisk: "Critical",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-api",
+        licenseRisk: "High",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-web",
+        licenseRisk: "Medium",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-mobile",
+        licenseRisk: "Low",
+        licenseFamily: "Permissive",
+    },
+    {
+        repositoryName: "6senseEV/6sense-ev-desktop",
+        licenseRisk: "Unknown",
+        licenseFamily: "Permissive",
+    },
+];

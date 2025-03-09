@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Flame, Handshake } from "lucide-react";
 import Link from "next/link";
-import { TDependenciesTableProps, Dependency } from "@/types/dependencies.types";
+import { TDependenciesTableProps} from "@/types/dependencies.types";
 import { getBadgeVariant, getHealthBadgeVariant } from "@/constants/globalFunctions";
 import { DependenciesPagination } from "./DependenciesPagination";
 import { createColumns } from "@/components/ColumnDefinations";

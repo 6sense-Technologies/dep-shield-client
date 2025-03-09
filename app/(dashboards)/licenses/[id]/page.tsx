@@ -1,43 +1,16 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
-import React, { Suspense, useState} from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AvatarMenu from "@/components/AvatarMenu";
-import GlobalBreadCrumb from "@/components/globalBreadCrumb";
+import React, { Suspense, useState } from "react";
+import PageHeader from "@/components/PageHeader";
 import PageHeading from "@/components/pageHeading";
 import Loader from "@/components/loader";
-import { Badge } from "@/components/ui/badge";
-import { Check, CircleAlert, ExternalLink, X } from "lucide-react";
 import CustomAlert from "./_components/customAlert";
 import { SingleLicenseTable } from "./_components/singleLicenseTable";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import { LicensesData } from "@/constants/DummyDataFactory";
 
-const LicensesData = [
-    {
-        repositoryName: "6senseEV/6sense-ev-admin",
-        licenseRisk: "Critical",
-        licenseFamily: "Permissive",
-    },
-    {
-        repositoryName: "6senseEV/6sense-ev-api",
-        licenseRisk: "High",
-        licenseFamily: "Permissive",
-    },
-    {
-        repositoryName: "6senseEV/6sense-ev-web",
-        licenseRisk: "Medium",
-        licenseFamily: "Permissive",
-    },
-    {
-        repositoryName: "6senseEV/6sense-ev-mobile",
-        licenseRisk: "Low",
-        licenseFamily: "Permissive",
-    },
-    {
-        repositoryName: "6senseEV/6sense-ev-desktop",
-        licenseRisk: "Unknown",
-        licenseFamily: "Permissive",
-    },
-];
+import { Check, CircleAlert,X } from "lucide-react";
+import CustomBadge from "./_components/CustomBadge";
+import Tabs from "./_components/Tabs";
 
 const LicensesDetailsContent = () => {
     const [activeTab, setActiveTab] = useState<string>("overview");
@@ -47,19 +20,15 @@ const LicensesDetailsContent = () => {
         localStorage.setItem("activeTab", tab);
     };
 
+    const tabs = [
+        { id: "overview", label: "Overview" },
+        { id: "fulltext", label: "Full text" },
+    ];
+
     return (
         <div className="flex flex-col min-h-screen">
-            <PageTitle title="MIT Details • Licenses • DepShield.io" />
-            <div className="flex justify-between items-center md:hidden px-4 pt-8 pb-4">
-                <span className="md:hidden"><SidebarTrigger /></span>
-                <AvatarMenu />
-            </div>
-            <div className="flex justify-between items-center px-3 lg:px-6 pt-4">
-                <GlobalBreadCrumb initialData="Licenses" initalLink="/licenses" secondayData="Details" secondayLink="/licenses/12" />
-                <span className="hidden md:flex pr-2">
-                    <AvatarMenu />
-                </span>
-            </div>
+            <PageHeader title="MIT Details • Licenses • DepShield.io" />
+            <BreadcrumbWithAvatar initialData="Licenses" initialLink="/licenses" secondaryData="Details" secondaryLink="/licenses/12" />
             <div className="flex items-center pl-4 md:pl-8 pt-3">
                 <PageHeading title="MIT" className="mr-4" />
             </div>
@@ -68,60 +37,23 @@ const LicensesDetailsContent = () => {
                 <div>
                     <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Permissions</h1>
                     <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                        <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Commercial use
-                                </span>
-                            </div>
-                        </Badge>
-                        <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Modification
-                                </span>
-                            </div>
-                        </Badge>
-                        <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">Distribution
-                                </span>
-                            </div>
-                        </Badge>
-                        <Badge className="inline-flex items-center gap-1 bg-[#DCFCE7]  hover:bg-[#DCFCE7] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <Check size={14} className="mb-[2px] text-[#166534]" />  <span className="text-twelve font-normal text-[#166534]">
-                                    Private use
-                                </span>
-                            </div>
-                        </Badge>
+                        <CustomBadge label="Commercial use" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                        <CustomBadge label="Modification" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                        <CustomBadge label="Distribution" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
+                        <CustomBadge label="Private use" bgColor="bg-[#DCFCE7]" textColor="text-[#166534]" icon={<Check size={14} className="mb-[2px] text-[#166534]" />} />
                     </div>
                 </div>
                 <div>
                     <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 ">Limitations</h1>
                     <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                        <Badge className="inline-flex items-center gap-1 bg-[#FEF2F2]  hover:bg-[#FEF2F2] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <X size={14} className="mb-[2px] text-[#DC2626]" />  <span className="text-twelve font-normal text-[#DC2626]">Liability
-                                </span>
-                            </div>
-                        </Badge>
-                        <Badge className="inline-flex items-center gap-1 bg-[#FEF2F2]  hover:bg-[#FEF2F2] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <X size={14} className="mb-[2px] text-[#DC2626]" />  <span className="text-twelve font-normal text-[#DC2626]">
-                                    Warranty
-                                </span>
-                            </div>
-                        </Badge>
+                        <CustomBadge label="Liability" bgColor="bg-[#FEF2F2]" textColor="text-[#DC2626]" icon={<X size={14} className="mb-[2px] text-[#DC2626]" />} />
+                        <CustomBadge label="Warranty" bgColor="bg-[#FEF2F2]" textColor="text-[#DC2626]" icon={<X size={14} className="mb-[2px] text-[#DC2626]" />} />
                     </div>
                 </div>
                 <div>
                     <h1 className="text-[16px] text-deepBlackColor font-medium border-b pb-2 mt-5 md:mt-0">Conditions</h1>
                     <div className="flex flex-wrap gap-2 mt-4 ml-1">
-                        <Badge className="inline-flex items-center gap-1 bg-[#F1F5F9]  hover:bg-[#F1F5F9] text-nowrap font-normal">
-                            <div className="flex items-center gap-1">
-                                <CircleAlert size={14} className="mb-[2px] text-[#0F172A]" />  <span className="text-twelve font-normal text-[#0F172A]">License and copyright notice
-                                </span>
-                            </div>
-                        </Badge>
+                        <CustomBadge label="License and copyright notice" bgColor="bg-[#F1F5F9]" textColor="text-[#0F172A]" icon={<CircleAlert size={14} className="mb-[2px] text-[#0F172A]" />} />
                     </div>
                 </div>
             </div>
@@ -129,20 +61,7 @@ const LicensesDetailsContent = () => {
             <CustomAlert />
 
             <div className="pt-6 px-4 md:pt-6 md:px-6">
-                <div className="flex space-x-2 md:space-x-4 border-b">
-                    <button
-                        className={`py-2 px-4 ${activeTab === 'overview' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
-                        onClick={() => handleTabChange('overview')}
-                    >
-                        Overview
-                    </button>
-                    <button
-                        className={`py-2 px-4 text-nowrap ${activeTab === 'fulltext' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
-                        onClick={() => handleTabChange('fulltext')}
-                    >
-                        Full text
-                    </button>
-                </div>
+                <Tabs activeTab={activeTab} onTabChange={handleTabChange} tabs={tabs} />
             </div>
             <div className="pt-6 px-4 md:pt-6 md:px-6">
                 {activeTab === 'overview' && (
@@ -188,34 +107,10 @@ const LicensesDetailsContent = () => {
                     <p className="font-medium text-[16px] text-deepBlackColor">References</p>
                 </div>
                 <div className="flex flex-wrap gap-3 mt-3">
-                    <div>
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor cursor-pointer">GitHub</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
-                    <div>
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor cursor-pointer">tl;drLegal</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
-                    <div>
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor cursor-pointer">Opensource</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
-                    <div>
-                        <Badge className="inline-flex items-center gap-1 bg-white text-black hover:bg-white text-nowrap font-normal">
-                            <div className="flex items-center gap-[6px]">
-                                <span className="text-twelve font-normal text-deepBlackColor cursor-pointer">SPDX</span> <ExternalLink size={14} className="mb-[2px]" />
-                            </div>
-                        </Badge>
-                    </div>
+                    <CustomBadge label="GitHub" link />
+                    <CustomBadge label="tl;drLegal" link />
+                    <CustomBadge label="Opensource" link />
+                    <CustomBadge label="SPDX" link />
                 </div>
             </div>
 
