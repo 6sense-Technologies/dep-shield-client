@@ -25,7 +25,6 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { TeamSwitcher } from './team-switcher';
 import { NavMain } from './nav-main';
-import { NavAdmin } from './nav-admin';
 
 const defaultData = {
   user: {
