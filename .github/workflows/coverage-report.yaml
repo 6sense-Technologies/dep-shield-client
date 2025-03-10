@@ -2,7 +2,7 @@ name: Coverage Reporting
 
 on:
   push:
-    branches: [test]
+    branches: [beta]
   workflow_dispatch:
 
 jobs:
