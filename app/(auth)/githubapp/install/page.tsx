@@ -43,10 +43,10 @@ const InstallContent = () => {
   });
 
   useEffect(() => {
-    if (authCode && installation_id && accessToken) {
+    if (authCode && installation_id && accessToken){
       installGithubAppMutation.mutate();
     }
-  }, [authCode, installation_id, accessToken, installGithubAppMutation]);
+  }, [accessToken]);
 
   return (
     <div>
