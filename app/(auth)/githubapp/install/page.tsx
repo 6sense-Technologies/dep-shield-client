@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import Loader from '@/components/loader';
 import { TEMP_BACKEND_URL } from '@/config';
