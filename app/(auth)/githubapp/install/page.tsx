@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import Loader from '@/components/loader';
 import { TEMP_BACKEND_URL } from '@/config';
@@ -43,10 +44,10 @@ const InstallContent = () => {
   });
 
   useEffect(() => {
-    if (authCode && installation_id && accessToken) {
+    if (authCode && installation_id && accessToken){
       installGithubAppMutation.mutate();
     }
-  }, [authCode, installation_id, accessToken, installGithubAppMutation]);
+  }, [accessToken]);
 
   return (
     <div>
