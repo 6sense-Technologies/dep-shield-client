@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
 import PageHeader from "@/components/PageHeader";
@@ -74,7 +75,7 @@ const IntegrationContent = () => {
                 github: false,
             }));
         }
-    }, [gitStatus]);
+    }, []);
 
     return (
         <div className="flex flex-col min-h-screen">

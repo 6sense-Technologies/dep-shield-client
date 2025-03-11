@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import {test } from '@playwright/test';
 
 test('Repositories', async ({ page }) => {
   // Set a longer timeout for the entire test
