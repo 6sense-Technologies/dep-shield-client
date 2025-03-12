@@ -2,15 +2,13 @@
 
 ![Depshield Logo](./public/logo/depSheildLogo.svg)
 
-Depshield is a powerful tool designed for analyzing and monitoring the security and integrity of your code repositories. Inspired by Debricked, it checks for vulnerabilities, limitations, and dependencies across different branches. Users can scan repositories to retrieve and analyze data, ensuring secure and optimized development.
+Depshield is a powerful tool designed for analyzing and monitoring the security and integrity of your code repositories. It checks for vulnerabilities, limitations, and dependencies across different branches. Users can scan repositories to retrieve and analyze data, ensuring secure and optimized development.
 
 ## Features
 
 - **Dependency Analysis:** Identify and track dependencies within your project.
 - **Vulnerability Scanning:** Detect security vulnerabilities and limitations in dependencies.
 - **Branch Monitoring:** Scan and retrieve data from repositories efficiently.
-- **Authentication & Security:** Uses Auth.js for authentication and Codecy for tracking code errors and duplication.
-- **Comprehensive Testing:** Ensures reliability with Jest and Playwright.
 
 ## Branching Strategy
 
