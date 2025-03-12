@@ -1,10 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Depshield Logo](./assets/logo.png)
+
+# Depshield
+
+Depshield is a powerful tool designed to analyze and monitor the security and integrity of your code repositories. Inspired by Debricked, it checks for vulnerabilities, limitations, and dependencies across different branches. Users can scan repositories to retrieve and analyze data, ensuring secure and optimized development.
+
+## Features
+
+Dependency Analysis: Identify and track dependencies within your project.
+
+Vulnerability Scanning: Detect security vulnerabilities and limitations in dependencies.
+
+Branch Monitoring: Scan and retrieve data from repositories efficiently.
+
+Authentication & Security: Uses Auth.js for authentication and Codecy for tracking code errors and duplication.
+
+Comprehensive Testing: Ensures reliability with Jest and Playwright.
+
+## Branching Strategy
+
+Test Branch: Used for internal testing.
+
+Beta Branch: Used for client testing.
+
+Development Branch: Uses the naming convention depshield-client-vX.00.00X, where X changes based on iteration.
+
+## Configuration
+
+The backend URLs and important keys/tokens are stored in the .env file.
+
+After modifying the .env file, export the values from config.ts for proper integration.
+
+.env.example file is provided to illustrate the .env file structure
+
+## Technologies Used
+
+Framework: Next.js
+
+Forms & Validation: React Hook Form, Zod
+
+UI Components: Shadcn
+
+Networking: Axios
+
+State Management: TanStack Query
+
+Icons: Lucide Icons
+
+Authentication: Auth.js
+
+Testing: Jest, Playwright
+
+Code Quality Monitoring: Codecy
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
-```bash
+npm install
+
+Run the development server:
+
 npm run dev
 # or
 yarn dev
@@ -12,25 +67,83 @@ yarn dev
 pnpm dev
 # or
 bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The recommended deployment platform is Vercel. Refer to the Next.js Deployment Guide for more details.
 
-## Learn More
+Deploying with Vercel CLI
 
-To learn more about Next.js, take a look at the following resources:
+To deploy your project using Vercel CLI, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Install Vercel CLI if you haven’t already:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+npm install -g vercel
 
-## Deploy on Vercel
+Login to Vercel:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+vercel login
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Follow the prompts to authenticate with your Vercel account.
+
+Navigate to your project directory and deploy:
+
+vercel
+
+This will initialize the deployment process and prompt you with options.
+
+If deploying updates, use:
+
+vercel --prod
+
+Deploying to Development and Preview Environments
+
+Development Environment: To deploy your project in a development environment, use:
+
+vercel --env development
+
+This helps in testing changes before pushing them to production.
+
+Preview Deployment: To create a preview deployment (useful for testing branches before merging), run:
+
+vercel --pre
+
+This will deploy the branch as a preview, which can be shared and tested before going live.
+
+Assigning a Custom Domain
+
+To assign a custom domain to your deployment:
+
+Add your domain to Vercel:
+
+vercel domains add yourdomain.com
+
+Update your DNS settings by following the instructions provided by Vercel.
+
+Set the domain for production:
+
+vercel alias yourdeploymenturl yourdomain.com
+
+Verify the domain:
+
+vercel domains inspect yourdomain.com
+
+Logging Out
+
+To log out of the Vercel CLI:
+
+vercel logout
+
+Learn More
+
+Next.js Documentation - Learn about Next.js features and API.
+
+Auth.js Documentation - Authentication setup.
+
+TanStack Query - Data fetching and state management.
+
+Vercel Documentation - Deployment and configuration guidance.
+
+Depshield aims to provide seamless security and dependency management for modern development workflows.
