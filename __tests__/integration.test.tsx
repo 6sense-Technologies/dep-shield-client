@@ -56,6 +56,9 @@ describe('Integration Page', () => {
   });
 
   it('renders the integration page correctly', async () => {
+    const pageTitle = screen.getByText('Integrations • DepShield.io');
+    expect(pageTitle).toBeInTheDocument();
+
     const heading = screen.getByText('All Integrations');
     expect(heading).toBeInTheDocument();
   });
