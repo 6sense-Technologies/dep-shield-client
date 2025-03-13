@@ -82,7 +82,10 @@ const IntegrationContent = () => {
             <PageHeader title="Integrations • DepShield.io" />
             <BreadcrumbWithAvatar initialData="Integrations" initialLink="/integrations" />
             <PageHeading title="All Integrations" className="pl-4 md:pl-7 pt-3" />
-            {(isGitStatusLoading || isFetchingGitStatus) ? (<Loader />) : (
+            {(isGitStatusLoading || isFetchingGitStatus) ? (<Loader 
+                text="Please wait while we set things up for you."
+                variant="big"
+            />) : (
                 <IntegrationArea
                     connections={connections}
                     handleConnect={handleConnect}
