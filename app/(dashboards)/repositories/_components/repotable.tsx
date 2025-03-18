@@ -46,7 +46,7 @@ export const RepoTable: React.FC<TRepoTableProps> = ({
                 return (
                     <div className="flex flex-wrap gap-2">
                         {severities.map((severity: string) => {
-                            const count: number = getSeverityCount(vulnerabilities, severity);
+                            const count: any = getSeverityCount(vulnerabilities, severity);
                             return count > 0 ? (
                                 <Badge key={severity} className={getBadgeVariant(severity)}>
                                     {severity} {count}

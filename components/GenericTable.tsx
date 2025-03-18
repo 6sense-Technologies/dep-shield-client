@@ -170,7 +170,7 @@ export const GenericTable = <T,>({
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
-                                basePath="/repositories/add?provider=github"
+                                basePath="/repositories?tab=myrepositories"
                             />
                         </div>
                     </div>
