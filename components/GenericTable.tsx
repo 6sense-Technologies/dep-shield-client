@@ -33,6 +33,7 @@ interface GenericTableProps<T> {
     headerClassNames?: { [key: string]: string };
     cellClassNames?: { [key: string]: string };
     PaginationComponent?: React.ComponentType<{ currentPage: number; totalPage: number; onPageChange: (page: number) => void }>;
+    basePath?: string;
 }
 
 export const GenericTable = <T,>({
@@ -44,6 +45,7 @@ export const GenericTable = <T,>({
     loading,
     headerClassNames = {},
     cellClassNames = {},
+    basePath = "",
 }: GenericTableProps<T>) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -170,7 +172,7 @@ export const GenericTable = <T,>({
                                 currentPage={currentPageState}
                                 totalPage={totalPages}
                                 onPageChange={onPageChange}
-                                basePath="/repositories?tab=myrepositories"
+                                basePath={basePath}
                             />
                         </div>
                     </div>

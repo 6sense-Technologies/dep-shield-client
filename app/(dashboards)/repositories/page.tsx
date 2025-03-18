@@ -189,7 +189,7 @@ const Repositories = () => {
                               totalCount: AllRepoData?.totalCount,
                               size: 10,
                             }}
-                            currentPage={1}
+                            currentPage={pages}
                             loading={false}
                           />
                         )}

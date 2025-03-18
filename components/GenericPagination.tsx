@@ -13,7 +13,7 @@ interface PaginationProps {
     currentPage: number;
     totalPage: number;
     onPageChange: (page: number) => void;
-    basePath: string;
+    basePath?: string;
 }
 
 const CustomPagination: React.FC<{ children: React.ReactNode }> = ({
@@ -67,7 +67,13 @@ export const GenericPagination: React.FC<PaginationProps> = ({
     const pagination = getPagination();
 
     const getPageUrl = (page: number) => {
-        return basePath.includes('?') ? `${basePath}&page=${page}` : `${basePath}?page=${page}`;
+        const path = basePath || '';
+        return path.includes('?') ? `${path}&page=${page}` : `${path}?page=${page}`;
+    };
+
+    const handlePageChange = (page: number) => {
+        onPageChange(page);
+        router.push(getPageUrl(page));
     };
 
     return (
@@ -80,8 +86,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                         onClick={(e) => {
                             e.preventDefault();
                             if (currentPage > 1) {
-                                onPageChange(currentPage - 1);
-                                router.push(getPageUrl(currentPage - 1));
+                                handlePageChange(currentPage - 1);
                             }
                         }}
                     />
@@ -95,8 +100,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                                 isActive={currentPage === page}
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    onPageChange(page);
-                                    router.push(getPageUrl(page));
+                                    handlePageChange(page);
                                 }}
                             >
                                 {page}
@@ -113,8 +117,7 @@ export const GenericPagination: React.FC<PaginationProps> = ({
                         onClick={(e) => {
                             e.preventDefault();
                             if (currentPage < totalPage) {
-                                onPageChange(currentPage + 1);
-                                router.push(getPageUrl(currentPage + 1));
+                                handlePageChange(currentPage + 1);
                             }
                         }}
                     />
