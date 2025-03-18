@@ -113,6 +113,7 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
       headerClassNames={headerClassNames}
       cellClassNames={cellClassNames}
       PaginationComponent={MyRepoPagination}
+      basePath='/repositories?tab=myrepositories'
     />
   );
 };

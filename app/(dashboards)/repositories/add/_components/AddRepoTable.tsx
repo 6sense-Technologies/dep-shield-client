@@ -117,6 +117,7 @@ export const AddRepoTable: React.FC<TAddRepoTableProps> = ({
             headerClassNames={headerClassNames}
             cellClassNames={cellClassNames}
             PaginationComponent={AddRepoPagination}
+            basePath='/repositories/add?provider=github'
         />
     );
 };
