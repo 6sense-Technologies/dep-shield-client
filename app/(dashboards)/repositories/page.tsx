@@ -16,7 +16,7 @@ import { getAllRepositories } from '@/helpers/githubApp/githubApi';
 import { useSession } from 'next-auth/react';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
 import Link from 'next/link';
-import {shareData } from '@/constants/DummyDataFactory';
+import { shareData } from '@/constants/DummyDataFactory';
 import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 
 // Need this for next build
@@ -72,7 +72,7 @@ const Repositories = () => {
     queryKey: ['AllRepo', session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
-  console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData);
+  // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData);
 
   return (
     <Suspense fallback={<Loader />}>

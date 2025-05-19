@@ -18,6 +18,7 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
   currentPage,
   loading = false,
 }) => {
+  console.log('🚀 ~ repos:', repos);
   const columns: ColumnDef<Repository>[] = [
     {
       accessorKey: 'repoName',
@@ -82,9 +83,9 @@ export const MyRepoTable: React.FC<TMyRepoTableProps> = ({
       id: 'actions',
       header: () => <div className='text-bold pr-4 text-start'>Actions</div>,
       enableHiding: false,
-      cell: () => (
+      cell: (row: { row: any }) => (
         <div className='flex items-center justify-end space-x-4 pr-4'>
-          <Link href={`/repositories/${12}/details`}>
+          <Link href={`/repositories/${row.row.original._id}/details`}>
             <Button variant='outline'>View</Button>
           </Link>
           <Button variant='outline' className='w-[36px]'>
