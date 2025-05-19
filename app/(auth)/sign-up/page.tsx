@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import OrDivider from '../_components/orDivider';
 import { useRouter } from 'next/navigation';
-import Logo from "../../../public/logo/depSheildLogo.svg";
-import GoogleLogo from "../../../public/logo/googleLogo.svg";
-import FacebookLogo from "../../../public/logo/facebookLogo.svg";
-import AppleLogo from "../../../public/logo/appleLogo.svg";
+import Logo from '../../../public/logo/depSheildLogo.svg';
+import GoogleLogo from '../../../public/logo/googleLogo.svg';
+import FacebookLogo from '../../../public/logo/facebookLogo.svg';
+import AppleLogo from '../../../public/logo/appleLogo.svg';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TBasicSignupFormInputs } from '@/types/Auth.types';
@@ -49,6 +49,7 @@ const SignUp = () => {
     resolver: zodResolver(SignupSchema),
   });
   const session = useSession();
+  console.log('🚀 ~ SignUp ~ session:', session);
 
   const basicSignUpMutation = useMutation({
     mutationFn: handleBasicSignup,
@@ -68,9 +69,7 @@ const SignUp = () => {
       console.log(error.message);
       if (error.message === 'Request failed with status code 409') {
         setErrorMessage('Email already exists.');
-      }
-      else
-        setErrorMessage('Something went wrong. Please try again.');
+      } else setErrorMessage('Something went wrong. Please try again.');
     },
   });
 
@@ -85,21 +84,22 @@ const SignUp = () => {
 
   if (session.status === 'authenticated') {
     if (!session.data?.isVerified) {
+      console.log('session.data?.isVerified:', session.data?.isVerified);
       router.replace('/sign-up/verification');
       return <Loader />;
     }
 
-    if (
-      session.data?.isVerified &&
-      session.status === 'authenticated'
-    ) {
+    if (session.data?.isVerified && session.status === 'authenticated') {
       router.push('/dashboard');
       return <Loader />;
     }
   }
 
   const getButtonMarginTopClass = () => {
-    if (errors.password && errors.password.message !== 'Password is required.') {
+    if (
+      errors.password &&
+      errors.password.message !== 'Password is required.'
+    ) {
       return 'lg:mt-8';
     }
     return 'lg:mt-8';
@@ -115,9 +115,7 @@ const SignUp = () => {
         <div className='pl-[36px] pt-[36px]'>
           <Image src={Logo} alt='Depsheild Logo' width={160} />
         </div>
-        <FooterTexts
-          heading='Understand a library’s dependencies, licenses, and vulnerabilities before using it in a project to ensure security, compliance, and stability.'
-        />
+        <FooterTexts heading='Understand a library’s dependencies, licenses, and vulnerabilities before using it in a project to ensure security, compliance, and stability.' />
       </div>
       <div className='w-full overflow-y-auto bg-white pb-4'>
         <Toaster />
@@ -139,7 +137,7 @@ const SignUp = () => {
               Sign up
             </p>
           </div>
-          <div className='flex gap-x-4 pt-8 pb-3'>
+          <div className='flex gap-x-4 pb-3 pt-8'>
             <Button
               variant='extralight'
               size='minixl'

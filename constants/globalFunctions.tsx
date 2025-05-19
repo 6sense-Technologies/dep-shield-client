@@ -122,13 +122,13 @@ export const getInitials = (name: string) => {
 
 export const getHealthBadgeVariant = (value: number) => {
   if (value === null) {
-    return 'text-[#020617] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal';
+    return 'text-[#020617] bg-[#F1F5F9] hover:bg-[#F1F5F9] font-normal border';
   } else if (value >= 0 && value <= 30) {
-    return 'text-[#FFFFFF] bg-[#B91C1C] hover:bg-[#B91C1C] font-normal';
+    return 'text-[#FFFFFF] bg-[#B91C1C] hover:bg-[#B91C1C] font-normal border';
   } else if (value >= 31 && value <= 70) {
-    return 'text-[#FFFFFF] bg-[#B45309] hover:bg-[#B45309] font-normal';
+    return 'text-[#FFFFFF] bg-[#B45309] hover:bg-[#B45309] font-normal border';
   }
-  return 'text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal';
+  return 'text-[#FFFFFF] bg-[#15803D] hover:bg-[#15803D] font-normal border';
 };
 
 export const formatShareTime = (shareTime: string) => {
