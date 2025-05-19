@@ -14,7 +14,8 @@ export const LoginSchema = z.object({
 export const SignupSchema = z.object({
   displayName: z
     .string({ required_error: 'Full name is required.' })
-    .min(1, { message: 'Full name is required.' }),
+    .min(1, { message: 'Full name is required.' })
+    .regex(/^[A-Za-z\s]+$/, { message: 'Invalid name. Use letters only.' }),
   emailAddress: z
     .string({ required_error: 'Email is required.' })
     .min(1, { message: 'Email is required.' })
