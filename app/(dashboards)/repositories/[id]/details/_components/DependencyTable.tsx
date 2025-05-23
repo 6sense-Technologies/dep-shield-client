@@ -62,33 +62,21 @@ const columnsProps = [
 
       return (
         <div className='inline-flex gap-1'>
-          {popularity !== undefined ? (
-            <Badge
-              className={`inline-flex items-center gap-1 ${getBadgeColor(popularity)}`}
-            >
-              <Flame size={16} /> {Math.round(popularity)}
-            </Badge>
-          ) : (
-            <div
-              className={`inline-flex items-center gap-1 ${getBadgeColor(popularity)} rounded-full px-4 py-1`}
-            >
-              Unknown
-            </div>
-          )}
+          <Badge
+            className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((popularity * 100).toString(), 10))}`}
+          >
+            {popularity !== undefined
+              ? parseInt((popularity * 100).toString(), 10)
+              : '-'}
+          </Badge>
 
-          {quality !== undefined ? (
-            <Badge
-              className={`inline-flex items-center gap-1 ${getBadgeColor(quality)}`}
-            >
-              <BadgeCheck size={16} /> {Math.round(quality)}
-            </Badge>
-          ) : (
-            <div
-              className={`inline-flex items-center gap-1 ${getBadgeColor(quality)} rounded-full px-4`}
-            >
-              Unknown
-            </div>
-          )}
+          <Badge
+            className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((quality * 100).toString(), 10))}`}
+          >
+            {quality !== undefined
+              ? parseInt((quality * 100).toString(), 10)
+              : '-'}
+          </Badge>
         </div>
       );
     },
@@ -125,7 +113,7 @@ const cellClassNames = {
 };
 
 export const DependenciesTable: React.FC<{
-  dependencies?: TDependency;
+  dependencies?: any;
   refetch?: () => void;
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage?: number;
@@ -138,11 +126,11 @@ export const DependenciesTable: React.FC<{
   loading = false,
 }) => {
   const columns = createColumns(columnsProps);
-
+  // console.log('dependencies', dependencies);
   return (
     <GenericTable
       columns={columns}
-      data={dependencies}
+      data={dependencies?.data ?? []}
       refetch={refetch}
       totalCountAndLimit={totalCountAndLimit}
       currentPage={currentPage ?? 1}

@@ -33,18 +33,18 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
   const demoRepoId = '67c7ae1543029bcbed4be382';
 
   const { data: allDependencyData, isFetching: allDependencyDataLoading } =
-    useQuery<TDependency>({
+    useQuery<any>({
       queryKey: ['AllDependency', session, pages, limit],
       queryFn: () => getAllDependencies(repoId, session, pages, limit),
     });
-  // console.log('🚀 ~ allDependencyData:', allDependencyData);
+  console.log('🚀 ~ allDependencyData:', allDependencyData);
 
   const { data: allLicenseData, isFetching: allLicenseDataLoading } =
     useQuery<any>({
       queryKey: ['AllLicense', session, pages, limit],
       queryFn: () => getAllLicences(repoId, session, pages, limit),
     });
-  console.log('🚀 ~ allLicenseData:', allLicenseData);
+  // console.log('🚀 ~ allLicenseData:', allLicenseData);
 
   return (
     <div className='pt-4'>
@@ -68,7 +68,7 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
           <DependenciesTable
             dependencies={allDependencyData}
             totalCountAndLimit={{
-              totalCount: allDependencyData?.length ?? 0,
+              totalCount: allDependencyData?.count ?? 0,
               size: 10,
             }}
             currentPage={1}

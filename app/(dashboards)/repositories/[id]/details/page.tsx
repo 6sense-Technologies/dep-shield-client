@@ -23,7 +23,7 @@ const SearchParamsWrapper = ({
 const RepositoriesDetails = () => {
   const repoId = useParams().id;
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<string>('vulnerabilities');
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
