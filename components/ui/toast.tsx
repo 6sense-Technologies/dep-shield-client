@@ -45,11 +45,20 @@ const Toast = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
     VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
+  const TRASH_HOLD = 5000; // 5 seconds
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (props.onOpenChange) {
+        props.onOpenChange(false);
+      }
+    }, TRASH_HOLD);
+  }, []);
+
   return (
     <ToastPrimitives.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
-      duration={5000} // Set duration to 5 seconds
+      // duration={TRASH_HOLD} // Set duration to 5 seconds
       {...props}
     />
   );

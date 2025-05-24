@@ -12,6 +12,7 @@ import {
 
 export function Toaster() {
   const { toasts } = useToast();
+  console.log(toasts[0]?.onOpenChange?.toString());
 
   return (
     <ToastProvider>
