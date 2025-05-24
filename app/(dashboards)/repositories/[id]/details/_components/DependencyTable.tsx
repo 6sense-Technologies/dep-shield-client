@@ -65,6 +65,7 @@ const columnsProps = [
           <Badge
             className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((popularity * 100).toString(), 10))}`}
           >
+            <Flame />
             {popularity !== undefined
               ? parseInt((popularity * 100).toString(), 10)
               : '-'}
@@ -73,6 +74,7 @@ const columnsProps = [
           <Badge
             className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((quality * 100).toString(), 10))}`}
           >
+            <BadgeCheck />
             {quality !== undefined
               ? parseInt((quality * 100).toString(), 10)
               : '-'}
