@@ -66,7 +66,7 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
         <>
           <DependenciesSearchArea />
           <DependenciesTable
-            dependencies={allDependencyData}
+            dependencies={allDependencyData?.data}
             totalCountAndLimit={{
               totalCount: allDependencyData?.count ?? 0,
               size: 10,

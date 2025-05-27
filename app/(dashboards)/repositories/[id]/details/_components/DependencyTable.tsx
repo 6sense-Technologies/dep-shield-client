@@ -20,36 +20,31 @@ const columnsProps = [
     accessorKey: 'name',
     header: 'Name',
     cell: (row: any) => (
-      <div className='text-medium'>
-        {row.original?.dependencyId?.dependencyName || '-'}
-      </div>
+      <div className='text-medium'>{row.original?.name || '-'}</div>
     ),
   },
   {
-    accessorKey: 'totalVulnerabilities',
+    accessorKey: 'vulnerabilityCount',
     header: 'Total Vulnerabilities',
     cell: (row: any) => (
       <div className='text-medium'>
-        {row?.getValue('totalVulnerabilities') || '-'}
+        {row?.getValue('vulnerabilityCount') || '-'}
       </div>
     ),
   },
   {
-    accessorKey: 'licenses',
+    accessorKey: 'license',
     header: 'Licenses',
     cell: (row: any) => (
-      <div className='text-medium'>
-        {row?.original?.dependencyId?.license || '-'}
-      </div>
+      <div className='text-medium'>{row?.original?.license || '-'}</div>
     ),
   },
   {
     accessorKey: 'trustScore',
     header: 'Trust Score',
     cell: (row: any) => {
-      const scoreDetail = row?.original?.dependencyId?.score?.detail;
-      const popularity = scoreDetail?.popularity;
-      const quality = scoreDetail?.quality;
+      const popularity = row?.original?.popularity;
+      const quality = row?.original?.quality;
 
       const getBadgeColor = (value: number | undefined) => {
         if (value === undefined || value === null)
@@ -63,18 +58,18 @@ const columnsProps = [
       return (
         <div className='inline-flex gap-1'>
           <Badge
-            className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((popularity * 100).toString(), 10))}`}
+            className={`inline-flex items-center gap-1 rounded-full ${getBadgeColor(parseInt((popularity * 100).toString(), 10))}`}
           >
-            <Flame />
+            <Flame className='h-4 w-4' />
             {popularity !== undefined
               ? parseInt((popularity * 100).toString(), 10)
               : '-'}
           </Badge>
 
           <Badge
-            className={`inline-flex items-center gap-1 ${getBadgeColor(parseInt((quality * 100).toString(), 10))}`}
+            className={`inline-flex items-center gap-1 rounded-full ${getBadgeColor(parseInt((quality * 100).toString(), 10))}`}
           >
-            <BadgeCheck />
+            <BadgeCheck className='h-4 w-4' />
             {quality !== undefined
               ? parseInt((quality * 100).toString(), 10)
               : '-'}
@@ -86,10 +81,18 @@ const columnsProps = [
   {
     accessorKey: 'actions',
     header: 'Actions',
-    cell: () => (
+    cell: (row: any) => (
       <div className='flex items-center justify-end space-x-4 pr-4'>
-        <Link href={`http://localhost:3000/repositories/${12}/details`}>
-          <Button variant='outline'>View</Button>
+        <Link
+          href={
+            row?.original?.dependencyId
+              ? `/dependencies/${row?.original?.dependencyId}`
+              : '#'
+          }
+        >
+          <Button variant='outline' disabled={!row?.original?.dependencyId}>
+            View
+          </Button>
         </Link>
       </div>
     ),
@@ -128,11 +131,11 @@ export const DependenciesTable: React.FC<{
   loading = false,
 }) => {
   const columns = createColumns(columnsProps);
-  // console.log('dependencies', dependencies);
+  console.log('dependencies', dependencies);
   return (
     <GenericTable
       columns={columns}
-      data={dependencies?.data ?? []}
+      data={dependencies || []}
       refetch={refetch}
       totalCountAndLimit={totalCountAndLimit}
       currentPage={currentPage ?? 1}

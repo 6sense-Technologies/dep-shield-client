@@ -13,6 +13,7 @@ export type Dependency = {
     popularity: number;
     contribution: number;
   };
+  dependencyId: string;
 };
 
 export type TDependenciesTableProps = {

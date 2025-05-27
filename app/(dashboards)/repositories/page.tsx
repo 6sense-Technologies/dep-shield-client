@@ -72,7 +72,7 @@ const Repositories = () => {
     queryKey: ['AllRepo', session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
-  console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
+  // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
 
   return (
     <Suspense fallback={<Loader />}>
