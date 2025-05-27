@@ -131,7 +131,7 @@ export const getAllLicences = async (
   let accessToken: string = session.data.accessToken;
 
   const response = await axios.get(
-    `${NEXT_PUBLIC_BACKEND_URL}/repositories/${repoId}/licenses?page=${page}&limit=${limit}`,
+    `${NEXT_PUBLIC_BACKEND_URL}/licenses?${repoId}&page=${page}&limit=${limit}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,

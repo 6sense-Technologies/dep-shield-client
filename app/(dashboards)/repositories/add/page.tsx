@@ -50,9 +50,7 @@ const AddRepositoryContent = () => {
     if (
       showTable &&
       !addRepoLoading &&
-      (!addRepoData ||
-        !addRepoData.repositories ||
-        addRepoData.repositories.length === 0)
+      (!addRepoData || !addRepoData?.data || addRepoData?.count === 0)
     ) {
       toast({
         title: 'No Integration Found!',
@@ -88,9 +86,9 @@ const AddRepositoryContent = () => {
         <div className='px-4 pt-4 md:px-6 md:pt-4'>
           <AddRepoSearchArea session={session} />
           <AddRepoTable
-            repositories={addRepoData?.repositories}
+            repositories={addRepoData?.data}
             totalCountAndLimit={{
-              totalCount: addRepoData?.totalCount,
+              totalCount: addRepoData?.count,
               size: 10,
             }}
             currentPage={pages}
