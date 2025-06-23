@@ -1,4 +1,6 @@
-![Depshield Logo](https://github.com/6sense-Technologies/dep-shield-client/blob/beta/public/logo/depSheildLogo.svg)
+
+
+![Depshield Logo](./public/logo/depSheildLogo.svg)
 
 Depshield is a powerful tool designed for analyzing and monitoring the security and integrity of your code repositories. It checks for vulnerabilities, limitations, and dependencies across different branches. Users can scan repositories to retrieve and analyze data, ensuring secure and optimized development.
 
@@ -61,13 +63,13 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
 ### Deploying with Vercel CLI
 
 1. Install Vercel CLI if you haven’t already:
-
+   
    ```bash
    npm install -g vercel
    ```
 
 2. Login to Vercel:
-
+   
    ```bash
    vercel login
    ```
@@ -75,7 +77,7 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
    Follow the prompts to authenticate with your Vercel account.
 
 3. Navigate to your project directory and deploy:
-
+   
    ```bash
    vercel
    ```
@@ -83,7 +85,6 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
    This will initialize the deployment process and prompt you with options.
 
 4. For deploying updates, use:
-
    ```bash
    vercel --prod
    ```
@@ -91,25 +92,25 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
 ### Deploying to Development and Preview Environments
 
 - **Development Environment:**
-
+  
   ```bash
   vercel --env development
   ```
-
+  
   This helps in testing changes before pushing them to production.
 
 - **Preview Deployment:**
-
+  
   ```bash
   vercel --pre
   ```
-
+  
   This will deploy the branch as a preview, which can be shared and tested before going live.
 
 ### Assigning a Custom Domain
 
 - **Add your domain to Vercel:**
-
+  
   ```bash
   vercel domains add yourdomain.com
   ```
@@ -117,13 +118,13 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
 - **Update your DNS settings** by following the instructions provided by Vercel.
 
 - **Set the domain for production:**
-
+  
   ```bash
   vercel alias yourdeploymenturl yourdomain.com
   ```
 
 - **Verify the domain:**
-
+  
   ```bash
   vercel domains inspect yourdomain.com
   ```
