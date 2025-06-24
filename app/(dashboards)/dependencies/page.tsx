@@ -10,6 +10,7 @@ import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { getAllGlobalDependencies } from '@/helpers/globalDependancies/globalDependenciesApi';
+import { TAllDependencies } from '@/types/dependencies.types';
 
 const DependenciesContent = () => {
   const session = useSession();
@@ -19,7 +20,7 @@ const DependenciesContent = () => {
   const {
     data: allGlobalDependencyData,
     isFetching: allGlobalDependencyDataLoading,
-  } = useQuery<any>({
+  } = useQuery<TAllDependencies>({
     queryKey: ['AllGlobalDependency', session, pages, limit],
     queryFn: () => getAllGlobalDependencies(session, pages, limit),
   });
@@ -46,8 +47,8 @@ const DependenciesContent = () => {
             totalCount: allGlobalDependencyData?.count,
             size: 10,
           }}
-          currentPage={1}
-          loading={false}
+          currentPage={pages}
+          loading={allGlobalDependencyDataLoading}
         />
       </div>
     </div>
