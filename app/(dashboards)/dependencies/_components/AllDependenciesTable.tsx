@@ -1,19 +1,15 @@
-import React from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import { GenericTable } from '@/components/GenericTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BadgeCheck, Flame, Handshake } from 'lucide-react';
-import Link from 'next/link';
-import { AllDependenciesPagination } from './AllDependenciesPagination';
-import {
-  getBadgeVariant,
-  getHealthBadgeVariant,
-} from '@/constants/globalFunctions';
 import {
   Dependency,
   TDependenciesTableProps,
 } from '@/types/dependencies.types';
-import { GenericTable } from '@/components/GenericTable';
+import { ColumnDef } from '@tanstack/react-table';
+import { BadgeCheck, Flame } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+import { AllDependenciesPagination } from './AllDependenciesPagination';
 
 export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
   dependencies = [],

@@ -1,5 +1,5 @@
 'use client';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import PageHeading from '@/components/pageHeading';
 import Loader from '@/components/loader';
@@ -11,11 +11,18 @@ import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { getAllGlobalDependencies } from '@/helpers/globalDependancies/globalDependenciesApi';
 import { TAllDependencies } from '@/types/dependencies.types';
+import { useSearchParams } from 'next/navigation';
 
 const DependenciesContent = () => {
   const session = useSession();
   const [pages, setPages] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const newPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+    setPages(newPage);
+  }, [searchParams]);
 
   const {
     data: allGlobalDependencyData,
