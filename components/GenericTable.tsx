@@ -101,10 +101,10 @@ export const GenericTable = <T,>({
     }
   }, [loading]);
 
-  const displayedRowsCount =
-    currentPageState > 1
-      ? (currentPageState - 1) * pagination.pageSize + data?.length
-      : data?.length;
+  const displayedRowsCount = Math.min(
+    currentPageState * pagination.pageSize,
+    totalCountAndLimit.totalCount || 0
+  );
 
   return (
     <div className='w-full'>
@@ -125,9 +125,9 @@ export const GenericTable = <T,>({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header as React.ReactNode,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header as React.ReactNode,
+                            header.getContext()
+                          )}
                       </TableHead>
                     ))}
                   </TableRow>
