@@ -27,7 +27,7 @@ interface GenericTableProps<T> {
   columns: ColumnDef<T>[];
   data: T[] | Repository[] | any[];
   refetch?: () => void;
-  totalCountAndLimit: { totalCount: number; size: number };
+  totalCountAndLimit: { totalCount: number | undefined; size: number };
   currentPage: number;
   loading: boolean;
   headerClassNames?: { [key: string]: string };

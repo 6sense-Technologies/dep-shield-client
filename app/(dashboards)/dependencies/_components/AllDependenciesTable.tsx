@@ -62,10 +62,9 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
     {
       accessorKey: 'trustScore',
       header: 'Trust Score',
-      cell: (row: any) => {
-        // const scoreDetail = row?.original?.dependencyId?.score?.detail;
-        const popularity = row.original?.popularity;
-        const quality = row.original?.quality;
+      cell: ({ row }: { row: any }) => {
+        const popularity = row?.original?.popularity;
+        const quality = row?.original?.quality;
 
         const getBadgeColor = (value: number | undefined) => {
           if (value === undefined || value === null)

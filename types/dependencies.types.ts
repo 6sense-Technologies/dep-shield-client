@@ -17,9 +17,9 @@ export type Dependency = {
 };
 
 export type TDependenciesTableProps = {
-  dependencies?: Dependency[];
+  dependencies?: TSingleDependencies[];
   refetch?: () => void;
-  totalCountAndLimit?: { totalCount: number; size: number };
+  totalCountAndLimit?: { totalCount: number | undefined; size: number };
   currentPage: number;
   loading?: boolean;
 };
@@ -121,4 +121,19 @@ export interface Detail {
   quality: number;
   popularity: number;
   maintenance: number;
+}
+
+export interface TAllDependencies {
+  data: TSingleDependencies[];
+  count: number;
+}
+
+export interface TSingleDependencies {
+  vulnerabilityCount: number;
+  license?: string;
+  dependencyId: string;
+  _id: string;
+  name: string;
+  quality?: number;
+  popularity?: number;
 }
