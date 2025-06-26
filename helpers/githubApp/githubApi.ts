@@ -142,14 +142,48 @@ export const getAllLicences = async (
   return response.data;
 };
 
-export const getRepositoryBranches = async (
-  repoId: string,
-  session: any
-) => {
+export const getRepositoryBranches = async (repoId: string, session: any) => {
   let accessToken: string = session.data.accessToken;
 
   const response = await axios.get(
     `${TEMP_BACKEND_URL}/repositories/${repoId}/branches`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const updateDefaultBranch = async (
+  repoId: string,
+  branch: string,
+  session: any
+) => {
+  let accessToken: string = session.data.accessToken;
+
+  const response = await axios.patch(
+    `${TEMP_BACKEND_URL}/repositories/${repoId}`,
+    {
+      branchName: branch,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const getRepositoryDetails = async (repoId: string, session: any) => {
+  let accessToken: string = session.data.accessToken;
+
+  const response = await axios.get(
+    `${TEMP_BACKEND_URL}/repositories/${repoId}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
