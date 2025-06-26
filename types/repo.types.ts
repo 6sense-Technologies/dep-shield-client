@@ -3,15 +3,11 @@ export interface DisableModalProps {
   // togglefn: (data: string) => any;
 }
 
-
 export interface MyRepoPaginationProps {
   currentPage: number;
   totalPage: number;
   onPageChange: (page: number) => void;
 }
-
-
-
 
 export interface IHeadingProps {
   title: string;
@@ -21,7 +17,6 @@ export interface IHeadingProps {
   className?: string;
   showButton?: boolean;
 }
-
 
 export interface RepoPaginationProps {
   currentPage: number;
@@ -33,7 +28,19 @@ export type RepoSearchbarProps = {
   placeholder?: string;
   name?: string;
   btntext?: string;
-  variant?: "default" | "link" | "submit" | "secondary" | "outline" | "destructive" | "ghost" | "greenish" | "light" | "extralight" | "dark" | null;
+  variant?:
+    | 'default'
+    | 'link'
+    | 'submit'
+    | 'secondary'
+    | 'outline'
+    | 'destructive'
+    | 'ghost'
+    | 'greenish'
+    | 'light'
+    | 'extralight'
+    | 'dark'
+    | null;
   className?: string;
 };
 
@@ -90,9 +97,15 @@ export interface IHeadingProps {
 }
 
 export interface RepositoryBranches {
-  data: RepositoryBranch[]
-  count: number
+  data: RepositoryBranch[];
+  count: number;
 }
 export interface RepositoryBranch {
-  name: string
+  name: string;
+}
+export interface RepositoryDetails {
+  repoName: string;
+  repoUrl: string;
+  defaultBranch: string;
+  _id: string;
 }

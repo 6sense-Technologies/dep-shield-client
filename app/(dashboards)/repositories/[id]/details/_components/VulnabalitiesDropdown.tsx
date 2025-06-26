@@ -47,9 +47,9 @@ export function VulnabalitiesDropdown({
       <SelectTrigger className={cn("border shadow-none h-[28px]", className)} disabled={!active}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
-        <SelectGroup className={cn("bg-white !z-50 ", className)}>
-          <SelectLabel>Branches</SelectLabel>
+      <SelectContent className="!z-500">
+        <SelectGroup className={cn("bg-white !z-500 ", className)}>
+          {/* <SelectLabel>Branches</SelectLabel> */}
           {options.length > 0 ? (
             options.map((opt) => (
               <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
