@@ -37,7 +37,7 @@
     "@tanstack/react-query-devtools": "^5.56.2",
     "@tanstack/react-table": "^8.20.6",
     "@types/js-cookie": "^3.0.6",
-    "@types/recharts": "^1.8.29",
+    "@types/recharts": "^2.0.0",
     "@typescript-eslint/typescript-estree": "^8.5.0",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.1",
