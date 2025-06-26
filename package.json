@@ -11,7 +11,8 @@
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "vercel:deploy": "vercel --prod"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.0.0",

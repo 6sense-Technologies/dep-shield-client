@@ -1,15 +1,14 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import PageHeader from '@/components/PageHeader';
-import PageHeadingWithDeleteButton from './_components/PageHeadingWithDeleteButton';
-import PageHeadingHover from './_components/PageHeadingHover';
-import Loader from '@/components/loader';
-import TabNavigation from '../../_components/TabNavigation';
-import TabContent from '../../_components/TabContent';
 import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
-import { useParams } from 'next/navigation';
+import Loader from '@/components/loader';
+import PageHeader from '@/components/PageHeader';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
+import TabContent from '../../_components/TabContent';
+import TabNavigation from '../../_components/TabNavigation';
+import PageHeadingHover from './_components/PageHeadingHover';
+import PageHeadingWithDeleteButton from './_components/PageHeadingWithDeleteButton';
 
 const SearchParamsWrapper = ({
   children,
