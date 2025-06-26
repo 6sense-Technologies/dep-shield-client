@@ -141,3 +141,21 @@ export const getAllLicences = async (
 
   return response.data;
 };
+
+export const getRepositoryBranches = async (
+  repoId: string,
+  session: any
+) => {
+  let accessToken: string = session.data.accessToken;
+
+  const response = await axios.get(
+    `${TEMP_BACKEND_URL}/repositories/${repoId}/branches`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response.data;
+};
