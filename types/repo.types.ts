@@ -109,3 +109,27 @@ export interface RepositoryDetails {
   defaultBranch: string;
   _id: string;
 }
+
+export interface TAllRepositories {
+  data: TSingleRepository[];
+  count: number;
+}
+
+export interface TSingleRepository {
+  _id: string;
+  user: string;
+  repoUrl: string;
+  __v: number;
+  createdAt: string;
+  defaultBranch: string;
+  htmlUrl: string;
+  isDeleted: boolean;
+  isPrivate: boolean;
+  isSelected: boolean;
+  owner: string;
+  ownerType: string;
+  repoDescription: any;
+  repoName: string;
+  updatedAt: string;
+  gitHubRepoId: number;
+}

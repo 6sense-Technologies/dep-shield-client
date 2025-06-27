@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import {
-  dependenciesData,
-  licensesData,
-  vulnerabilitiesData,
+  vulnerabilitiesData
 } from '@/constants/DummyDataFactory';
-import VulnabalitiesSearchArea from '../[id]/details/_components/vulnabilitiesSearchArea';
-import { VulnerabilityTable } from '../[id]/details/_components/VulnabilitiesTable';
+import {
+  getAllDependencies,
+  getAllLicences as getAllLicenses,
+} from '@/helpers/githubApp/githubApi';
+import { TAllDependencies } from '@/types/dependencies.types';
+import { ILicensesByRepoId } from '@/types/licenses.types';
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import DependenciesSearchArea from '../../dependencies/_components/DependenciesSearchArea';
 import { DependenciesTable } from '../[id]/details/_components/DependencyTable';
 import LicensesSearchArea from '../[id]/details/_components/LicensesSearchArea';
 import { LicensesTable } from '../[id]/details/_components/LicensesTable';
-import { useQuery } from '@tanstack/react-query';
-import {
-  getAllDependencies,
-  getAllLicences,
-} from '@/helpers/githubApp/githubApi';
-import { useSession } from 'next-auth/react';
-import { all } from 'axios';
-import { TDependency } from '@/types/dependencies.types';
+import VulnabalitiesSearchArea from '../[id]/details/_components/vulnabilitiesSearchArea';
+import { VulnerabilityTable } from '../[id]/details/_components/VulnabilitiesTable';
 
 interface TabContentProps {
   repoId: string;
@@ -26,25 +24,33 @@ interface TabContentProps {
 }
 
 const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
-  // console.log('🚀 ~ repoId:', repoId);
   const [pages, setPages] = useState<number>(1);
   const [limit] = useState<number>(10);
   const session = useSession();
-  const demoRepoId = '67c7ae1543029bcbed4be382';
+  const searchParams = useSearchParams();
 
-  const { data: allDependencyData, isFetching: allDependencyDataLoading } =
-    useQuery<any>({
+  useEffect(() => {
+    const newPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+    setPages(newPage);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (searchParams.get('page')) {
+      setPages(1);
+    }
+  }, [activeTab, searchParams])
+
+  const { data: allDependencyData } =
+    useQuery<TAllDependencies>({
       queryKey: ['AllDependency', session, pages, limit],
       queryFn: () => getAllDependencies(repoId, session, pages, limit),
     });
-  console.log('🚀 ~ allDependencyData:', allDependencyData);
 
-  const { data: allLicenseData, isFetching: allLicenseDataLoading } =
-    useQuery<any>({
+  const { data: allLicenseData } =
+    useQuery<ILicensesByRepoId>({
       queryKey: ['AllLicense', session, pages, limit],
-      queryFn: () => getAllLicences(repoId, session, pages, limit),
+      queryFn: () => getAllLicenses(repoId, session, pages, limit),
     });
-  // console.log('🚀 ~ allLicenseData:', allLicenseData);
 
   return (
     <div className='pt-4'>
@@ -57,8 +63,10 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
               totalCount: vulnerabilitiesData.length,
               size: 10,
             }}
-            currentPage={1}
+            currentPage={pages}
             loading={false}
+            activeTab={activeTab}
+            repoId={repoId}
           />
         </>
       )}
@@ -71,8 +79,10 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
               totalCount: allDependencyData?.count ?? 0,
               size: 10,
             }}
-            currentPage={1}
+            currentPage={pages}
             loading={false}
+            activeTab={activeTab}
+            repoId={repoId}
           />
         </>
       )}
@@ -82,11 +92,13 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
           <LicensesTable
             licenses={allLicenseData?.data}
             totalCountAndLimit={{
-              totalCount: allLicenseData?.totalCount,
+              totalCount: allLicenseData?.count || 0,
               size: 10,
             }}
-            currentPage={1}
+            currentPage={pages}
             loading={false}
+            activeTab={activeTab}
+            repoId={repoId}
           />
         </>
       )}

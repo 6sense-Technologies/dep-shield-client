@@ -193,3 +193,23 @@ export const getRepositoryDetails = async (repoId: string, session: any) => {
 
   return response.data;
 };
+
+export const getSelectedRepo = async (
+  dependencyId: string,
+  session: any,
+  page: number,
+  limit: number
+) => {
+  let accessToken: string = session.data.accessToken;
+
+  const response = await axios.get(
+    `${NEXT_PUBLIC_BACKEND_URL}/repositories/selected-repos?page=${page}&limit=${limit}&dependencyId=${dependencyId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response.data;
+};
