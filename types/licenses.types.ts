@@ -33,19 +33,14 @@ export type SingleLicenses = {
   licenseFamily: string;
 };
 
-export type SubLicense = {
-  name: string;
-  licenseRisk: string;
-  dependencies: number;
-  licenseFamily: string;
-};
-
 export type TLicensesTableProps = {
-  licenses?: SubLicense[];
+  licenses?: ISingleLicenseByRepoId[];
   refetch?: () => void;
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage: number;
   loading?: boolean;
+  activeTab: string;
+  repoId: string;
 };
 
 export type TSingleLicenseTableProps = {
@@ -55,3 +50,17 @@ export type TSingleLicenseTableProps = {
   currentPage: number;
   loading?: boolean;
 };
+
+export interface ILicensesByRepoId {
+  data: ISingleLicenseByRepoId[];
+  count: number;
+}
+
+export interface ISingleLicenseByRepoId {
+  dependencyCount: number;
+  licenseId: string;
+  _id: string;
+  license: string;
+  licenseRisk: string;
+  licenseFamily: string;
+}

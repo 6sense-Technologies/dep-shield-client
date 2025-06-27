@@ -60,6 +60,8 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
   totalCountAndLimit = { totalCount: 0, size: 10 },
   currentPage,
   loading = false,
+  activeTab,
+  repoId
 }) => {
   const columns = createColumns(columnsProps);
 
@@ -74,6 +76,7 @@ export const LicensesTable: React.FC<TLicensesTableProps> = ({
       headerClassNames={headerClassNames}
       cellClassNames={cellClassNames}
       PaginationComponent={LicensesPagination}
+      basePath={`/repositories/${repoId}/details?tab=${activeTab}`}
     />
   );
 };

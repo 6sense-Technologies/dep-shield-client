@@ -1,19 +1,11 @@
-import React from 'react';
+import { createColumns } from '@/components/ColumnDefinations';
 import { GenericTable } from '@/components/GenericTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BadgeCheck, Flame } from 'lucide-react';
 import Link from 'next/link';
-import {
-  TDependenciesTableProps,
-  TDependency,
-} from '@/types/dependencies.types';
-import {
-  getBadgeVariant,
-  getHealthBadgeVariant,
-} from '@/constants/globalFunctions';
+import React from 'react';
 import { DependenciesPagination } from './DependenciesPagination';
-import { createColumns } from '@/components/ColumnDefinations';
 
 const columnsProps = [
   {
@@ -123,12 +115,16 @@ export const DependenciesTable: React.FC<{
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage?: number;
   loading?: boolean;
+  activeTab: string;
+  repoId: string;
 }> = ({
   dependencies = [],
   refetch,
   totalCountAndLimit = { totalCount: 0, size: 10 },
   currentPage,
   loading = false,
+  activeTab,
+  repoId
 }) => {
   const columns = createColumns(columnsProps);
   console.log('dependencies', dependencies);
@@ -143,6 +139,7 @@ export const DependenciesTable: React.FC<{
       headerClassNames={headerClassNames}
       cellClassNames={cellClassNames}
       PaginationComponent={DependenciesPagination}
+      basePath={`/repositories/${repoId}/details?tab=${activeTab}`}
     />
   );
 };
