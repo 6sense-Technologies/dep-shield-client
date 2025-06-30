@@ -2,8 +2,8 @@ import { GenericTable } from '@/components/GenericTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Dependency,
   TDependenciesTableProps,
+  TSingleDependencies
 } from '@/types/dependencies.types';
 import { ColumnDef } from '@tanstack/react-table';
 import { BadgeCheck, Flame } from 'lucide-react';
@@ -18,7 +18,7 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
   currentPage,
   loading = false,
 }) => {
-  const columns: ColumnDef<Dependency>[] = [
+  const columns: ColumnDef<TSingleDependencies>[] = [
     {
       accessorKey: 'name',
       header: () => <div className='text-bold'>Name</div>,
@@ -118,7 +118,7 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
       enableHiding: false,
       cell: ({ row }) => (
         <div className='flex items-center justify-end space-x-4 pr-4'>
-          <Link href={`/dependencies/${row.original.dependencyId}`}>
+          <Link href={`/dependencies/${row.original._id}`}>
             <Button variant='outline'>View</Button>
           </Link>
         </div>
