@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import {
   vulnerabilitiesData
 } from '@/constants/DummyDataFactory';
@@ -7,10 +6,11 @@ import {
   getAllLicences as getAllLicenses,
 } from '@/helpers/githubApp/githubApi';
 import { TAllDependencies } from '@/types/dependencies.types';
-import { ILicensesByRepoId } from '@/types/licenses.types';
+import { IAllLicenses } from '@/types/licenses.types';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import DependenciesSearchArea from '../../dependencies/_components/DependenciesSearchArea';
 import { DependenciesTable } from '../[id]/details/_components/DependencyTable';
 import LicensesSearchArea from '../[id]/details/_components/LicensesSearchArea';
@@ -47,7 +47,7 @@ const TabContent: React.FC<TabContentProps> = ({ repoId, activeTab }) => {
     });
 
   const { data: allLicenseData } =
-    useQuery<ILicensesByRepoId>({
+    useQuery<IAllLicenses>({
       queryKey: ['AllLicense', session, pages, limit],
       queryFn: () => getAllLicenses(repoId, session, pages, limit),
     });

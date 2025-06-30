@@ -34,9 +34,9 @@ const DependenciesDetailsContent = () => {
     queryFn: () => getDependencyByRepoId(session, dependencyId),
   });
 
-  const { data: selectedRepo } = useQuery<TAllRepositories>({
-    queryKey: ['selectedRepo', session, pages],
-    queryFn: () => getSelectedRepo(dependencyId, session, pages, 10),
+  const { data: selectedRepositories } = useQuery<TAllRepositories>({
+    queryKey: ['selectedRepositories', session, pages],
+    queryFn: () => getSelectedRepo(session, pages, 10, dependencyId),
   });
 
   // Helper function to format popularity score
@@ -132,9 +132,9 @@ const DependenciesDetailsContent = () => {
             icon={true}
           />
           <CustomCardWithBadge
-            bgColor={cardData.license.bgColor}
-            Heading={cardData.license.heading}
-            subheading={cardData.license.subheading}
+            bgColor={cardData.package.bgColor}
+            Heading={cardData.package.heading}
+            subheading={cardData.package.subheading}
             icon={true}
           />
         </div>
@@ -177,9 +177,9 @@ const DependenciesDetailsContent = () => {
         <div>
           <DepSearchSection />
           <SingleDepTable
-            repos={selectedRepo?.data ?? []}
+            repos={selectedRepositories?.data ?? []}
             totalCountAndLimit={{
-              totalCount: selectedRepo?.count ?? 0,
+              totalCount: selectedRepositories?.count ?? 0,
               size: 10,
             }}
             currentPage={pages}

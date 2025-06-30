@@ -131,7 +131,7 @@ export const getAllLicences = async (
   let accessToken: string = session.data.accessToken;
 
   const response = await axios.get(
-    `${NEXT_PUBLIC_BACKEND_URL}/licenses?${repoId}&page=${page}&limit=${limit}`,
+    `${NEXT_PUBLIC_BACKEND_URL}/licenses?repoId=${repoId}&page=${page}&limit=${limit}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -195,15 +195,29 @@ export const getRepositoryDetails = async (repoId: string, session: any) => {
 };
 
 export const getSelectedRepo = async (
-  dependencyId: string,
   session: any,
   page: number,
-  limit: number
+  limit: number,
+  dependencyId?: string,
+  licenseId?: string
 ) => {
   let accessToken: string = session.data.accessToken;
 
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+  });
+
+  if (dependencyId) {
+    queryParams.append('dependencyId', dependencyId);
+  }
+
+  if (licenseId) {
+    queryParams.append('licenseId', licenseId);
+  }
+
   const response = await axios.get(
-    `${NEXT_PUBLIC_BACKEND_URL}/repositories/selected-repos?page=${page}&limit=${limit}&dependencyId=${dependencyId}`,
+    `${NEXT_PUBLIC_BACKEND_URL}/repositories/selected-repos?${queryParams.toString()}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
