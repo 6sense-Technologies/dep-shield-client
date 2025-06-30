@@ -1,15 +1,17 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import PageHeader from '@/components/PageHeader';
-import PageHeadingWithDeleteButton from './_components/PageHeadingWithDeleteButton';
-import PageHeadingHover from './_components/PageHeadingHover';
-import Loader from '@/components/loader';
-import TabNavigation from '../../_components/TabNavigation';
-import TabContent from '../../_components/TabContent';
 import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
-import { useParams } from 'next/navigation';
+import Loader from '@/components/loader';
+import PageHeader from '@/components/PageHeader';
+import { getRepositoryDetails } from '@/helpers/githubApp/githubApi';
+import { RepositoryDetails } from '@/types/repo.types';
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
+import TabContent from '../../_components/TabContent';
+import TabNavigation from '../../_components/TabNavigation';
+import PageHeadingWithDeleteButton from './_components/PageHeadingWithDeleteButton';
 
 const SearchParamsWrapper = ({
   children,
@@ -23,11 +25,17 @@ const SearchParamsWrapper = ({
 const RepositoriesDetails = () => {
   const repoId = useParams().id;
   const router = useRouter();
+  const session = useSession();
   const [activeTab, setActiveTab] = useState<string>('vulnerabilities');
+
+  const { data: repositoryDetails } = useQuery<RepositoryDetails>({
+    queryKey: ['repositoryDetails', repoId, session],
+    queryFn: () => getRepositoryDetails(repoId as string, session),
+    enabled: !!repoId && !!session.data?.accessToken,
+  });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    // console.log('🚀 ~ useEffect ~ searchParams:', searchParams);
     const tab = searchParams.get('tab');
     if (!tab) {
       router.replace(`${window.location.pathname}?tab=vulnerabilities`);
@@ -52,18 +60,20 @@ const RepositoriesDetails = () => {
               initialData='Repositories'
               initialLink='/repositories'
               secondaryData='Details'
-              secondaryLink='/repositories/12/details'
+              secondaryLink={`/repositories/${repoId}/details`}
             />
             <div className='px-3 lg:px-6'>
               <PageHeadingWithDeleteButton
-                title='6senseEV/6sense-ev-accounting-service'
-                className='hidden pl-2 pt-3 md:block'
+                title={repositoryDetails?.repoName || ""}
+                className='pl-2 pt-3'
+                repoId={repoId as string}
+                repositoryDetails={repositoryDetails}
               />
-              <PageHeadingHover
+              {/* <PageHeadingHover
                 title='Repository'
-                hoverTitle='6senseEV/6sense-ev-accounting-service'
+                hoverTitle={repositoryDetails?.repoName || ""}
                 className='block pl-2 pt-3 md:hidden'
-              />
+              /> */}
               <TabNavigation
                 activeTab={activeTab}
                 onTabChange={handleTabChange}

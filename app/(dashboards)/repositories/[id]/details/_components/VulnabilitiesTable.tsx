@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { getBadgeVariant } from "@/constants/globalFunctions";
-import { TVulnerabilityTableProps} from "@/types/Vulnerability.types";
+import { TVulnerabilityTableProps } from "@/types/Vulnerability.types";
 import { createColumns } from "@/components/ColumnDefinations";
 
 
@@ -76,6 +76,8 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
     loading = false,
+    activeTab,
+    repoId
 }) => {
     const columns = createColumns(columnsProps);
 
@@ -89,6 +91,7 @@ export const VulnerabilityTable: React.FC<TVulnerabilityTableProps> = ({
             loading={loading}
             headerClassNames={headerClassNames}
             cellClassNames={cellClassNames}
+            basePath={`/repositories/${repoId}/details?tab=${activeTab}`}
         />
     );
 };

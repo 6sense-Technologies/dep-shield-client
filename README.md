@@ -85,7 +85,6 @@ The recommended deployment platform is **Vercel**. Refer to the [Next.js Deploym
    This will initialize the deployment process and prompt you with options.
 
 4. For deploying updates, use:
-   
    ```bash
    vercel --prod
    ```

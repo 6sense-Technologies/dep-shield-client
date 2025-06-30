@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {
-  handleConnection,
-  getGitRepositories,
-  AddRepositories,
   AddAllRepositories,
-  getRepoAddStatus,
+  AddRepositories,
   getAllRepositories,
+  getGitRepositories,
+  getRepoAddStatus,
+  handleConnection
 } from '../helpers/githubApp/githubApi';
 
 jest.mock('axios');

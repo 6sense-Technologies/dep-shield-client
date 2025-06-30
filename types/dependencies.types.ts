@@ -1,3 +1,5 @@
+import { TSingleRepository } from './repo.types';
+
 export interface DependenciesPaginationProps {
   currentPage: number;
   totalPage: number;
@@ -13,12 +15,13 @@ export type Dependency = {
     popularity: number;
     contribution: number;
   };
+  dependencyId: string;
 };
 
 export type TDependenciesTableProps = {
-  dependencies?: Dependency[];
+  dependencies?: TSingleDependencies[];
   refetch?: () => void;
-  totalCountAndLimit?: { totalCount: number; size: number };
+  totalCountAndLimit?: { totalCount: number | undefined; size: number };
   currentPage: number;
   loading?: boolean;
 };
@@ -34,7 +37,7 @@ export type SingleDependencies = {
 };
 
 export type TSingleDepTableProps = {
-  repos?: SingleDependencies[];
+  repos?: TSingleRepository[];
   refetch?: () => void;
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage: number;
@@ -120,4 +123,69 @@ export interface Detail {
   quality: number;
   popularity: number;
   maintenance: number;
+}
+
+export interface TAllDependencies {
+  data: TSingleDependencies[];
+  count: number;
+}
+
+export interface TSingleDependencies {
+  vulnerabilityCount: number;
+  license?: string;
+  dependencyId: string;
+  _id: string;
+  name: string;
+  quality?: number;
+  popularity?: number;
+}
+
+export interface IDependencyDetails {
+  _id: string;
+  dependencyName: string;
+  __v: number;
+  createdAt: string;
+  ecosystem: string;
+  isDeleted: boolean;
+  maintainers: {
+    name: string;
+    email: string;
+    _id: string;
+  }[];
+  updatedAt: string;
+  currentVersion: string;
+  description: string;
+  evaluation: {
+    quality: {
+      carefulness: number;
+      tests: number;
+      health: number;
+      branding: number;
+    };
+    popularity: {
+      communityInterest: number;
+      downloadsCount: number;
+      downloadsAcceleration: number;
+      dependentsCount: number;
+    };
+    maintenance: {
+      releasesFrequency: number;
+      commitsFrequency: number;
+      openIssues: number;
+      issuesDistribution: number;
+    };
+  };
+  homepage: string;
+  lastPublishDate: string;
+  license: string;
+  npm: string;
+  repository: string;
+  score: {
+    final: number;
+    detail: {
+      quality: number;
+      popularity: number;
+      maintenance: number;
+    };
+  };
 }

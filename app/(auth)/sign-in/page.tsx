@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { TBasicSignInFormInputs } from "@/types/Auth.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Circle } from "@phosphor-icons/react";
 import Link from "next/link";
@@ -25,6 +25,7 @@ import Logo from "../../../public/logo/depSheildLogo.svg";
 import GoogleLogo from "../../../public/logo/googleLogo.svg";
 import FacebookLogo from "../../../public/logo/facebookLogo.svg";
 import AppleLogo from "../../../public/logo/appleLogo.svg";
+import { warmUpServer } from "@/helpers/Auth/authApi";
 
 
 const SignIn = () => {
@@ -39,11 +40,14 @@ const SignIn = () => {
 
   const session = useSession();
 
-  console.log("Sign-IN",session);
- 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errorFlag, setErrorFlag] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  useQuery({
+    queryKey: ['warm-up'],
+    queryFn: warmUpServer,
+  })
 
   const handlePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

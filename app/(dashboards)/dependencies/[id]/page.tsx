@@ -1,78 +1,202 @@
-"use client";
-import React, { Suspense } from "react";
-import PageHeader from "@/components/PageHeader";
-import PageHeading from "@/components/pageHeading";
-import Loader from "@/components/loader";
-import CustomCard from "../../vulnerabilities/[id]/_components/customCard";
-import CustomCardWithBadge from "../../vulnerabilities/[id]/_components/customCardWithBadge";
-import { SingleDepTable } from "./_components/SingleDepTable";
-import DepSearchSection from "./_components/DepSearchSection";
-import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
-import {RepoData } from "@/constants/DummyDataFactory";
-import LinkSection from "./_components/LinkSection";
-
+'use client';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
+import Loader from '@/components/loader';
+import PageHeader from '@/components/PageHeader';
+import PageHeading from '@/components/pageHeading';
+import { getSelectedRepo } from '@/helpers/githubApp/githubApi';
+import { getDependencyByRepoId } from '@/helpers/globalDependancies/globalDependenciesApi';
+import { IDependencyDetails } from '@/types/dependencies.types';
+import { TAllRepositories } from '@/types/repo.types';
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { useParams, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import CustomCard from '../../vulnerabilities/[id]/_components/customCard';
+import CustomCardWithBadge from '../../vulnerabilities/[id]/_components/customCardWithBadge';
+import DepSearchSection from './_components/DepSearchSection';
+import LinkSection from './_components/LinkSection';
+import { SingleDepTable } from './_components/SingleDepTable';
 
 const DependenciesDetailsContent = () => {
-    return (
-        <div className="flex flex-col min-h-screen">
-            <PageHeader title="@types/react (npm) Details • Dependencies • DepShield.io" />
-            <BreadcrumbWithAvatar initialData="Dependencies" initialLink="/dependencies" secondaryData="Details" secondaryLink="/dependencies/12" />
-            <div className="flex items-center pl-4 md:pl-8 pt-3">
-                <PageHeading title="@types/react (npm)" className="mr-4" />
-            </div>
-            <div className="pt-4 px-4 md:pt-4 md:px-6 hidden lg:grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                <CustomCard bgColor="bg-[#F1F5F9]" Heading="January 23, 2025" subheading="Last Published" />
-                <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading="MIT" subheading="License" icon={true} />
-                <CustomCard bgColor="bg-[#DCFCE7]" Heading="82" subheading="Popularity" />
-                <CustomCard bgColor="bg-[#FDEBDD]" Heading="69" subheading="Contributors" />
-                <CustomCard bgColor="bg-[#FDEBDD]" Heading="46" subheading="Security" />
-            </div>
-            <div className="pt-4 px-4 md:pt-4 md:px-6 grid grid-cols-1 lg:hidden gap-4">
-                <div className="lg:hidden grid grid-cols-2 gap-4">
-                    <CustomCard bgColor="bg-[#F1F5F9]" Heading="January 23, 2025" subheading="Last Published" />
-                    <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading="MIT" subheading="License" icon={true} />
-                </div>
-                <div className="lg:hidden grid grid-cols-3 gap-4">
-                    <CustomCard bgColor="bg-[#DCFCE7]" Heading="82" subheading="Popularity" />
-                    <CustomCard bgColor="bg-[#FDEBDD]" Heading="69" subheading="Contributors" />
-                    <CustomCard bgColor="bg-[#FDEBDD]" Heading="46" subheading="Security" />
-                </div>
-            </div>
+  const session = useSession();
+  const params = useParams();
+  const dependencyId = params.id as string;
+  const [pages, setPages] = useState(1);
+  const searchParams = useSearchParams();
 
-            <div className="pt-6 px-4 md:pt-6 md:px-6 hidden lg:flex">
-                <LinkSection version="18.2.21" />
-            </div>
+  useEffect(() => {
+    const newPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+    setPages(newPage);
+  }, [searchParams]);
 
-            <div className="pt-6 px-4 md:pt-6 md:px-6 flex flex-col lg:hidden">
-                <div className="flex flex-row gap-x-12 lg:hidden border-b pb-4 items-center justify-center">
-                    <LinkSection version="18.2.21" />
-                </div>
-            </div>
+  const { data: dependencyDetails } = useQuery<IDependencyDetails>({
+    queryKey: ['dependencyDetails', session],
+    queryFn: () => getDependencyByRepoId(session, dependencyId),
+  });
 
-            <div className="pt-6 px-4 md:pt-6 md:px-6">
-                <div className="flex items-center gap-2 border-b pb-4">
-                    <p className="font-medium text-[16px] text-deepBlackColor">Repositories</p>
-                </div>
-                <div>
-                    <DepSearchSection />
-                    <SingleDepTable
-                        repos={RepoData ?? []}
-                        totalCountAndLimit={{ totalCount: RepoData.length, size: 10 }}
-                        currentPage={1}
-                        loading={false}
-                    />
-                </div>
-            </div>
+  const { data: selectedRepositories } = useQuery<TAllRepositories>({
+    queryKey: ['selectedRepositories', session, pages],
+    queryFn: () => getSelectedRepo(session, pages, 10, dependencyId),
+  });
+
+  // Helper function to format popularity score
+  const formatPopularityScore = (score: number | undefined) => {
+    return score !== undefined ? String(Math.round(score * 100)) : '-';
+  };
+
+  // Card data configuration
+  const cardData = {
+    license: {
+      heading: dependencyDetails?.license || '-',
+      subheading: 'License',
+      bgColor: 'bg-[#F1F5F9]',
+    },
+    package: {
+      heading: dependencyDetails?.ecosystem || '-',
+      subheading: 'Package',
+      bgColor: 'bg-[#F1F5F9]',
+    },
+    popularity: {
+      heading: formatPopularityScore(dependencyDetails?.score?.detail?.popularity),
+      subheading: 'Popularity',
+      bgColor: 'bg-[#DCFCE7]',
+    },
+    quality: {
+      heading: formatPopularityScore(dependencyDetails?.score?.detail?.quality),
+      subheading: 'Quality',
+      bgColor: 'bg-[#FDEBDD]',
+    },
+    maintenance: {
+      heading: formatPopularityScore(dependencyDetails?.score?.detail?.maintenance),
+      subheading: 'Maintenance',
+      bgColor: 'bg-[#FDEBDD]',
+    },
+  };
+
+  return (
+    <div className='flex min-h-screen flex-col'>
+      <PageHeader title='@types/react (npm) Details • Dependencies • DepShield.io' />
+      <BreadcrumbWithAvatar
+        initialData='Dependencies'
+        initialLink='/dependencies'
+        secondaryData='Details'
+        secondaryLink='/dependencies/12'
+      />
+      <div className='flex items-center pl-4 pt-3 md:pl-8'>
+        <PageHeading
+          title={dependencyDetails?.dependencyName || ''}
+          className='mr-4'
+        />
+      </div>
+
+      {/* Desktop Layout - Large screens and above */}
+      <div className='hidden gap-4 px-4 pt-4 md:px-6 md:pt-4 lg:grid lg:grid-cols-4 xl:grid-cols-5'>
+
+        <CustomCardWithBadge
+          bgColor={cardData.license.bgColor}
+          Heading={cardData.license.heading}
+          subheading={cardData.license.subheading}
+          icon={true}
+        />
+        <CustomCardWithBadge
+          bgColor={cardData.package.bgColor}
+          Heading={cardData.package.heading}
+          subheading={cardData.package.subheading}
+          icon={true}
+        />
+        <CustomCard
+          bgColor={cardData.popularity.bgColor}
+          Heading={cardData.popularity.heading}
+          subheading={cardData.popularity.subheading}
+        />
+        <CustomCard
+          bgColor={cardData.quality.bgColor}
+          Heading={cardData.quality.heading}
+          subheading={cardData.quality.subheading}
+        />
+        <CustomCard
+          bgColor={cardData.maintenance.bgColor}
+          Heading={cardData.maintenance.heading}
+          subheading={cardData.maintenance.subheading}
+        />
+      </div>
+
+      {/* Mobile Layout - Hidden on large screens */}
+      <div className='grid grid-cols-1 gap-4 px-4 pt-4 md:px-6 md:pt-4 lg:hidden'>
+        {/* First row - 2 columns */}
+        <div className='grid grid-cols-2 gap-4 lg:hidden'>
+          <CustomCardWithBadge
+            bgColor={cardData.license.bgColor}
+            Heading={cardData.license.heading}
+            subheading={cardData.license.subheading}
+            icon={true}
+          />
+          <CustomCardWithBadge
+            bgColor={cardData.package.bgColor}
+            Heading={cardData.package.heading}
+            subheading={cardData.package.subheading}
+            icon={true}
+          />
         </div>
-    );
+        {/* Second row - 3 columns */}
+        <div className='grid grid-cols-3 gap-4 lg:hidden'>
+          <CustomCard
+            bgColor={cardData.popularity.bgColor}
+            Heading={cardData.popularity.heading}
+            subheading={cardData.popularity.subheading}
+          />
+          <CustomCard
+            bgColor={cardData.quality.bgColor}
+            Heading={cardData.quality.heading}
+            subheading={cardData.quality.subheading}
+          />
+          <CustomCard
+            bgColor={cardData.maintenance.bgColor}
+            Heading={cardData.maintenance.heading}
+            subheading={cardData.maintenance.subheading}
+          />
+        </div>
+      </div>
+
+      <div className='hidden px-4 pt-6 md:px-6 md:pt-6 lg:flex'>
+        <LinkSection version={dependencyDetails?.currentVersion || ''} />
+      </div>
+
+      <div className='flex flex-col px-4 pt-6 md:px-6 md:pt-6 lg:hidden'>
+        <div className='flex flex-row items-center justify-center gap-x-12 border-b pb-4 lg:hidden'>
+          <LinkSection version={dependencyDetails?.currentVersion || ''} />
+        </div>
+      </div>
+
+      <div className='px-4 pt-6 md:px-6 md:pt-6'>
+        <div className='flex items-center gap-2 border-b pb-4'>
+          <p className='text-[16px] font-medium text-deepBlackColor'>
+            Repositories
+          </p>
+        </div>
+        <div>
+          <DepSearchSection />
+          <SingleDepTable
+            repos={selectedRepositories?.data ?? []}
+            totalCountAndLimit={{
+              totalCount: selectedRepositories?.count ?? 0,
+              size: 10,
+            }}
+            currentPage={pages}
+            loading={false}
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const DependenciesDetails = () => {
-    return (
-        <Suspense fallback={<Loader />}>
-            <DependenciesDetailsContent />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<Loader />}>
+      <DependenciesDetailsContent />
+    </Suspense>
+  );
 };
 
 export default DependenciesDetails;

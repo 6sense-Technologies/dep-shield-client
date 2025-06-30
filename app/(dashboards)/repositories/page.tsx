@@ -72,7 +72,7 @@ const Repositories = () => {
     queryKey: ['AllRepo', session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
-  // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData);
+  // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -144,9 +144,9 @@ const Repositories = () => {
                           </div>
                         ) : (
                           <RepoTable
-                            repos={AllRepoData?.repositories}
+                            repos={AllRepoData?.data}
                             totalCountAndLimit={{
-                              totalCount: AllRepoData?.totalCount,
+                              totalCount: AllRepoData?.count,
                               size: 10,
                             }}
                             currentPage={1}
@@ -184,9 +184,9 @@ const Repositories = () => {
                           </div>
                         ) : (
                           <MyRepoTable
-                            repos={AllRepoData?.repositories}
+                            repos={AllRepoData?.data}
                             totalCountAndLimit={{
-                              totalCount: AllRepoData?.totalCount,
+                              totalCount: AllRepoData?.count,
                               size: 10,
                             }}
                             currentPage={pages}
