@@ -213,7 +213,7 @@ export const getSelectedRepo = async (
   }
 
   if (licenseId) {
-    queryParams.append('licenseId', licenseId);
+    queryParams.append('license', licenseId);
   }
 
   const response = await axios.get(

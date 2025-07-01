@@ -149,7 +149,6 @@ const LicensesDetailsContent = () => {
             totalCountAndLimit={{ totalCount: selectedRepositories?.count ?? 0, size: 10 }}
             currentPage={pages}
             loading={isFetchingSelectedRepositories}
-            licenseDetails={licenseDetails}
           />
         </div>
       </div>

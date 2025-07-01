@@ -1,6 +1,4 @@
 import { GenericTable } from "@/components/GenericTable";
-import { Badge } from "@/components/ui/badge";
-import { getBadgeVariant } from "@/constants/globalFunctions";
 import { TSingleLicenseTableProps } from "@/types/licenses.types";
 import { TSingleRepository } from "@/types/repo.types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -24,7 +22,6 @@ export const SingleLicenseTable: React.FC<TSingleLicenseTableProps> = ({
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
     loading = false,
-    licenseDetails
 }) => {
     const columns: ColumnDef<TSingleRepository>[] = [
         {
@@ -32,25 +29,6 @@ export const SingleLicenseTable: React.FC<TSingleLicenseTableProps> = ({
             header: () => <div className="text-bold">Repositories</div>,
             cell: ({ row }) => (
                 <div className="text-medium">{row?.original?.repoName || "-"}</div>
-            ),
-        },
-        {
-            accessorKey: "licenseRisk",
-            header: () => <div className="text-bold">License Risk</div>,
-            cell: () => {
-                const licenseRisk = licenseDetails?.useCase?.licenseRisk || 'Unknown';
-                return (
-                    <Badge className={getBadgeVariant(licenseRisk)}>
-                        {licenseRisk}
-                    </Badge>
-                );
-            },
-        },
-        {
-            accessorKey: "licenseFamily",
-            header: () => <div className="text-bold">License Family</div>,
-            cell: () => (
-                <div className="text-medium">{licenseDetails?.useCase?.licenseFamily || "-"}</div>
             ),
         },
         {
