@@ -42,7 +42,6 @@ export type TSingleLicenseTableProps = {
   totalCountAndLimit?: { totalCount: number; size: number };
   currentPage: number;
   loading?: boolean;
-  licenseDetails?: ILicenseDetails;
 };
 
 export interface IAllLicenses {
