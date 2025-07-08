@@ -16,15 +16,11 @@ import { parseAsInteger, useQueryState } from "nuqs";
 
 const Vulnerabilities = () => {
     const session = useSession();
-    const [limit] = useState(2);
+    const [limit] = useState(10);
 
     const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
 
-    const {
-        data: allVulnerabilities,
-        isFetching: allVulnerabilitiesLoading,
-        refetch
-    } = useQuery<AllVulnerabilitiesType>({
+    const { data: allVulnerabilities, isFetching: allVulnerabilitiesLoading } = useQuery<AllVulnerabilitiesType>({
         queryKey: ["allVulnerabilities", session, page, limit],
         queryFn: () => getAllVulnerabilities(session, page, limit)
     });
@@ -39,11 +35,11 @@ const Vulnerabilities = () => {
             <div className="pt-4 px-4 md:pt-4 md:px-6 ">
                 <VulnerabilitySearhArea />
                 <div className="mt-7">
-                    {allVulnerabilitiesLoading ? (
-                        <EmptyTableSkeleton />
-                    ) : (
-                        <VulnerabilityTable allVulnerabilities={allVulnerabilities} page={page} setPage={setPage} limit={limit} />
-                    )}
+                    {
+                        allVulnerabilitiesLoading ?
+                            <EmptyTableSkeleton /> :
+                            <VulnerabilityTable allVulnerabilities={allVulnerabilities} page={page} setPage={setPage} limit={limit} />
+                    }
                 </div>
             </div>
         </div>

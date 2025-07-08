@@ -3,9 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Providers from "@/components/providers";
-import { MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,26 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={inter.className}>
+            <Head>
+                <ColorSchemeScript />
+            </Head>
             <body className="antialiased">
                 <SessionProvider>
                     <Providers>
                         <NuqsAdapter>
-                            <MantineProvider>{children}</MantineProvider>
+                            <MantineProvider
+                                defaultColorScheme='auto'
+                                theme={{
+                                    components: {
+                                        Checkbox: {
+                                            defaultProps: {
+                                            },
+                                        },
+                                    },
+                                }}
+                            >
+                                {children}
+                            </MantineProvider>
                         </NuqsAdapter>
                     </Providers>
                 </SessionProvider>
