@@ -26,7 +26,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={inter.className}>
             <Head>
-                <ColorSchemeScript />
+                <ColorSchemeScript defaultColorScheme="light" />
             </Head>
             <body className="antialiased">
                 <SessionProvider>
