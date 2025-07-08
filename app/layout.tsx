@@ -33,7 +33,7 @@ export default function RootLayout({
                     <Providers>
                         <NuqsAdapter>
                             <MantineProvider
-                                defaultColorScheme='auto'
+                                defaultColorScheme='light'
                                 theme={{
                                     components: {
                                         Checkbox: {
