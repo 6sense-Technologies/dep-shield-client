@@ -2,8 +2,6 @@
 import PageHeader from "@/components/PageHeader";
 import { useState } from "react";
 
-import VulnerabilitySearhArea from "./_components/vulnerabilitySearhArea";
-
 import VulnerabilityTable from "@/app/(dashboards)/vulnerabilities/_components/VulnerabilityTable";
 import { getAllVulnerabilities } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
 import { AllVulnerabilitiesType } from "@/app/(dashboards)/vulnerabilities/types/types";
@@ -13,6 +11,7 @@ import PageHeading from "@/components/pageHeading";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { parseAsInteger, useQueryState } from "nuqs";
+import VulnerabilitySearchArea from "./_components/vulnerabilitySearchArea";
 
 const Vulnerabilities = () => {
     const session = useSession();
@@ -33,7 +32,7 @@ const Vulnerabilities = () => {
                 <PageHeading title="All Vulnerabilities" className="mr-4" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6 ">
-                <VulnerabilitySearhArea />
+                <VulnerabilitySearchArea />
                 <div className="mt-7">
                     {
                         allVulnerabilitiesLoading ?

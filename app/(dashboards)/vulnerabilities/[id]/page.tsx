@@ -10,26 +10,44 @@ import CustomStepper from "./_components/CustomStepper";
 import CustomSummary from "./_components/CustomSummary";
 import SecondTabTable from "./_components/secondTabTable";
 import CustomRadialGraph from "./_components/CustomRadialGraph";
+
 import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
 import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
 import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
 import PageHeading from "@/components/pageHeading";
+import { getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
+import dayjs from "dayjs";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
 ];
 
 const VulnerabilitiesDetailsContent = () => {
+
+    const { id: vulnerabilityId } = useParams();
+
+    const session = useSession();
     const [activeTab, setActiveTab] = useState('cv');
     const [showMoreNVD, setShowMoreNVD] = useState(false);
     const [showMoreGitHub, setShowMoreGitHub] = useState(false);
     const [isNVDOverflowing, setIsNVDOverflowing] = useState(false);
     const [isGitHubOverflowing, setIsGitHubOverflowing] = useState(false);
 
+
     const nvdRef = useRef<HTMLParagraphElement>(null);
     const githubRef = useRef<HTMLParagraphElement>(null);
+
+    const { data: vulnerabilityDetails, isFetching: vulnerabilityDetailsLoading } = useQuery<VulnerabilityDetailsType>({
+        queryKey: ["vulnerabilityDetails", session, vulnerabilityId],
+        queryFn: () => getVulnerabilityDetails(session, vulnerabilityId as string),
+        enabled: !!vulnerabilityId
+      });
 
     useEffect(() => {
         if (nvdRef.current && nvdRef.current.scrollHeight > 120) {
@@ -60,7 +78,7 @@ const VulnerabilitiesDetailsContent = () => {
                 <PageHeading title="CVE-2023-42282" className="mr-4" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6 hidden lg:grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                <CustomCard bgColor="bg-[#F1F5F9]" Heading="January 24, 2025" subheading="Discovered" />
+                <CustomCard bgColor="bg-[#F1F5F9]" Heading={dayjs(vulnerabilityDetails?.createdAt).format("MMMM DD, YYYY")} subheading="Discovered" />
                 <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading="log4j (Maven)" subheading="Dependency" />
                 <CustomCard bgColor="bg-[#DCFCE7]" Heading="3.7" subheading="CVSS3 - Critical" />
                 <CustomCard bgColor="bg-[#DDF3FD]" Heading="4.3" subheading="CVSS2 - Medium" />

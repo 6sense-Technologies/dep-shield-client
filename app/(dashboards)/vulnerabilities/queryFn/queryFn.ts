@@ -38,3 +38,20 @@ export const getAllVulnerabilitiesByRepo = async (
 
   return response.data;
 };
+export const getVulnerabilityDetails = async (
+  session: any,
+  vulnerabilityId: string,
+) => {
+  let accessToken: string = session.data.accessToken;
+
+  const response = await axios.get(
+    `${NEXT_PUBLIC_BACKEND_URL}/vulnerabilities/${vulnerabilityId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  return response.data;
+};

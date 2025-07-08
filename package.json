@@ -47,6 +47,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "dayjs": "^1.11.13",
     "input-otp": "^1.4.2",
     "jest-environment-jsdom": "^29.7.0",
     "js-cookie": "^3.0.5",
