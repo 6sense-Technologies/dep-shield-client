@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { SessionProvider } from "next-auth/react";
 import Providers from "@/components/providers";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import Head from "next/head";
+import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+import { Inter } from "next/font/google";
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import "./globals.css";
+import { Suspense } from 'react'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,16 +24,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={inter.className}>
+        <html lang="en" className={inter.className} {...mantineHtmlProps}>
             <head>
-                <ColorSchemeScript defaultColorScheme="light" />
+                <Suspense>
+                    <ColorSchemeScript defaultColorScheme="light" />
+                </Suspense>
+
             </head>
             <body className="antialiased">
                 <SessionProvider>
                     <Providers>
                         <NuqsAdapter>
                             <MantineProvider
-                                defaultColorScheme='light'
+                                defaultColorScheme="light"
                                 theme={{
                                     components: {
                                         Checkbox: {

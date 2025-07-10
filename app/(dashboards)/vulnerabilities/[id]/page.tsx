@@ -115,7 +115,7 @@ const VulnerabilitiesDetailsContent = () => {
                 </div>
                 <section>
                     <Tabs value={activeTab} onChange={setActiveTab} defaultValue={Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed()?.[0]}>
-
+                    <Tabs.List>
                         {
                             vulnerabilityDetails?.severity ?
                                 Object.keys(vulnerabilityDetails?.severity)?.toReversed()?.map((item, index) => {
@@ -124,9 +124,9 @@ const VulnerabilitiesDetailsContent = () => {
                                     if (vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]) {
                                         return (
                                             <React.Fragment key={item}>
-                                                <Tabs.List>
+                                               
                                                     <Tabs.Tab value={index?.toString()} key={index?.toString()}>{item}</Tabs.Tab>
-                                                </Tabs.List>
+                                                
                                                 <Tabs.Panel value={index?.toString()}>{item} asd</Tabs.Panel>
                                             </React.Fragment>
                                         )
@@ -134,7 +134,7 @@ const VulnerabilitiesDetailsContent = () => {
 
                                 }) : null
                         }
-
+</Tabs.List>
                     </Tabs>
                 </section>
                 {/* <div>
