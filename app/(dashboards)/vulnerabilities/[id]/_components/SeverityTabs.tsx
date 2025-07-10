@@ -15,10 +15,10 @@ type Props = {
 };
 
 const severityLabelMap: Record<string, string> = {
-  cvssMetricV2: 'CVSSMetricV2',
-  cvssMetricV30: 'CVSSMetricV3',
-  cvssMetricV31: 'CVSSMetricV3.1',
-  cvssMetricV40: 'CVSSMetricV4',
+  cvssMetricV2: 'CVSS2',
+  cvssMetricV30: 'CVSS3',
+  cvssMetricV31: 'CVSS3.1',
+  cvssMetricV40: 'CVSS4',
 };
 
 export default function SeverityTabs({ severity, activeTab, setActiveTab }: Props) {
@@ -46,7 +46,7 @@ export default function SeverityTabs({ severity, activeTab, setActiveTab }: Prop
         onChange={setActiveTab}
         defaultValue={defaultTab}
       >
-        <Tabs.List>
+        <Tabs.List >
           {keys.map((key, idx) => {
             if (!severity[key]) return null;
             return (
@@ -66,7 +66,7 @@ export default function SeverityTabs({ severity, activeTab, setActiveTab }: Prop
           if (!data) return null;
 
           return (
-            <Tabs.Panel key={idx} value={idx.toString()} className="flex flex-col gap-3 mt-4">
+            <Tabs.Panel key={idx} value={idx.toString()} className="flex flex-col gap-3 mt-4 pl-4">
               {Object.entries(data).map(([k, v]) => (
                 <div key={k} className="grid grid-cols-3">
                   <span className="font-normal text-sm text-black">{formatKey(k)}</span>

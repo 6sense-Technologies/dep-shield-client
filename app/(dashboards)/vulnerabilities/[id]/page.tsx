@@ -113,7 +113,10 @@ const VulnerabilitiesDetailsContent = () => {
                     </Badge>
                 </div>
                 <div className="flex items-center justify-start mt-10">
-                    <CustomStepper />
+                    {
+                        !vulnerabilityDetailsLoading ?
+                        <CustomStepper history={vulnerabilityDetails?.vulnerabilityHistory} /> : null
+                    }
                 </div>
                 <SeverityTabs
                     severity={vulnerabilityDetails?.severity}
