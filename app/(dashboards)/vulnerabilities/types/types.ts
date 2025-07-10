@@ -13,24 +13,13 @@ export interface SingleVulnerabilityType {
 
 export interface VulnerabilityDetailsType {
   _id: string
-  id: string
-  __v: number
-  createdAt: string
   cveId: string
-  cweId: string[]
-  dependencyId: string
-  dependencyVersionId: string
-  details: string
-  intensity: string
-  nvd_published_at: string
   published: string
-  references: string[]
-  summary: string
-  updatedAt: string
-  weaknesses: string[]
+  dependencyName: string
   nvdDescription: string
-  nvdVulnStatus: string
+  references: string[]
   severity: Severity
+  vulnerabilityHistory: VulnerabilityHistory[]
 }
 
 export interface Severity {
@@ -72,4 +61,9 @@ export interface CvssData2 {
   confidentialityImpact: string
   integrityImpact: string
   availabilityImpact: string
+}
+
+export interface VulnerabilityHistory {
+  status: string
+  version: string
 }

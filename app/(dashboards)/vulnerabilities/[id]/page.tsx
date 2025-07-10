@@ -1,28 +1,30 @@
 "use client";
-import React, { Suspense, useState, useRef, useEffect } from "react";
 import PageHeader from "@/components/PageHeader";
 import Loader from "@/components/loader";
-import CustomCard from "./_components/customCard";
-import CustomCardWithBadge from "./_components/customCardWithBadge";
-import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ExternalLink } from "lucide-react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
+import CustomRadialGraph from "./_components/CustomRadialGraph";
 import CustomStepper from "./_components/CustomStepper";
 import CustomSummary from "./_components/CustomSummary";
+import CustomCard from "./_components/customCard";
+import CustomCardWithBadge from "./_components/customCardWithBadge";
 import SecondTabTable from "./_components/secondTabTable";
-import CustomRadialGraph from "./_components/CustomRadialGraph";
 
+import { getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
+import { VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
+import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
+import PageHeading from "@/components/pageHeading";
+import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
+import { Tabs } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { useQueryState } from "nuqs";
 import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
-import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
-import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
-import PageHeading from "@/components/pageHeading";
-import { getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
-import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
-import dayjs from "dayjs";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
@@ -33,7 +35,7 @@ const VulnerabilitiesDetailsContent = () => {
     const { id: vulnerabilityId } = useParams();
 
     const session = useSession();
-    const [activeTab, setActiveTab] = useState('cv');
+    const [activeTab, setActiveTab] = useQueryState('0');
     const [showMoreNVD, setShowMoreNVD] = useState(false);
     const [showMoreGitHub, setShowMoreGitHub] = useState(false);
     const [isNVDOverflowing, setIsNVDOverflowing] = useState(false);
@@ -47,7 +49,7 @@ const VulnerabilitiesDetailsContent = () => {
         queryKey: ["vulnerabilityDetails", session, vulnerabilityId],
         queryFn: () => getVulnerabilityDetails(session, vulnerabilityId as string),
         enabled: !!vulnerabilityId
-      });
+    });
 
     useEffect(() => {
         if (nvdRef.current && nvdRef.current.scrollHeight > 120) {
@@ -58,17 +60,8 @@ const VulnerabilitiesDetailsContent = () => {
         }
     }, []);
 
-    const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-        localStorage.setItem('activeTab', tab);
-    };
+    console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
 
-    useEffect(() => {
-        const savedTab = localStorage.getItem('activeTab');
-        if (savedTab) {
-            setActiveTab(savedTab);
-        }
-    }, []);
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -78,10 +71,10 @@ const VulnerabilitiesDetailsContent = () => {
                 <PageHeading title="CVE-2023-42282" className="mr-4" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6 hidden lg:grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                <CustomCard bgColor="bg-[#F1F5F9]" Heading={dayjs(vulnerabilityDetails?.createdAt).format("MMMM DD, YYYY")} subheading="Discovered" />
-                <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading="log4j (Maven)" subheading="Dependency" />
-                <CustomCard bgColor="bg-[#DCFCE7]" Heading="3.7" subheading="CVSS3 - Critical" />
-                <CustomCard bgColor="bg-[#DDF3FD]" Heading="4.3" subheading="CVSS2 - Medium" />
+                <CustomCard bgColor="bg-[#F1F5F9]" Heading={dayjs(vulnerabilityDetails?.published).format("MMMM DD, YYYY")} subheading="Discovered" />
+                <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading={vulnerabilityDetails?.dependencyName ?? '-'} subheading="Dependency" />
+                <CustomCard bgColor="bg-[#DCFCE7]" Heading="N/A" subheading="CVSS3 - Critical" />
+                <CustomCard bgColor="bg-[#DDF3FD]" Heading="N/A" subheading="CVSS2 - Medium" />
                 <CustomCard bgColor="bg-[#F1F5F9]" Heading="N/A" subheading="CISA KEV" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6 grid grid-cols-1 lg:hidden gap-4">
@@ -90,8 +83,8 @@ const VulnerabilitiesDetailsContent = () => {
                     <CustomCardWithBadge bgColor="bg-[#F1F5F9]" Heading="log4j (Maven)" subheading="Dependency" />
                 </div>
                 <div className="lg:hidden grid grid-cols-3 gap-4">
-                    <CustomCard bgColor="bg-[#DCFCE7]" Heading="3.7" subheading="CVSS3 - Critical" />
-                    <CustomCard bgColor="bg-[#DDF3FD]" Heading="4.3" subheading="CVSS2 - Medium" />
+                    <CustomCard bgColor="bg-[#DCFCE7]" Heading="N/A" subheading="CVSS3 - Critical" />
+                    <CustomCard bgColor="bg-[#DDF3FD]" Heading="N/A" subheading="CVSS2 - Medium" />
                     <CustomCard bgColor="bg-[#F1F5F9]" Heading="N/A" subheading="CISA KEV" />
                 </div>
             </div>
@@ -105,6 +98,7 @@ const VulnerabilitiesDetailsContent = () => {
                 isGitHubOverflowing={isGitHubOverflowing}
                 setShowMoreNVD={setShowMoreNVD}
                 setShowMoreGitHub={setShowMoreGitHub}
+                vulnerabilityDetails={vulnerabilityDetails}
             />
 
             <div className="pt-6 px-4 md:pt-6 md:px-6">
@@ -112,14 +106,38 @@ const VulnerabilitiesDetailsContent = () => {
                     <p className="font-medium text-[16px] text-deepBlackColor">Vulnerable dependency</p>
 
                     <Badge className="inline-flex items-center gap-1 bg-transparent text-black px-2 py-1 rounded-xl hover:bg-transparent cursor-pointer">
-                        log4j (Maven)
+                        {vulnerabilityDetails?.dependencyName ?? '-'}
                         <ExternalLink size={16} className='ml-[6px]' />
                     </Badge>
                 </div>
                 <div className="flex items-center justify-start mt-10">
                     <CustomStepper />
                 </div>
-                <div>
+                <section>
+                    <Tabs value={activeTab} onChange={setActiveTab} defaultValue={Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed()?.[0]}>
+
+                        {
+                            vulnerabilityDetails?.severity ?
+                                Object.keys(vulnerabilityDetails?.severity)?.toReversed()?.map((item, index) => {
+                                    console.log('qqqqqqqqqq', vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]);
+
+                                    if (vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]) {
+                                        return (
+                                            <React.Fragment key={item}>
+                                                <Tabs.List>
+                                                    <Tabs.Tab value={index?.toString()} key={index?.toString()}>{item}</Tabs.Tab>
+                                                </Tabs.List>
+                                                <Tabs.Panel value={index?.toString()}>{item} asd</Tabs.Panel>
+                                            </React.Fragment>
+                                        )
+                                    }
+
+                                }) : null
+                        }
+
+                    </Tabs>
+                </section>
+                {/* <div>
                     <div className="pt-4">
                         <div className="flex space-x-2 md:space-x-4 border-b">
                             <button
@@ -167,7 +185,7 @@ const VulnerabilitiesDetailsContent = () => {
                             </div>
                         )}
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className="pt-6 px-4 md:pt-6 md:px-6">
