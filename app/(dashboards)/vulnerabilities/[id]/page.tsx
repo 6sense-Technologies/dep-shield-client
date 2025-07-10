@@ -25,6 +25,9 @@ import { useQueryState } from "nuqs";
 import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
+import { cn } from "@/lib/utils";
+import { capitalizeFirstLetter, capitalizeOnlyFirstLetter } from "@/helpers/helpers";
+import SeverityTabs from "@/app/(dashboards)/vulnerabilities/[id]/_components/SeverityTabs";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
@@ -61,7 +64,6 @@ const VulnerabilitiesDetailsContent = () => {
     }, []);
 
     console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
-
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -113,30 +115,11 @@ const VulnerabilitiesDetailsContent = () => {
                 <div className="flex items-center justify-start mt-10">
                     <CustomStepper />
                 </div>
-                <section>
-                    <Tabs value={activeTab} onChange={setActiveTab} defaultValue={Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed()?.[0]}>
-                        <Tabs.List>
-                            {
-                                vulnerabilityDetails?.severity ?
-                                    Object.keys(vulnerabilityDetails?.severity)?.toReversed()?.map((item, index) => {
-                                        console.log('qqqqqqqqqq', vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]);
-
-                                        if (vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]) {
-                                            return (
-                                                <React.Fragment key={item}>
-
-                                                    <Tabs.Tab value={index?.toString()} key={index?.toString()}>{item}</Tabs.Tab>
-
-                                                    <Tabs.Panel value={index?.toString()}>{item} asd</Tabs.Panel>
-                                                </React.Fragment>
-                                            )
-                                        }
-
-                                    }) : null
-                            }
-                        </Tabs.List>
-                    </Tabs>
-                </section>
+                <SeverityTabs
+                    severity={vulnerabilityDetails?.severity}
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                />
                 {/* <div>
                     <div className="pt-4">
                         <div className="flex space-x-2 md:space-x-4 border-b">

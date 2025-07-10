@@ -26,31 +26,19 @@ export default function RootLayout({
     return (
         <html lang="en" className={inter.className} {...mantineHtmlProps}>
             <head>
-                <Suspense>
-                    <ColorSchemeScript defaultColorScheme="light" />
-                </Suspense>
+                <ColorSchemeScript />
 
             </head>
             <body className="antialiased">
-                <SessionProvider>
-                    <Providers>
-                        <NuqsAdapter>
-                            <MantineProvider
-                                defaultColorScheme="light"
-                                theme={{
-                                    components: {
-                                        Checkbox: {
-                                            defaultProps: {
-                                            },
-                                        },
-                                    },
-                                }}
-                            >
+                <MantineProvider>
+                    <SessionProvider>
+                        <Providers>
+                            <NuqsAdapter>
                                 {children}
-                            </MantineProvider>
-                        </NuqsAdapter>
-                    </Providers>
-                </SessionProvider>
+                            </NuqsAdapter>
+                        </Providers>
+                    </SessionProvider>
+                </MantineProvider>
             </body>
         </html>
     );
