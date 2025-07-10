@@ -115,26 +115,26 @@ const VulnerabilitiesDetailsContent = () => {
                 </div>
                 <section>
                     <Tabs value={activeTab} onChange={setActiveTab} defaultValue={Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed()?.[0]}>
-                    <Tabs.List>
-                        {
-                            vulnerabilityDetails?.severity ?
-                                Object.keys(vulnerabilityDetails?.severity)?.toReversed()?.map((item, index) => {
-                                    console.log('qqqqqqqqqq', vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]);
+                        <Tabs.List>
+                            {
+                                vulnerabilityDetails?.severity ?
+                                    Object.keys(vulnerabilityDetails?.severity)?.toReversed()?.map((item, index) => {
+                                        console.log('qqqqqqqqqq', vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]);
 
-                                    if (vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]) {
-                                        return (
-                                            <React.Fragment key={item}>
-                                               
+                                        if (vulnerabilityDetails?.severity[item as keyof typeof vulnerabilityDetails.severity]) {
+                                            return (
+                                                <React.Fragment key={item}>
+
                                                     <Tabs.Tab value={index?.toString()} key={index?.toString()}>{item}</Tabs.Tab>
-                                                
-                                                <Tabs.Panel value={index?.toString()}>{item} asd</Tabs.Panel>
-                                            </React.Fragment>
-                                        )
-                                    }
 
-                                }) : null
-                        }
-</Tabs.List>
+                                                    <Tabs.Panel value={index?.toString()}>{item} asd</Tabs.Panel>
+                                                </React.Fragment>
+                                            )
+                                        }
+
+                                    }) : null
+                            }
+                        </Tabs.List>
                     </Tabs>
                 </section>
                 {/* <div>
