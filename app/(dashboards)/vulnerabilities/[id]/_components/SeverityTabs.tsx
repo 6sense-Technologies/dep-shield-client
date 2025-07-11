@@ -27,6 +27,7 @@ export default function SeverityTabs({ severity, activeTab, setActiveTab }: Prop
 
 
   const keys = Object.keys(severity).toReversed() as SeverityKey[];
+  console.log(' SeverityTabs - keys:', keys)
   const defaultTab = keys[0];
 
 
@@ -42,17 +43,19 @@ export default function SeverityTabs({ severity, activeTab, setActiveTab }: Prop
       <Tabs
         color="black"
         className={cn("mt-8 !text-[#64748B] font-semibold")}
-        value={activeTab}
-        onChange={setActiveTab}
+        // value={activeTab}
+        // onChange={setActiveTab}
         defaultValue={defaultTab}
       >
         <Tabs.List >
           {keys.map((key, idx) => {
             if (!severity[key]) return null;
+            console.log('aaaaaaaaaa',(keys.length - 1 - idx).toString());
+            
             return (
               <Tabs.Tab
-                key={idx}
-                value={idx.toString()}
+                key={(keys?.length - 1 - idx)}
+                value={(keys?.length - 1 - idx).toString()}
                 className="data-[active=true]:text-black"
               >
                 {severityLabelMap[key] || ''}
@@ -66,7 +69,7 @@ export default function SeverityTabs({ severity, activeTab, setActiveTab }: Prop
           if (!data) return null;
 
           return (
-            <Tabs.Panel key={idx} value={idx.toString()} className="flex flex-col gap-3 mt-4 pl-4">
+            <Tabs.Panel key={idx} value={(keys?.length - 1 - idx).toString()} className="flex flex-col gap-3 mt-4 pl-4">
               {Object.entries(data).map(([k, v]) => (
                 <div key={k} className="grid grid-cols-3">
                   <span className="font-normal text-sm text-black">{formatKey(k)}</span>

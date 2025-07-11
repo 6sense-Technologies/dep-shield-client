@@ -3,31 +3,25 @@ import PageHeader from "@/components/PageHeader";
 import Loader from "@/components/loader";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
-import React, { Suspense, useEffect, useRef, useState } from "react";
-import CustomRadialGraph from "./_components/CustomRadialGraph";
+import { Suspense, useEffect, useRef, useState } from "react";
 import CustomStepper from "./_components/CustomStepper";
 import CustomSummary from "./_components/CustomSummary";
 import CustomCard from "./_components/customCard";
 import CustomCardWithBadge from "./_components/customCardWithBadge";
-import SecondTabTable from "./_components/secondTabTable";
 
+import SeverityTabs from "@/app/(dashboards)/vulnerabilities/[id]/_components/SeverityTabs";
 import { getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
 import { VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
 import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
 import PageHeading from "@/components/pageHeading";
-import { firstTabData, RepoData, secondTabData } from "@/constants/DummyDataFactory";
-import { Tabs } from "@mantine/core";
+import { RepoData } from "@/constants/DummyDataFactory";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useQueryState } from "nuqs";
-import FristTabTable from "./_components/FirstTabTable";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
-import { cn } from "@/lib/utils";
-import { capitalizeFirstLetter, capitalizeOnlyFirstLetter } from "@/helpers/helpers";
-import SeverityTabs from "@/app/(dashboards)/vulnerabilities/[id]/_components/SeverityTabs";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
@@ -64,6 +58,8 @@ const VulnerabilitiesDetailsContent = () => {
     }, []);
 
     console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
+
+    if (vulnerabilityDetailsLoading) return <Loader />
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -115,7 +111,7 @@ const VulnerabilitiesDetailsContent = () => {
                 <div className="flex items-center justify-start mt-10">
                     {
                         !vulnerabilityDetailsLoading ?
-                        <CustomStepper history={vulnerabilityDetails?.vulnerabilityHistory} /> : null
+                            <CustomStepper history={vulnerabilityDetails?.vulnerabilityHistory} /> : null
                     }
                 </div>
                 <SeverityTabs
