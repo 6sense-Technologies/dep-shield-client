@@ -1,12 +1,11 @@
 import Providers from "@/components/providers";
-import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import "./globals.css";
-import { Suspense } from 'react'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +23,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={inter.className} {...mantineHtmlProps}>
+        <html lang="en" className={inter.className} data-mantine-color-scheme="light">
             <head>
-                <ColorSchemeScript />
-
+                {/* <ColorSchemeScript /> */}
             </head>
             <body className="antialiased">
                 <MantineProvider>

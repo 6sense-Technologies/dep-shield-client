@@ -22,6 +22,7 @@ import { useParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import RepoSearchSection from "./_components/RepoSearchSection";
 import { SingleRepoTable } from "./_components/SingleRepoTable";
+import CustomRadialGraph from "@/app/(dashboards)/vulnerabilities/[id]/_components/CustomRadialGraph";
 
 const chartData = [
     { browser: "safari", visitors: 3.7, fill: "" },
@@ -115,12 +116,13 @@ const VulnerabilitiesDetailsContent = () => {
                     }
                 </div>
                 <SeverityTabs
+                    vulnerabilityDetails={vulnerabilityDetails}
                     severity={vulnerabilityDetails?.severity}
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
                 />
-                {/* <div>
-                    <div className="pt-4">
+                <div>
+                    {/* <div className="pt-4">
                         <div className="flex space-x-2 md:space-x-4 border-b">
                             <button
                                 className={`py-2 px-4 ${activeTab === 'cv' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
@@ -135,17 +137,17 @@ const VulnerabilitiesDetailsContent = () => {
                                 CVSS2 - 6.8
                             </button>
                         </div>
-                    </div>
+                    </div> */}
                     <div>
-                        {activeTab === 'cv' && (
+                        {/* {activeTab === 'cv' && (
                             <div>
                                 <FristTabTable
                                     data={firstTabData}
                                 />
                             </div>
-                        )}
-                        {activeTab === 'cvv' && (
-                            <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 2xl:gap-44 pb-8">
+                        )} */}
+                        {/* {activeTab === 'cvv' && ( */}
+                        {/* <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 2xl:gap-44 pb-8">
                                 <SecondTabTable data={secondTabData} />
                                 <div className="flex flex-col lg:flex-row gap-4">
                                     <CustomRadialGraph
@@ -164,10 +166,10 @@ const VulnerabilitiesDetailsContent = () => {
                                         subHeading="Max -6.0"
                                     />
                                 </div>
-                            </div>
-                        )}
+                            </div> */}
+                        {/* )} */}
                     </div>
-                </div> */}
+                </div>
             </div>
 
             <div className="pt-6 px-4 md:pt-6 md:px-6">
