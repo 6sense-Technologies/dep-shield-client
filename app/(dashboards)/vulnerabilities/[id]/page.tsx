@@ -42,7 +42,14 @@ const VulnerabilitiesDetailsContent = () => {
     const { data: vulnerabilityDetails, isFetching: vulnerabilityDetailsLoading } = useQuery<VulnerabilityDetailsType>({
         queryKey: ["vulnerabilityDetails", session, vulnerabilityId],
         queryFn: () => getVulnerabilityDetails(session, vulnerabilityId as string),
-        enabled: !!vulnerabilityId
+        enabled: !!vulnerabilityId,
+        staleTime: 0
+        
+    });
+    const { data: allRepos, isFetching: allReposLoading } = useQuery<AllRepoType>({
+        queryKey: ["allRepos", session, page, limit],
+        queryFn: () => getAllReposByVulnerability(session, vulnerabilityId as string, page, limit),
+        staleTime: 0
     });
 
     useEffect(() => {
@@ -57,10 +64,6 @@ const VulnerabilitiesDetailsContent = () => {
     console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
 
 
-    const { data: allRepos, isFetching: allReposLoading } = useQuery<AllRepoType>({
-        queryKey: ["allRepos", session, page, limit],
-        queryFn: () => getAllReposByVulnerability(session, vulnerabilityId as string, page, limit)
-    });
 
     if (vulnerabilityDetailsLoading) return <Loader />
 
@@ -120,7 +123,7 @@ const VulnerabilitiesDetailsContent = () => {
                 <SeverityTabs
                     vulnerabilityDetails={vulnerabilityDetails}
                     severity={vulnerabilityDetails?.severity}
-            />
+                />
             </div>
             <div className="pt-6 pb-6 px-4 md:pt-6 md:px-6">
                 <div className="flex items-center gap-2 border-b pb-4">

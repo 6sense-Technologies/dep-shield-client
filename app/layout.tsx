@@ -23,7 +23,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" {...mantineHtmlProps} className={inter.className} >
+        <html lang="en" data-mantine-color-scheme='light' className={inter.className} >
             <head>
                 <ColorSchemeScript defaultColorScheme="light" />
             </head>

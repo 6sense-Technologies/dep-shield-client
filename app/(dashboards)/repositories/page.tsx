@@ -1,23 +1,23 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 import PageHeader from '@/components/PageHeader';
-import { FolderOpen, Plus, Share } from 'lucide-react';
+import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
+import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
-import { RepoTable } from './_components/repotable';
-import RepoSearchArea from './_components/RepoSearchArea';
+import { shareData } from '@/constants/DummyDataFactory';
+import { getAllRepositories } from '@/helpers/githubApp/githubApi';
+import { useQuery } from '@tanstack/react-query';
+import { FolderOpen, Plus, Share } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
 import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
+import RepoSearchArea from './_components/RepoSearchArea';
 import { MyRepoTable } from './_components/myRepoTable';
+import { RepoTable } from './_components/repotable';
 import { ShareTable } from './_components/shareTable';
-import Loader from '@/components/loader';
-import { useQuery } from '@tanstack/react-query';
-import { getAllRepositories } from '@/helpers/githubApp/githubApi';
-import { useSession } from 'next-auth/react';
-import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
-import Link from 'next/link';
-import { shareData } from '@/constants/DummyDataFactory';
-import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 
 // Need this for next build
 const SearchParamsWrapper = ({
@@ -30,8 +30,8 @@ const SearchParamsWrapper = ({
     <>
       {typeof children === 'function'
         ? (children as (params: URLSearchParams) => React.ReactNode)(
-            searchParams
-          )
+          searchParams
+        )
         : children}
     </>
   );
