@@ -43,11 +43,11 @@ const RepoTable = ({
                         // withTableBorder
                         data={{ head, body }}
                         verticalSpacing={18}
-                        className="min-w-[900px] !table-fixed w-full"
+                        className="min-w-[600px] !table-fixed w-full"
                         classNames={{
+                            td: "min-w-[120px] whitespace-nowrap [&:nth-child(2)]:text-center",
+                            th: "min-w-[120px] whitespace-nowrap [&:nth-child(2)]:text-center",
                             thead: "!text-[#64748B] !text-xs !font-normal",
-                            th: "min-w-[120px] whitespace-nowrap",
-                            td: "min-w-[120px] whitespace-nowrap",
                         }}
                     />
                 ) : (
@@ -56,9 +56,9 @@ const RepoTable = ({
                         className="min-w-[900px] !table-fixed w-full rounded-md"
                         classNames={{
                             table: "border", // optional: outer border if needed
+                            td: "min-w-[120px] whitespace-nowrap [&:nth-child(2)]:text-center",
+                            th: "min-w-[120px] whitespace-nowrap [&:nth-child(2)]:text-center",
                             thead: "!text-[#64748B] !text-xs !font-normal",
-                            th: "min-w-[120px] whitespace-nowrap",
-                            td: "min-w-[120px] whitespace-nowrap",
                         }}
                     >
                         <thead className="!text-[#64748B] !text-xs !font-normal">
