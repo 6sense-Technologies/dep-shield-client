@@ -67,3 +67,14 @@ export interface VulnerabilityHistory {
   status: string
   version: string
 }
+
+
+export interface AllRepoType {
+  data: SingleRepoType[]
+  count: number
+}
+
+export interface SingleRepoType {
+  _id: string
+  repoName: string
+}

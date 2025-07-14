@@ -9,31 +9,27 @@ import CustomSummary from "./_components/CustomSummary";
 import CustomCard from "./_components/customCard";
 import CustomCardWithBadge from "./_components/customCardWithBadge";
 
+import RepoTable from "@/app/(dashboards)/vulnerabilities/[id]/_components/RepoTable";
 import SeverityTabs from "@/app/(dashboards)/vulnerabilities/[id]/_components/SeverityTabs";
-import { getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
-import { VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
+import { getAllReposByVulnerability, getVulnerabilityDetails } from "@/app/(dashboards)/vulnerabilities/queryFn/queryFn";
+import { AllRepoType, AllVulnerabilitiesType, VulnerabilityDetailsType } from "@/app/(dashboards)/vulnerabilities/types/types";
 import BreadcrumbWithAvatar from "@/components/BreadCrumbiwthAvatar";
 import PageHeading from "@/components/pageHeading";
-import { RepoData } from "@/constants/DummyDataFactory";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState } from "nuqs";
 import RepoSearchSection from "./_components/RepoSearchSection";
-import { SingleRepoTable } from "./_components/SingleRepoTable";
-import CustomRadialGraph from "@/app/(dashboards)/vulnerabilities/[id]/_components/CustomRadialGraph";
-
-const chartData = [
-    { browser: "safari", visitors: 3.7, fill: "" },
-];
 
 const VulnerabilitiesDetailsContent = () => {
 
     const { id: vulnerabilityId } = useParams();
 
+    const [limit] = useState(10);
+
+    const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
     const session = useSession();
-    const [activeTab, setActiveTab] = useQueryState('0');
     const [showMoreNVD, setShowMoreNVD] = useState(false);
     const [showMoreGitHub, setShowMoreGitHub] = useState(false);
     const [isNVDOverflowing, setIsNVDOverflowing] = useState(false);
@@ -59,6 +55,12 @@ const VulnerabilitiesDetailsContent = () => {
     }, []);
 
     console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
+
+
+    const { data: allRepos, isFetching: allReposLoading } = useQuery<AllRepoType>({
+        queryKey: ["allRepos", session, page, limit],
+        queryFn: () => getAllReposByVulnerability(session, vulnerabilityId as string, page, limit)
+    });
 
     if (vulnerabilityDetailsLoading) return <Loader />
 
@@ -111,78 +113,26 @@ const VulnerabilitiesDetailsContent = () => {
                 </div>
                 <div className="flex items-center justify-start mt-10">
                     {
-                        !vulnerabilityDetailsLoading ?
-                            <CustomStepper history={vulnerabilityDetails?.vulnerabilityHistory} /> : null
+                        !vulnerabilityDetailsLoading && vulnerabilityDetails?.vulnerabilityHistory?.length ?
+                            <CustomStepper history={!vulnerabilityDetails?.vulnerabilityHistory ? [] : vulnerabilityDetails?.vulnerabilityHistory} /> : null
                     }
                 </div>
                 <SeverityTabs
                     vulnerabilityDetails={vulnerabilityDetails}
                     severity={vulnerabilityDetails?.severity}
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                />
-                <div>
-                    {/* <div className="pt-4">
-                        <div className="flex space-x-2 md:space-x-4 border-b">
-                            <button
-                                className={`py-2 px-4 ${activeTab === 'cv' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
-                                onClick={() => handleTabChange('cv')}
-                            >
-                                CVSS2 - 6.8
-                            </button>
-                            <button
-                                className={`py-2 px-4 text-nowrap ${activeTab === 'cvv' ? 'border-b-2 border-black font-semibold text-black' : 'text-lightAquaTextColor font-semibold'}`}
-                                onClick={() => handleTabChange('cvv')}
-                            >
-                                CVSS2 - 6.8
-                            </button>
-                        </div>
-                    </div> */}
-                    <div>
-                        {/* {activeTab === 'cv' && (
-                            <div>
-                                <FristTabTable
-                                    data={firstTabData}
-                                />
-                            </div>
-                        )} */}
-                        {/* {activeTab === 'cvv' && ( */}
-                        {/* <div className="pt-4 flex flex-col flex-wrap items-center lg:items-start lg:flex-row gap-6 2xl:gap-44 pb-8">
-                                <SecondTabTable data={secondTabData} />
-                                <div className="flex flex-col lg:flex-row gap-4">
-                                    <CustomRadialGraph
-                                        chartData={chartData}
-                                        heading="Base Score"
-                                        subHeading="Max - 10"
-                                    />
-                                    <CustomRadialGraph
-                                        chartData={chartData}
-                                        heading="Exploitability"
-                                        subHeading="Max - 3.9"
-                                    />
-                                    <CustomRadialGraph
-                                        chartData={chartData}
-                                        heading="Impact"
-                                        subHeading="Max -6.0"
-                                    />
-                                </div>
-                            </div> */}
-                        {/* )} */}
-                    </div>
-                </div>
+            />
             </div>
-
-            <div className="pt-6 px-4 md:pt-6 md:px-6">
+            <div className="pt-6 pb-6 px-4 md:pt-6 md:px-6">
                 <div className="flex items-center gap-2 border-b pb-4">
                     <p className="font-medium text-[16px] text-deepBlackColor">Repositories</p>
                 </div>
-                <div>
+                <div className="pb-4">
                     <RepoSearchSection />
-                    <SingleRepoTable
-                        repos={RepoData ?? []}
-                        totalCountAndLimit={{ totalCount: RepoData.length, size: 10 }}
-                        currentPage={1}
-                        loading={false}
+                    <RepoTable
+                        allRepos={allRepos}
+                        page={page}
+                        setPage={setPage}
+                        limit={limit}
                     />
                 </div>
             </div>

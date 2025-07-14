@@ -1,39 +1,26 @@
 'use client';
 
-import CustomRadialGraph from '@/app/(dashboards)/vulnerabilities/[id]/_components/CustomRadialGraph';
 import { VulnerabilityDetailsType } from '@/app/(dashboards)/vulnerabilities/types/types';
 import { capitalizeOnlyFirstLetter } from '@/helpers/helpers';
 import { cn } from '@/lib/utils';
 import { RingProgress, Tabs } from '@mantine/core';
-import { RadialBarChart } from '@mantine/charts';
 
 type SeverityKey = 'cvssMetricV2' | 'cvssMetricV30' | 'cvssMetricV31' | 'cvssMetricV40';
 
 type Props = {
   vulnerabilityDetails: VulnerabilityDetailsType | undefined
   severity: VulnerabilityDetailsType['severity'] | undefined;
-  activeTab: string | null;
-  setActiveTab: (value: string | null) => void;
 };
 
-const severityLabelMap: Record<SeverityKey, string> = {
-  cvssMetricV2: 'CVSS2',
-  cvssMetricV30: 'CVSS3',
-  cvssMetricV31: 'CVSS3.1',
-  cvssMetricV40: 'CVSS4',
-};
-
-export default function SeverityTabs({ vulnerabilityDetails, severity, activeTab, setActiveTab }: Props) {
+export default function SeverityTabs({ vulnerabilityDetails, severity }: Props) {
   if (!severity) return null;
 
   const keys = Object.keys(severity).filter(Boolean).reverse() as SeverityKey[];
   if (!keys.length) return null;
 
-  const defaultTab = keys[0];
 
   const result = vulnerabilityDetails?.severity ? Object.entries(vulnerabilityDetails?.severity)?.toReversed().map(([key, value]) => {
-    const version = capitalizeOnlyFirstLetter(key.replace("2", "2").replace("30", "3").replace("31", "3.1").replace("40", "4"))
-    console.log('🚀 - result - version:', version)
+    const version = (key?.replace('cvssMetric', 'CVSS').replace("2", "2").replace("30", "3").replace("31", "3.1").replace("40", "4"))
     return {
       version,
       source: value?.source ?? null,
@@ -43,7 +30,6 @@ export default function SeverityTabs({ vulnerabilityDetails, severity, activeTab
       impactScore: value?.impactScore ?? null
     }
   }) : []
-  console.log('🚀 - result - result:', result)
 
   function formatKey(key: string) {
     return key
@@ -51,27 +37,12 @@ export default function SeverityTabs({ vulnerabilityDetails, severity, activeTab
       .replace(/^./, str => str.toUpperCase())
       .replace(/Impact$/, ' Impact');
   }
-
-  const chartData = [
-    { browser: "safari", visitors: 3.7, fill: "" },
-  ];
-
-  const data = [
-    {
-      name: 'Score',
-      value: 7.3, // score
-      fill: '#1D4ED8', // blue
-    },
-  ];
-
   return (
     <section>
       <Tabs
         color="black"
         className={cn("mt-8 !text-[#64748B] font-semibold")}
-        // value={activeTab}
-        // onChange={setActiveTab}
-        defaultValue={'Cvssmetricv2'}
+        defaultValue={result[0]?.version}
       >
         <Tabs.List>
           {result.map(item => (

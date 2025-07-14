@@ -1,5 +1,5 @@
 import Providers from "@/components/providers";
-import { MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -23,9 +23,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={inter.className} data-mantine-color-scheme="light">
+        <html lang="en" {...mantineHtmlProps} className={inter.className} >
             <head>
-                {/* <ColorSchemeScript /> */}
+                <ColorSchemeScript defaultColorScheme="light" />
             </head>
             <body className="antialiased">
                 <MantineProvider>
