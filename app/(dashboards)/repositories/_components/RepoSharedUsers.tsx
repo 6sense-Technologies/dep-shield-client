@@ -1,0 +1,72 @@
+import { AllRepoSharedUsers } from '@/app/(dashboards)/repositories/model/types';
+import { getRepoSharedUsers } from '@/app/(dashboards)/repositories/queryFn/queryFn';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { useQuery } from '@tanstack/react-query';
+import { Users, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+
+const RepoSharedUsers = ({ session }: { session: any }) => {
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+
+    const { data: repoSharedUsers, isFetching: repoSharedUsersLoading } = useQuery<AllRepoSharedUsers>({
+        queryKey: ["repoSharedUsers", session, page, limit],
+        queryFn: () => getRepoSharedUsers(session, page, limit),
+        staleTime: 0
+    });
+    console.log('🚀 - RepoSharedUsers - repoSharedUsers:', repoSharedUsers)
+
+    const [menuVisible, setMenuVisible] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setMenuVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        if (menuVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuVisible]);
+
+    return (
+        <div className='relative'>
+            <Button size="tight" variant="light" onClick={() => setMenuVisible(!menuVisible)}><Users size={16} /></Button>
+
+            {menuVisible && (
+                <div ref={menuRef} className="absolute -top-2 left-8 mt-2 w-64 bg-white shadow-lg rounded-lg p-2 z-50">
+                    <div className="flex justify-between items-center mb-4">
+                        <span className="text-twelve font-normal text-inputFooterColor">Shared with</span>
+                        <Button size="tight" variant="none" onClick={() => setMenuVisible(false)}><X size={16} /></Button>
+                    </div>
+                    {
+                        repoSharedUsersLoading ? <div>Loading...</div> :
+                        repoSharedUsers?.length ? repoSharedUsers?.map(user => {
+                            return (
+                                <div className="flex items-center mb-2" key={user?._id}>
+                                    <Avatar className="w-8 h-8 rounded-full mr-2">
+                                        {/* <AvatarImage src="https://randomuser.me/api/portraits/men/1.jpg" alt="User 1" /> */}
+                                        <AvatarFallback></AvatarFallback>
+                                    </Avatar>
+                                    <span className='text-sm font-semibold text-miniSubheadingColor'>{user?.sharedWith}</span>
+                                </div>
+                            )
+                        }) : null
+                    }
+                    <hr className="my-[6px]" />
+                    <div className="text-center text-twelve text-lightAquaTextColor cursor-not-allowed font-normal">+3 more</div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default RepoSharedUsers;

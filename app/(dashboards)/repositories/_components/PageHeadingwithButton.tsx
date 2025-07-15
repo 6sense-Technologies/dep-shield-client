@@ -1,10 +1,12 @@
+import RepoSharedUsers from '@/app/(dashboards)/repositories/_components/RepoSharedUsers';
 import { cn } from '@/lib/utils';
-import React, { FC } from 'react';
 import { IHeadingProps } from '@/types/repo.types';
-import SharedMenu from '../[id]/details/_components/SharedMenu';
+import { FC } from 'react';
 
 
-const PageHeadingwithButton: FC<IHeadingProps> = ({ title, subTitle, titleclassName, subTitleClassName, className, showButton = true }) => {
+const PageHeadingwithButton: FC<IHeadingProps> = ({ title, subTitle, titleclassName, subTitleClassName, className, showButton = true, session }) => {
+
+
     return (
         <div className='flex items-center gap-x-2'>
             <div className={cn(className)}>
@@ -13,7 +15,7 @@ const PageHeadingwithButton: FC<IHeadingProps> = ({ title, subTitle, titleclassN
             </div>
             {showButton && (
                 <div className='mt-3 relative'>
-                    <SharedMenu />
+                    <RepoSharedUsers session={session} />
                 </div>
             )}
         </div>

@@ -16,6 +16,7 @@ export interface IHeadingProps {
   subTitleClassName?: string;
   className?: string;
   showButton?: boolean;
+  session?: any;
 }
 
 export interface RepoPaginationProps {

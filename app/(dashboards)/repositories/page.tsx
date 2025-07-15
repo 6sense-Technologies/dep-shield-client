@@ -89,6 +89,7 @@ const Repositories = () => {
                 title='All Repositories'
                 className='pl-2 pt-3'
                 showButton={activeTab !== 'all'}
+                session={session}
               />
               <div className='tab pt-4'>
                 <div className='flex space-x-2 border-b md:space-x-4'>

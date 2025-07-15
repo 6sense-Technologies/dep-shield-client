@@ -44,7 +44,6 @@ const VulnerabilitiesDetailsContent = () => {
         queryFn: () => getVulnerabilityDetails(session, vulnerabilityId as string),
         enabled: !!vulnerabilityId,
         staleTime: 0
-        
     });
     const { data: allRepos, isFetching: allReposLoading } = useQuery<AllRepoType>({
         queryKey: ["allRepos", session, page, limit],
@@ -60,9 +59,6 @@ const VulnerabilitiesDetailsContent = () => {
             setIsGitHubOverflowing(true);
         }
     }, []);
-
-    console.log('Object.keys(vulnerabilityDetails?.severity)?.toReversed()', Object.keys(vulnerabilityDetails?.severity ?? {})?.toReversed());
-
 
 
     if (vulnerabilityDetailsLoading) return <Loader />
