@@ -178,17 +178,19 @@ const Repositories = () => {
                               <FolderOpen size={32} strokeWidth={1} />
                             </span>
                             <p className='text-xl font-medium text-deepBlackColor'>
-                              No Shared Repositories
+                              No Repositories Added
                             </p>
                             <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                              You haven&#39;t shared any repositories yet.
+                              Get started by adding a new repository.
                             </p>
-                            <Button className='w-[84px]'>
-                              Share{' '}
-                              <span className='text-white'>
-                                <Share size={16} />
-                              </span>
-                            </Button>
+                            <Link href='/repositories/add'>
+                              <Button className='w-20'>
+                                Add{' '}
+                                <span className='text-white'>
+                                  <Plus size={16} />
+                                </span>
+                              </Button>
+                            </Link>
                           </div>
                         ) : (
                           <RepoTable

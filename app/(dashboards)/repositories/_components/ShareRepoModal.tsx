@@ -30,6 +30,7 @@ const ShareRepoModal = ({ selectedRepoId, close, opened, session }: { selectedRe
                     onSuccess() {
                         toast.success('Repository shared successfully')
                         close()
+                        setEmail('')
                     },
                     onError(error) {
                         console.log('🚀 - onError - error:', error)
@@ -45,6 +46,7 @@ const ShareRepoModal = ({ selectedRepoId, close, opened, session }: { selectedRe
             onClose={() => {
                 setEmailError('')
                 close()
+                setEmail('')
             }}
             centered
             withCloseButton={false}
