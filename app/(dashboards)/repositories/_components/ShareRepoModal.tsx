@@ -29,6 +29,7 @@ const ShareRepoModal = ({ selectedRepoId, close, opened, session }: { selectedRe
                 {
                     onSuccess() {
                         toast.success('Repository shared successfully')
+                        close()
                     },
                     onError(error) {
                         console.log('🚀 - onError - error:', error)

@@ -1,5 +1,7 @@
 'use client';
 import RepoTable from '@/app/(dashboards)/repositories/_components/RepoTable';
+import { AllRepoSharedUsers, AllRepoType } from '@/app/(dashboards)/repositories/model/types';
+import { getSharedWithMeRepos } from '@/app/(dashboards)/repositories/queryFn/queryFn';
 import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 import PageHeader from '@/components/PageHeader';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
@@ -18,7 +20,6 @@ import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
 import RepoSearchArea from './_components/RepoSearchArea';
 import { ShareTable } from './_components/shareTable';
-import { AllRepoType } from '@/app/(dashboards)/repositories/model/types';
 
 // Need this for next build
 const SearchParamsWrapper = ({
@@ -76,7 +77,12 @@ const Repositories = () => {
   });
   // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
 
-
+  const { data: sharedWithMeRepos, isFetching: sharedWithMeReposLoader } = useQuery<AllRepoSharedUsers>({
+    queryKey: ["sharedWithMeRepos", session, page, limit],
+    queryFn: () => getSharedWithMeRepos(session, page, limit),
+    staleTime: 0
+  });
+  console.log('🚀 - Repositories - sharedWithMeRepos:', sharedWithMeRepos)
 
   return (
     <Suspense fallback={<Loader />}>
@@ -105,15 +111,14 @@ const Repositories = () => {
                     All
                   </button>
                   <button
-                    className={`text-nowrap px-4 py-2 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'cursor-not-allowed font-semibold text-gray-300'}`}
+                    className={`text-nowrap px-4 py-2 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : ''}`}
                     onClick={() => handleTabChange('myrepositories')}
                   >
                     My repositories
                   </button>
                   <button
-                    className={`text-nowrap px-4 py-2 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'cursor-not-allowed font-semibold text-gray-300'}`}
+                    className={`text-nowrap px-4 py-2 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : ''}`}
                     onClick={() => handleTabChange('sharedwithme')}
-                    disabled
                   >
                     Shared with me
                   </button>
