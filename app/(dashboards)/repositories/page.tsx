@@ -1,4 +1,5 @@
 'use client';
+import RepoTable from '@/app/(dashboards)/repositories/_components/RepoTable';
 import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 import PageHeader from '@/components/PageHeader';
 import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
@@ -11,13 +12,13 @@ import { FolderOpen, Plus, Share } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { parseAsInteger, useQueryState } from 'nuqs';
 import React, { Suspense, useEffect, useState } from 'react';
 import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
 import RepoSearchArea from './_components/RepoSearchArea';
-import { MyRepoTable } from './_components/myRepoTable';
-import { RepoTable } from './_components/repotable';
 import { ShareTable } from './_components/shareTable';
+import { AllRepoType } from '@/app/(dashboards)/repositories/model/types';
 
 // Need this for next build
 const SearchParamsWrapper = ({
@@ -43,6 +44,7 @@ const Repositories = () => {
   const searchParams = useSearchParams();
   const [pages, setPages] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const session = useSession();
 
   useEffect(() => {
@@ -68,11 +70,13 @@ const Repositories = () => {
     router.push(newUrl);
   };
 
-  const { data: AllRepoData, isFetching: RepoDataLoading } = useQuery<any>({
+  const { data: AllRepoData, isFetching: RepoDataLoading } = useQuery<AllRepoType>({
     queryKey: ['AllRepo', session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
   // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
+
+
 
   return (
     <Suspense fallback={<Loader />}>
@@ -123,7 +127,7 @@ const Repositories = () => {
                       <EmptyTableSkeleton />
                     ) : (
                       <>
-                        {AllRepoData?.totalCount === 0 ? (
+                        {AllRepoData?.count === 0 ? (
                           <div className='flex h-96 flex-col items-center justify-center'>
                             <span>
                               <FolderOpen size={32} strokeWidth={1} />
@@ -145,13 +149,11 @@ const Repositories = () => {
                           </div>
                         ) : (
                           <RepoTable
-                            repos={AllRepoData?.data}
-                            totalCountAndLimit={{
-                              totalCount: AllRepoData?.count,
-                              size: 10,
-                            }}
-                            currentPage={1}
-                            loading={false}
+                            session={session}
+                            allRepos={AllRepoData}
+                            page={page}
+                            setPage={setPage}
+                            limit={limit}
                           />
                         )}
                       </>
@@ -160,12 +162,12 @@ const Repositories = () => {
                 )}
                 {activeTab === 'myrepositories' && (
                   <>
-                    <MyRepoSearchArea />
+                    <MyRepoSearchArea session={session} />
                     {RepoDataLoading ? (
                       <EmptyTableSkeleton />
                     ) : (
                       <>
-                        {AllRepoData?.totalCount === 0 ? (
+                        {AllRepoData?.count === 0 ? (
                           <div className='flex h-96 flex-col items-center justify-center'>
                             <span>
                               <FolderOpen size={32} strokeWidth={1} />
@@ -184,14 +186,12 @@ const Repositories = () => {
                             </Button>
                           </div>
                         ) : (
-                          <MyRepoTable
-                            repos={AllRepoData?.data}
-                            totalCountAndLimit={{
-                              totalCount: AllRepoData?.count,
-                              size: 10,
-                            }}
-                            currentPage={pages}
-                            loading={false}
+                          <RepoTable
+                            session={session}
+                            allRepos={AllRepoData}
+                            page={page}
+                            setPage={setPage}
+                            limit={limit}
                           />
                         )}
                       </>

@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
                 <ColorSchemeScript defaultColorScheme="light" />
             </head>
             <body className="antialiased">
+                <Toaster richColors position="top-center" expand={true} className="w-full bg-black text-white" />
                 <MantineProvider>
                     <SessionProvider>
                         <Providers>

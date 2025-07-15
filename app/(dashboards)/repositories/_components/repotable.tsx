@@ -1,108 +1,151 @@
-import React from 'react';
-import { ColumnDef } from '@tanstack/react-table';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { RepoPagination } from './repoPagination';
-import Link from 'next/link';
-import { getBadgeVariant, getSeverityCount } from '@/constants/globalFunctions';
-import { Repository, TRepoTableProps } from '@/types/repo.types';
-import { GenericTable } from '@/components/GenericTable';
-import { cellClassNames, headerClassNames } from '@/constants/TableItems';
+import ShareRepoModal from "@/app/(dashboards)/repositories/_components/ShareRepoModal";
+import { AllRepoType } from "@/app/(dashboards)/repositories/model/types";
+import { Button } from "@/components/ui/button";
+import { Input, Modal, Pagination, Paper, Table } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { ChevronLeft, ChevronRight, Share } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
-export const RepoTable: React.FC<TRepoTableProps> = ({
-  repos = [],
-  refetch,
-  totalCountAndLimit = { totalCount: 0, size: 10 },
-  currentPage,
-  loading = false,
+const RepoTable = ({
+    session,
+    allRepos,
+    setPage,
+    limit,
+    page,
+}: {
+    session: any
+    allRepos: AllRepoType | undefined;
+    setPage: (page: number) => void;
+    limit: number;
+    page: number;
 }) => {
-  //   console.log('🚀 ~ repos:--------------------', repos);
-  const columns: ColumnDef<Repository>[] = [
-    {
-      accessorKey: 'repoName',
-      header: () => <div className='text-bold'>Repository Name</div>,
-      cell: ({ row }: { row: any }) => (
-        <div className='text-medium'>{row.original?.repoName || '-'}</div>
-      ),
-    },
-    {
-      accessorKey: 'totalVulnerabilities',
-      header: () => <div className='text-bold'>Total Vulnerabilities</div>,
-      cell: ({ row }: { row: any }) => (
-        <div className='text-medium'>
-          {row.getValue('totalVulnerabilities') || '-'}
-        </div>
-      ),
-    },
-    {
-      accessorKey: 'vulnerabilities',
-      header: () => <div className='text-bold'>Vulnerabilities</div>,
-      cell: ({ row }: { row: any }) => {
-        const vulnerabilities = row.original.vulnerabilities;
-        if (!vulnerabilities || vulnerabilities.length === 0) {
-          return <div className='text-medium'>-</div>;
-        }
-        const severities = ['Critical', 'High', 'Medium', 'Low', 'Unknown'];
-        return (
-          <div className='flex flex-wrap gap-2'>
-            {severities.map((severity: string) => {
-              const count: any = getSeverityCount(vulnerabilities, severity);
-              return count > 0 ? (
-                <Badge key={severity} className={getBadgeVariant(severity)}>
-                  {severity} {count}
-                </Badge>
-              ) : null;
-            })}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: 'sharingDetails',
-      header: () => <div className='text-bold'>Sharing Details</div>,
-      cell: ({ row }: { row: any }) => {
-        const sharingDetails = row.original.sharingDetails;
-        if (!sharingDetails || sharingDetails.length === 0) {
-          return <div className='text-medium'>-</div>;
-        }
-        return (
-          <div className='flex -space-x-2'>
-            {sharingDetails.map((user: any) => (
-              <Avatar key={user.id} className='h-8 w-8'>
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback>{user.name[0]}</AvatarFallback>
-              </Avatar>
-            ))}
-          </div>
-        );
-      },
-    },
-    {
-      id: 'actions',
-      header: () => <div className='text-bold pr-4 text-start'>Actions</div>,
-      enableHiding: false,
-      cell: () => (
-        <div className='flex items-center justify-end space-x-4 pr-4'>
-          <Link href={`/repositories/${12}/details`}>
-            <Button variant='outline'>View</Button>
-          </Link>
-        </div>
-      ),
-    },
-  ];
+    const [opened, { open, close }] = useDisclosure(false);
+    const head = [
+        "Repository Name",
+        "Total Vulnerabilities",
+        "Vulnerabilities",
+        "Shared With",
+        "Actions",
+    ];
+    const [selectedRepoId, setSelectedRepoId] = useState('')
 
-  return (
-    <GenericTable
-      columns={columns}
-      data={repos}
-      refetch={refetch}
-      totalCountAndLimit={totalCountAndLimit}
-      currentPage={currentPage}
-      loading={loading}
-      headerClassNames={headerClassNames}
-      cellClassNames={cellClassNames}
-      PaginationComponent={RepoPagination}
-    />
-  );
+    const body = allRepos?.data?.length ? allRepos?.data?.map((item) => [
+        item.repoName,
+        '-',
+        "-",
+        "-",
+        <section key={`link-${item?._id}`}>
+            <Link
+                href={`/vulnerabilities/${item?._id}`}
+
+                className="border-[1px] rounded-md py-1 px-5 text-center cursor-pointer"
+            >
+                View
+            </Link>
+            <Button
+                onClick={() => {
+                    setSelectedRepoId(item?._id)
+                    open()
+                }}
+                size='xsTight'
+                variant='light'
+                className='ml-2'
+            >
+                <Share />
+                <span className='text-sm font-medium text-deepBlackColor lg:hidden'>
+                    Share
+                </span>
+            </Button>
+        </section>
+    ]) : []
+
+    const displayedRowsCount = Math.min(page * limit, allRepos?.count || 0);
+
+    return (
+        <>
+            <ShareRepoModal selectedRepoId={selectedRepoId} close={close} opened={opened} session={session} />
+            <Paper withBorder radius="md" className="overflow-x-auto">
+                {body.length > 0 ? (
+                    <Table
+                        // withTableBorder
+                        data={{ head, body }}
+                        verticalSpacing={18}
+                        className="min-w-[900px] !table-fixed w-full"
+                        classNames={{
+                            thead: "!text-[#64748B] !text-xs !font-normal",
+                            th: "min-w-[120px] whitespace-nowrap",
+                            td: "min-w-[120px] whitespace-nowrap",
+                        }}
+                    />
+                ) : (
+                    <Table
+                        // withTableBorder
+                        className="min-w-[900px] !table-fixed w-full rounded-md"
+                        classNames={{
+                            table: "border", // optional: outer border if needed
+                            thead: "!text-[#64748B] !text-xs !font-normal",
+                            th: "min-w-[120px] whitespace-nowrap",
+                            td: "min-w-[120px] whitespace-nowrap",
+                        }}
+                    >
+                        <thead className="!text-[#64748B] !text-xs !font-normal">
+                            {/* @ts-ignore */}
+                            <tr align="left">
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Name</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Discovered</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Severity (CVSS3)</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Severity (CVSS2)</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Dependencies</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Exploited (CISA)</th>
+                                <th className="min-w-[120px] whitespace-nowrap py-4 px-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colSpan={7} className="text-center text-[#64748B] py-6">
+                                    No Results
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    // <div className="w-full text-center text-[#64748B] text-sm py-6">No Results</div>
+                )}
+            </Paper>
+
+            <div className="flex items-center">
+                <div className="mr-auto text-sm text-[#64748B]">
+                    {displayedRowsCount} of {allRepos?.count ?? 0} row(s) showing
+                </div>
+                <div className="flex justify-end mt-4 ml-auto">
+                    <Pagination
+                        gap={20}
+                        classNames={{
+                            root: "!justify-end",
+                            control:
+                                "!border-0 !border-[#E2E8F0] !rounded-lg !text-[#020617] !bg-transparent data-[active=true]:!border-[1px]",
+                        }}
+                        nextIcon={() => (
+                            <span className="flex items-center gap-1 text-sm font-semibold">
+                                Next <ChevronRight size={16} />
+                            </span>
+                        )}
+                        previousIcon={() => (
+                            <span className="flex items-center gap-1 text-sm font-semibold">
+                                <ChevronLeft size={16} /> Previous
+                            </span>
+                        )}
+                        onChange={setPage}
+                        total={Math.ceil((allRepos?.count ?? 0) / limit)}
+                        boundaries={1}
+                        siblings={0}
+                        defaultValue={page}
+                    />
+                </div>
+            </div>
+
+        </>
+    );
 };
+
+export default RepoTable;

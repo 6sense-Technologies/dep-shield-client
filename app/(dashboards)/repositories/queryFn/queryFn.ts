@@ -15,3 +15,17 @@ export const getRepoSharedUsers = async (session: any, page: number, limit: numb
 
     return response.data;
 };
+export const shareRepo = async (data: any) => {
+    let accessToken: string = data?.session.data.accessToken;
+
+    const response = await axios.post(
+        `${NEXT_PUBLIC_BACKEND_URL}/repositories/share-repo`, data,
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
+
+    return response.data;
+};
