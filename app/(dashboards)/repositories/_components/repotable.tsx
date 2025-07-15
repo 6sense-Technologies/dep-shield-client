@@ -37,7 +37,7 @@ const RepoTable = ({
         "-",
         <section key={`link-${item?._id}`}>
             <Link
-                href={`/vulnerabilities/${item?._id}`}
+                href={`/repositories/${item?._id}/details`}
 
                 className="border-[1px] rounded-md py-1 px-5 text-center cursor-pointer"
             >
