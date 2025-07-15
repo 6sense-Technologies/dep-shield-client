@@ -34,7 +34,12 @@ const ShareRepoModal = ({ selectedRepoId, close, opened, session }: { selectedRe
                     },
                     onError(error) {
                         console.log('🚀 - onError - error:', error)
-                        toast.error('User not found')
+                        //@ts-ignore
+                        if (error?.response?.data?.message === 'Repository already shared') {
+                            toast.error('Repository already shared')
+                        } else {
+                            toast.error('User not found')
+                        }
                     },
                 }
             )
