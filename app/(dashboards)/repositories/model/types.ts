@@ -3,6 +3,8 @@ export type AllRepoSharedUsers = SingleRepoSharedUsers[]
 export interface SingleRepoSharedUsers {
   _id: string
   repositoryId: string
+  repositoryName: string
+  sharedByName: string
   sharedWith: string
   sharedBy: string
   isDeleted: boolean

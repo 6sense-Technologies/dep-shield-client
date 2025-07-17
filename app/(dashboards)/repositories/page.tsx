@@ -20,6 +20,7 @@ import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
 import RepoSearchArea from './_components/RepoSearchArea';
 import { ShareTable } from './_components/shareTable';
+import SharedWithMeRepoTable from '@/app/(dashboards)/repositories/_components/SharedWithMeRepoTable';
 
 // Need this for next build
 const SearchParamsWrapper = ({
@@ -221,14 +222,12 @@ const Repositories = () => {
                         </p>
                       </div>
                     ) : (
-                      <ShareTable
-                        data={shareData}
-                        totalCountAndLimit={{
-                          totalCount: shareData.length,
-                          size: 10,
-                        }}
-                        currentPage={1}
-                        loading={false}
+                      <SharedWithMeRepoTable
+                        session={session}
+                        sharedWithMeRepos={sharedWithMeRepos}
+                        page={page}
+                        setPage={setPage}
+                        limit={limit}
                       />
                     )}
                   </>
