@@ -3,7 +3,7 @@ import { AllRepoSharedUsers } from "@/app/(dashboards)/repositories/model/types"
 import { Button } from "@/components/ui/button";
 import { Pagination, Paper, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { ChevronLeft, ChevronRight, Share } from "lucide-react";
+import { ChevronLeft, ChevronRight, FolderOpen, Share } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -102,7 +102,17 @@ const SharedWithMeRepoTable = ({
                         <tbody>
                             <tr>
                                 <td colSpan={7} className="text-center text-[#64748B] py-6">
-                                    No Results
+                                    <div className='flex h-96 flex-col items-center justify-center'>
+                                        <span>
+                                            <FolderOpen size={32} strokeWidth={1} />
+                                        </span>
+                                        <p className='text-xl font-medium text-deepBlackColor'>
+                                            No Repositories Shared With You
+                                        </p>
+                                        <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
+                                            No one has shared a repository with you yet.
+                                        </p>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

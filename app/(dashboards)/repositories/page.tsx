@@ -173,35 +173,13 @@ const Repositories = () => {
                       <EmptyTableSkeleton />
                     ) : (
                       <>
-                        {AllRepoData?.count === 0 ? (
-                          <div className='flex h-96 flex-col items-center justify-center'>
-                            <span>
-                              <FolderOpen size={32} strokeWidth={1} />
-                            </span>
-                            <p className='text-xl font-medium text-deepBlackColor'>
-                              No Repositories Added
-                            </p>
-                            <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                              Get started by adding a new repository.
-                            </p>
-                            <Link href='/repositories/add'>
-                              <Button className='w-20'>
-                                Add{' '}
-                                <span className='text-white'>
-                                  <Plus size={16} />
-                                </span>
-                              </Button>
-                            </Link>
-                          </div>
-                        ) : (
-                          <RepoTable
-                            session={session}
-                            allRepos={AllRepoData}
-                            page={page}
-                            setPage={setPage}
-                            limit={limit}
-                          />
-                        )}
+                        <RepoTable
+                          session={session}
+                          allRepos={AllRepoData}
+                          page={page}
+                          setPage={setPage}
+                          limit={limit}
+                        />
                       </>
                     )}
                   </>
@@ -209,27 +187,14 @@ const Repositories = () => {
                 {activeTab === 'sharedwithme' && (
                   <>
                     <RepoSearchArea />
-                    {shareData.length === 0 ? (
-                      <div className='flex h-96 flex-col items-center justify-center'>
-                        <span>
-                          <FolderOpen size={32} strokeWidth={1} />
-                        </span>
-                        <p className='text-xl font-medium text-deepBlackColor'>
-                          No Repositories Shared With You
-                        </p>
-                        <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                          No one has shared a repository with you yet.
-                        </p>
-                      </div>
-                    ) : (
-                      <SharedWithMeRepoTable
-                        session={session}
-                        sharedWithMeRepos={sharedWithMeRepos}
-                        page={page}
-                        setPage={setPage}
-                        limit={limit}
-                      />
-                    )}
+
+                    <SharedWithMeRepoTable
+                      session={session}
+                      sharedWithMeRepos={sharedWithMeRepos}
+                      page={page}
+                      setPage={setPage}
+                      limit={limit}
+                    />
                   </>
                 )}
               </div>
