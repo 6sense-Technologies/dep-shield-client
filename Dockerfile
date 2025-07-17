@@ -1,22 +1,13 @@
-FROM node:20-alpine3.17
+FROM node:24-alpine
 
-# Set the working directory to /app
-WORKDIR /app
+LABEL org.opencontainers.image.source="https://github.com/6sense-Technologies/dep-shield-client"
 
-# Copy package.json and package-lock.json to the working directory
+WORKDIR /dep-shield-client
 COPY package*.json ./
+RUN npm install
 
-# Install project dependencies
-RUN npm install --force
-
-# Bundle your app source
 COPY . .
-
-# Build the Next.js app for production
 RUN npm run build
 
-# Expose the port that your Next.js app will run on
 EXPOSE 3000
-
-# Define the command to run your app using Next.js
 CMD ["npm", "start"]
