@@ -120,7 +120,7 @@ pipeline {
             
 
             withCredentials([usernamePassword(credentialsId: 'github-pat-6sensehq', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_PAT')]) {
-              writeFile file: '.env', text: """\  
+              writeFile file: '.env', text: """\
 SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 SENTRY_SUPPRESS_TURBOPACK_WARNING=${SENTRY_SUPPRESS_TURBOPACK_WARNING}
 NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
