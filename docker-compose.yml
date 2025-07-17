@@ -2,17 +2,35 @@ version: '3'
 
 services:
   dep-shield-client:
+    image: ghcr.io/6sense-technologies/dep-shield-client:${IMAGE_TAG}
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT}:3000"
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    # environment:
-    #   - NODE_ENV=production
-    # restart: unless-stopped
-    # healthcheck:
-    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health || exit 1"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
+    environment:
+      - NODE_ENV=production
+      - SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+      - SENTRY_SUPPRESS_TURBOPACK_WARNING=${SENTRY_SUPPRESS_TURBOPACK_WARNING}
+      - NEXT_PUBLIC_SENTRY_DSN=${NEXT_PUBLIC_SENTRY_DSN}
+      - NEXT_LOCAL=${NEXT_LOCAL}
+      - NEXT_TEMP=${NEXT_TEMP}
+      - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
+      - AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
+      - NEXT_PUBLIC_GITHUBAPP_URL=${NEXT_PUBLIC_GITHUBAPP_URL}
+      - GITHUB_ID=${GITHUB_ID}
+      - GITHUB_SECRET=${GITHUB_SECRET}
+      - IMAGE_TAG=${IMAGE_TAG}
+      - CONTAINER_NAME=${CONTAINER_NAME}
+      - HOST_PORT=${HOST_PORT}
+    networks:
+      - 6sensehq_net
+
+networks:
+  6sensehq_net:
+    external: true
+    name: 6sensehq-network
