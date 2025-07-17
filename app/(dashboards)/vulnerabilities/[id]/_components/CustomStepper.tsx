@@ -51,7 +51,9 @@ export default function CustomStepper({ history }: { history: VulnerabilityDetai
                                         <ShieldAlert className="h-6 w-6 text-red-600" />
                                     )}
                                 </div>
-                                <span className="text-sm font-medium text-gray-600 mt-2">{version.number}</span>
+                                <span className="text-sm font-medium text-gray-600 mt-2 whitespace-nowrap">
+                                    {version.number}
+                                </span>
                             </div>
                             {/* Lines between steppers */}
                             {index < versions.length - 1 && (

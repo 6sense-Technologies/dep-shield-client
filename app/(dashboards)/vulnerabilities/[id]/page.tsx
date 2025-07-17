@@ -65,10 +65,10 @@ const VulnerabilitiesDetailsContent = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <PageHeader title="CVE-2023-42282 Details • Vulnerabilities • DepShield.io" />
+            <PageHeader title={`${vulnerabilityDetails?.cveId ?? ''} Details • Vulnerabilities • DepShield.io`} />
             <BreadcrumbWithAvatar initialData="Vulnerabilities" initialLink="/vulnerabilities" secondaryData="Details" secondaryLink="/vulnerabilities/12" />
             <div className="flex items-center pl-4 md:pl-8 pt-3">
-                <PageHeading title="CVE-2023-42282" className="mr-4" />
+                <PageHeading title={vulnerabilityDetails?.cveId ?? ''} className="mr-4" />
             </div>
             <div className="pt-4 px-4 md:pt-4 md:px-6 hidden lg:grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 <CustomCard bgColor="bg-[#F1F5F9]" Heading={dayjs(vulnerabilityDetails?.published).format("MMMM DD, YYYY")} subheading="Discovered" />

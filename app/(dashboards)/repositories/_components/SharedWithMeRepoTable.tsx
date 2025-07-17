@@ -29,7 +29,7 @@ const SharedWithMeRepoTable = ({
     ];
     const [selectedRepoId, setSelectedRepoId] = useState('')
 
-    const body = sharedWithMeRepos?.length ? sharedWithMeRepos?.map((item) => [
+    const body = sharedWithMeRepos?.data?.length ? sharedWithMeRepos?.data?.map((item) => [
         item.repositoryName,
         "-",
         item.sharedByName,
@@ -58,7 +58,7 @@ const SharedWithMeRepoTable = ({
         </section>
     ]) : []
 
-    // const displayedRowsCount = Math.min(page * limit, sharedWithMeRepos?.count || 0);
+    const displayedRowsCount = Math.min(page * limit, sharedWithMeRepos?.count || 0);
 
     return (
         <>
@@ -112,9 +112,9 @@ const SharedWithMeRepoTable = ({
             </Paper>
 
             <div className="flex items-center">
-                {/* <div className="mr-auto text-sm text-[#64748B]">
+                <div className="mr-auto text-sm text-[#64748B]">
                     {displayedRowsCount} of {sharedWithMeRepos?.count ?? 0} row(s) showing
-                </div> */}
+                </div>
                 <div className="flex justify-end mt-4 ml-auto">
                     <Pagination
                         gap={20}
@@ -134,8 +134,8 @@ const SharedWithMeRepoTable = ({
                             </span>
                         )}
                         onChange={setPage}
-                        // total={Math.ceil((sharedWithMeRepos?.count ?? 0) / limit)}
-                        total={Math.ceil((0) / limit)}
+                        total={Math.ceil((sharedWithMeRepos?.count ?? 0) / limit)}
+                        // total={Math.ceil((0) / limit)}
                         boundaries={1}
                         siblings={0}
                         defaultValue={page}

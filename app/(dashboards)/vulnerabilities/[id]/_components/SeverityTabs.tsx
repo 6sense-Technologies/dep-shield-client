@@ -42,14 +42,15 @@ export default function SeverityTabs({ vulnerabilityDetails, severity }: Props) 
       <Tabs
         color="black"
         className={cn("mt-8 !text-[#64748B] font-semibold")}
-        defaultValue={result[0]?.version}
+        defaultValue={result.find(r => r.cvssData && Object.keys(r.cvssData).length)?.version}
       >
         <Tabs.List>
           {result.map(item => (
             <Tabs.Tab
               key={item.version}
               value={item.version}
-              className="data-[active=true]:text-black"
+              disabled={!item.cvssData || Object.keys(item.cvssData).length === 0}
+              className={cn("data-[active=true]:text-black", { 'cursor-not-allowed': !item.cvssData || Object.keys(item.cvssData).length === 0 })}
             >
               {item.version}{item?.cvssData?.baseScore ? ` - ${item?.cvssData?.baseScore}` : ''}
             </Tabs.Tab>
@@ -57,82 +58,87 @@ export default function SeverityTabs({ vulnerabilityDetails, severity }: Props) 
         </Tabs.List>
 
         {result.map(item => (
-          <Tabs.Panel key={item.version} value={item.version} className="flex flex-col gap-3 mt-4 pl-4">
-            {item.cvssData && Object.entries(item.cvssData).length ? (
-              Object.entries(item.cvssData).map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[250px_1fr] mb-">
-                  <span className="font-normal text-sm text-black">{formatKey(k)}</span>
-                  <span
-                    className={cn("text-sm", {
-                      'text-red-500': ['NETWORK', 'NONE', 'LOW', 'HIGH'].includes(String(v)),
-                      'text-green-500': v === 'UNCHANGED',
-                    })}
-                  >
-                    {capitalizeOnlyFirstLetter(String(v ?? ''))}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <span>No Results</span>
-            )}
-            {
-              item?.cvssData?.baseScore ?
-                <section className='text-center border-[1px] rounded-md bg-[#FCFCFC] w-fit p-5'>
-                  <div className='text-black'>Base Score</div>
-                  <div className='text-sm'>Max - 10</div>
-                  <RingProgress
-                    size={120}
-                    thickness={12}
-                    label={
-                      <div className='text-center text-black font-semibold'>
-                        {item?.cvssData?.baseScore}
-                      </div>
-                    }
-                    sections={[
-                      { value: item?.cvssData?.baseScore / 10 * 100, color: 'black' },
-                    ]}
-                  />
-                </section> : null
+          <Tabs.Panel key={item.version} value={item.version} className="mt-4 pl-4">
+  <div className="flex flex-row gap-10">
+    <div className="flex flex-col gap-3">
+      {item.cvssData && Object.entries(item.cvssData).length ? (
+        Object.entries(item.cvssData).map(([k, v]) => (
+          <div key={k} className="grid grid-cols-[250px_1fr]">
+            <span className="font-normal text-sm text-black">{formatKey(k)}</span>
+            <span
+              className={cn("text-sm", {
+                'text-red-500': ['NETWORK', 'NONE', 'LOW', 'HIGH'].includes(String(v)),
+                'text-green-500': v === 'UNCHANGED',
+              })}
+            >
+              {capitalizeOnlyFirstLetter(String(v ?? ''))}
+            </span>
+          </div>
+        ))
+      ) : (
+        <span>No Results</span>
+      )}
+    </div>
+
+    <div className="flex flex-col gap-4">
+      {item?.cvssData?.baseScore && (
+        <section className="text-center border rounded-md bg-[#FCFCFC] w-fit p-5">
+          <div className="text-black">Base Score</div>
+          <div className="text-sm">Max - 10</div>
+          <RingProgress
+            size={120}
+            thickness={12}
+            label={
+              <div className="text-center text-black font-semibold">
+                {item.cvssData.baseScore}
+              </div>
             }
-            {
-              item?.cvssData?.exploitabilityScore ?
-                <section className='text-center border-[1px] rounded-md bg-[#FCFCFC] w-fit p-5'>
-                  <div className='text-black'>Base Score</div>
-                  <div className='text-sm'>Max - 3.9</div>
-                  <RingProgress
-                    size={120}
-                    thickness={12}
-                    label={
-                      <div className='text-center text-black font-semibold'>
-                        {item?.cvssData?.baseScore}
-                      </div>
-                    }
-                    sections={[
-                      { value: item?.cvssData?.baseScore / 3.9 * 100, color: 'black' },
-                    ]}
-                  />
-                </section> : null
+            sections={[
+              { value: (item.cvssData.baseScore / 10) * 100, color: 'black' },
+            ]}
+          />
+        </section>
+      )}
+      {item?.cvssData?.exploitabilityScore && (
+        <section className="text-center border rounded-md bg-[#FCFCFC] w-fit p-5">
+          <div className="text-black">Exploitability Score</div>
+          <div className="text-sm">Max - 3.9</div>
+          <RingProgress
+            size={120}
+            thickness={12}
+            label={
+              <div className="text-center text-black font-semibold">
+                {item.cvssData.exploitabilityScore}
+              </div>
             }
-            {
-              item?.cvssData?.impactScore ?
-                <section className='text-center border-[1px] rounded-md bg-[#FCFCFC] w-fit p-5'>
-                  <div className='text-black'>Base Score</div>
-                  <div className='text-sm'>Max - 6.0</div>
-                  <RingProgress
-                    size={120}
-                    thickness={12}
-                    label={
-                      <div className='text-center text-black font-semibold'>
-                        {item?.cvssData?.impactScore}
-                      </div>
-                    }
-                    sections={[
-                      { value: item?.cvssData?.impactScore / 6 * 100, color: 'black' },
-                    ]}
-                  />
-                </section> : null
+            sections={[
+              { value: (item.cvssData.exploitabilityScore / 3.9) * 100, color: 'black' },
+            ]}
+          />
+        </section>
+      )}
+      {item?.cvssData?.impactScore && (
+        <section className="text-center border rounded-md bg-[#FCFCFC] w-fit p-5">
+          <div className="text-black">Impact Score</div>
+          <div className="text-sm">Max - 6.0</div>
+          <RingProgress
+            size={120}
+            thickness={12}
+            label={
+              <div className="text-center text-black font-semibold">
+                {item.cvssData.impactScore}
+              </div>
             }
-          </Tabs.Panel>
+            sections={[
+              { value: (item.cvssData.impactScore / 6) * 100, color: 'black' },
+            ]}
+          />
+        </section>
+      )}
+    </div>
+  </div>
+</Tabs.Panel>
+
         ))}
       </Tabs>
     </section>

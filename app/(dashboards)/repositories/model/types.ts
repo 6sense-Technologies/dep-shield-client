@@ -1,17 +1,15 @@
-export type AllRepoSharedUsers = SingleRepoSharedUsers[]
+export interface AllRepoSharedUsers {
+  data: SingleRepoSharedUsers[]
+  count: number
+}
 
 export interface SingleRepoSharedUsers {
   _id: string
-  repositoryId: string
   repositoryName: string
   sharedByName: string
-  sharedWith: string
-  sharedBy: string
-  isDeleted: boolean
-  createdAt: string
-  updatedAt: string
-  __v: number
+  avatarUrl: string
 }
+
 
 export interface AllRepoType {
   data: SingleRepoType[]
