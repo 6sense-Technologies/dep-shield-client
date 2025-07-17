@@ -49,14 +49,14 @@ const RepoSharedUsers = ({ session }: { session: any }) => {
                     </div>
                     {
                         repoSharedUsersLoading ? <div>Loading...</div> :
-                        repoSharedUsers?.length ? repoSharedUsers?.map(user => {
+                        repoSharedUsers?.data?.length ? repoSharedUsers?.data?.map(user => {
                             return (
                                 <div className="flex items-center mb-2" key={user?._id}>
                                     <Avatar className="w-8 h-8 rounded-full mr-2">
                                         {/* <AvatarImage src="https://randomuser.me/api/portraits/men/1.jpg" alt="User 1" /> */}
                                         <AvatarFallback></AvatarFallback>
                                     </Avatar>
-                                    <span className='text-sm font-semibold text-miniSubheadingColor'>{user?.sharedWith}</span>
+                                    <span className='text-sm font-semibold text-miniSubheadingColor'>{user?.sharedByName}</span>
                                 </div>
                             )
                         }) : null
