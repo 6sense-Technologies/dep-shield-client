@@ -112,6 +112,7 @@ pipeline {
                 [infisicalKey: 'NEXT_PUBLIC_GITHUBAPP_URL'],
                 [infisicalKey: 'GITHUB_ID'],
                 [infisicalKey: 'GITHUB_SECRET'],
+                [infisicalKey: 'AUTH_TRUST_HOST'],
                 [infisicalKey: 'HOST_PORT'],                
               ]
             )
@@ -130,6 +131,7 @@ NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 AUTH_SECRET=${AUTH_SECRET}
 AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
 AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
+AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
 NEXT_PUBLIC_GITHUBAPP_URL=${NEXT_PUBLIC_GITHUBAPP_URL}
 GITHUB_ID=${GITHUB_ID}
 GITHUB_SECRET=${GITHUB_SECRET}
