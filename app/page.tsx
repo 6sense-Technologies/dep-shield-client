@@ -6,6 +6,8 @@ const HomePage = () => {
 
   redirect('/sign-in');
 
+  // TODO: Remove this after testing
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
       <header className="bg-white shadow-lg p-6 rounded-b-lg">
