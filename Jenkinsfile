@@ -119,7 +119,6 @@ pipeline {
           ]) {
             // env.DEPLOYMENT_ID = createAndUpdateGitHubDeployment(repo, env.GIT_COMMIT, env.BRANCH_NAME, deployEnv, deployUrl)
             
-
             withCredentials([usernamePassword(credentialsId: 'github-pat-6sensehq', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_PAT')]) {
               writeFile file: '.env', text: """\
 SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
