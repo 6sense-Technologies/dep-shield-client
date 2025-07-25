@@ -1,7 +1,7 @@
 import ShareRepoModal from "@/app/(dashboards)/repositories/_components/ShareRepoModal";
 import { AllRepoType } from "@/app/(dashboards)/repositories/model/types";
 import { Button } from "@/components/ui/button";
-import { Input, Modal, Pagination, Paper, Table } from "@mantine/core";
+import { Pagination, Paper, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ChevronLeft, ChevronRight, FolderOpen, Plus, Share } from "lucide-react";
 import Link from "next/link";
@@ -12,53 +12,43 @@ const RepoTable = ({
     allRepos,
     setPage,
     limit,
-    page,
+    page
 }: {
-    session: any
+    session: any;
     allRepos: AllRepoType | undefined;
     setPage: (page: number) => void;
     limit: number;
     page: number;
 }) => {
     const [opened, { open, close }] = useDisclosure(false);
-    const head = [
-        "Repository Name",
-        "Total Vulnerabilities",
-        "Vulnerabilities",
-        "Shared With",
-        "Actions",
-    ];
-    const [selectedRepoId, setSelectedRepoId] = useState('')
+    const head = ["Repository Name", "Total Vulnerabilities", "Vulnerabilities", "Shared With", "Actions"];
+    const [selectedRepoId, setSelectedRepoId] = useState("");
 
-    const body = allRepos?.data?.length ? allRepos?.data?.map((item) => [
-        item.repoName,
-        '-',
-        "-",
-        "-",
-        <section key={`link-${item?._id}`}>
-            <Link
-                href={`/repositories/${item?._id}/details`}
-
-                className="border-[1px] rounded-md py-1 px-5 text-center cursor-pointer"
-            >
-                View
-            </Link>
-            <Button
-                onClick={() => {
-                    setSelectedRepoId(item?._id)
-                    open()
-                }}
-                size='xsTight'
-                variant='light'
-                className='ml-2'
-            >
-                <Share />
-                <span className='text-sm font-medium text-deepBlackColor lg:hidden'>
-                    Share
-                </span>
-            </Button>
-        </section>
-    ]) : []
+    const body = allRepos?.data?.length
+        ? allRepos?.data?.map(item => [
+              item.repoName,
+              "-",
+              "-",
+              "-",
+              <section key={`link-${item?._id}`}>
+                  <Link href={`/repositories/${item?._id}/details`} className="border-[1px] rounded-md py-1 px-5 text-center cursor-pointer">
+                      View
+                  </Link>
+                  <Button
+                      onClick={() => {
+                          setSelectedRepoId(item?._id);
+                          open();
+                      }}
+                      size="xsTight"
+                      variant="light"
+                      className="ml-2"
+                  >
+                      <Share />
+                      <span className="text-sm font-medium text-deepBlackColor lg:hidden">Share</span>
+                  </Button>
+              </section>
+          ])
+        : [];
 
     const displayedRowsCount = Math.min(page * limit, allRepos?.count || 0);
 
@@ -75,7 +65,7 @@ const RepoTable = ({
                         classNames={{
                             thead: "!text-[#64748B] !text-xs !font-normal",
                             th: "min-w-[120px] whitespace-nowrap",
-                            td: "min-w-[120px] whitespace-nowrap",
+                            td: "min-w-[120px] whitespace-nowrap"
                         }}
                     />
                 ) : (
@@ -86,7 +76,7 @@ const RepoTable = ({
                             table: "border", // optional: outer border if needed
                             thead: "!text-[#64748B] !text-xs !font-normal",
                             th: "min-w-[120px] whitespace-nowrap",
-                            td: "min-w-[120px] whitespace-nowrap",
+                            td: "min-w-[120px] whitespace-nowrap"
                         }}
                     >
                         <thead className="!text-[#64748B] !text-xs !font-normal">
@@ -104,20 +94,16 @@ const RepoTable = ({
                         <tbody>
                             <tr>
                                 <td colSpan={7} className="text-center text-[#64748B] py-6">
-                                    <div className='flex h-96 flex-col items-center justify-center'>
+                                    <div className="flex h-96 flex-col items-center justify-center">
                                         <span>
                                             <FolderOpen size={32} strokeWidth={1} />
                                         </span>
-                                        <p className='text-xl font-medium text-deepBlackColor'>
-                                            No Repositories Added
-                                        </p>
-                                        <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                                            Get started by adding a new repository.
-                                        </p>
-                                        <Link href='/repositories/add'>
-                                            <Button className='w-20'>
-                                                Add{' '}
-                                                <span className='text-white'>
+                                        <p className="text-xl font-medium text-deepBlackColor">No Repositories Added</p>
+                                        <p className="pb-7 pt-1 text-sm font-normal text-inputFooterColor">Get started by adding a new repository.</p>
+                                        <Link href="/repositories/add">
+                                            <Button className="w-20">
+                                                Add{" "}
+                                                <span className="text-white">
                                                     <Plus size={16} />
                                                 </span>
                                             </Button>
@@ -140,8 +126,7 @@ const RepoTable = ({
                         gap={20}
                         classNames={{
                             root: "!justify-end",
-                            control:
-                                "!border-0 !border-[#E2E8F0] !rounded-lg !text-[#020617] !bg-transparent data-[active=true]:!border-[1px]",
+                            control: "!border-0 !border-[#E2E8F0] !rounded-lg !text-[#020617] !bg-transparent data-[active=true]:!border-[1px]"
                         }}
                         nextIcon={() => (
                             <span className="flex items-center gap-1 text-sm font-semibold">
@@ -161,7 +146,6 @@ const RepoTable = ({
                     />
                 </div>
             </div>
-
         </>
     );
 };
