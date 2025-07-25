@@ -1,50 +1,10 @@
-import React from "react";
-import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
-import { SingleLicensesPagination } from "./singleLicensesPagination";
-import { getBadgeVariant } from "@/constants/globalFunctions";
-import { SingleLicenses, TSingleLicenseTableProps } from "@/types/licenses.types";
 import { GenericTable } from "@/components/GenericTable";
-
-export const columns: ColumnDef<SingleLicenses>[] = [
-    {
-        accessorKey: "repositoryName",
-        header: () => <div className="text-bold">Repositories</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("repositoryName") || "-"}</div>
-        ),
-    },
-    {
-        accessorKey: "licenseRisk",
-        header: () => <div className="text-bold">License Risk</div>,
-        cell: ({ row }: { row: any }) => {
-            const licenseRisk = row.getValue("licenseRisk");
-            return (
-                <Badge className={getBadgeVariant(licenseRisk)}>
-                    {licenseRisk}
-                </Badge>
-            );
-        },
-    },
-    {
-        accessorKey: "licenseFamily",
-        header: () => <div className="text-bold">License Family</div>,
-        cell: ({ row }: { row: any }) => (
-            <div className="text-medium">{row.getValue("licenseFamily") || "-"}</div>
-        ),
-    },
-    {
-        id: "actions",
-        header: () => <div className="text-bold text-start pr-4">Actions</div>,
-        enableHiding: false,
-        cell: () => (
-            <div className="flex items-center justify-end space-x-4 pr-4">
-                <ExternalLink size={16} className="cursor-pointer"/>
-            </div>
-        ),
-    },
-];
+import { TSingleLicenseTableProps } from "@/types/licenses.types";
+import { TSingleRepository } from "@/types/repo.types";
+import { ColumnDef } from "@tanstack/react-table";
+import { ExternalLink } from "lucide-react";
+import React from "react";
+import { SingleLicensesPagination } from "./singleLicensesPagination";
 
 const headerClassNames = {
     actions: "text-right w-[150px]",
@@ -56,14 +16,32 @@ const cellClassNames = {
     repositoryName: "pl-4 text-start",
 };
 
-
 export const SingleLicenseTable: React.FC<TSingleLicenseTableProps> = ({
     licenses = [],
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
-    loading=false,
+    loading = false,
 }) => {
+    const columns: ColumnDef<TSingleRepository>[] = [
+        {
+            accessorKey: "repositoryName",
+            header: () => <div className="text-bold">Repositories</div>,
+            cell: ({ row }) => (
+                <div className="text-medium">{row?.original?.repoName || "-"}</div>
+            ),
+        },
+        {
+            id: "actions",
+            header: () => <div className="text-bold text-start pr-4">Actions</div>,
+            enableHiding: false,
+            cell: () => (
+                <div className="flex items-center justify-end space-x-4 pr-4">
+                    <ExternalLink size={16} className="cursor-pointer" />
+                </div>
+            ),
+        },
+    ];
     return (
         <GenericTable
             columns={columns}

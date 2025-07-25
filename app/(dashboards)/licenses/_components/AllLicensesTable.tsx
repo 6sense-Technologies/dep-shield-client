@@ -1,19 +1,12 @@
-import React from 'react';
-import { ColumnDef } from '@tanstack/react-table';
-import { Badge } from '@/components/ui/badge';
-import { AllLicensesPagination } from './AllLicensesPagiantion';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { getBadgeVariant } from '@/constants/globalFunctions';
-import { License, TAllLicensesTableProps } from '@/types/licenses.types';
 import { GenericTable } from '@/components/GenericTable';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { getBadgeVariant } from '@/constants/globalFunctions';
+import { ISingleLicense, TAllLicensesTableProps } from '@/types/licenses.types';
+import { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
+import React from 'react';
+import { AllLicensesPagination } from './AllLicensesPagiantion';
 
 export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
   licenses = [],
@@ -22,18 +15,18 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
   currentPage,
   loading = false,
 }) => {
-  const columns: ColumnDef<License>[] = [
+  const columns: ColumnDef<ISingleLicense>[] = [
     {
       accessorKey: 'license',
       header: () => <div className='text-bold'>Name</div>,
-      cell: ({ row }: { row: any }) => (
+      cell: ({ row }) => (
         <div className='text-medium'>{row.getValue('license') || '-'}</div>
       ),
     },
     {
       accessorKey: 'licenseRisk',
       header: () => <div className='text-bold'>License Risk</div>,
-      cell: ({ row }: { row: any }) => (
+      cell: ({ row }) => (
         <Badge className={getBadgeVariant(row.getValue('licenseRisk'))}>
           {row.getValue('licenseRisk') || '-'}
         </Badge>
@@ -42,7 +35,7 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     // {
     //     accessorKey: "affectedRepositories",
     //     header: () => <div className="text-bold">Affected Repositories</div>,
-    //     cell: ({ row }: { row: any }) => {
+    //     cell: ({ row }) => {
     //         const repos = row.getValue("affectedRepositories");
     //         return (
     //             <div className="flex items-center space-x-2">
@@ -73,7 +66,7 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     {
       accessorKey: 'dependencyCount',
       header: () => <div className='text-bold'>Dependencies</div>,
-      cell: ({ row }: { row: any }) => (
+      cell: ({ row }) => (
         <div className='text-medium'>
           {row.getValue('dependencyCount') || '-'}
         </div>
@@ -82,7 +75,7 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
     {
       accessorKey: 'licenseFamily',
       header: () => <div className='text-bold'>License Family</div>,
-      cell: ({ row }: { row: any }) => (
+      cell: ({ row }) => (
         <div className='text-medium'>
           {row.getValue('licenseFamily') || '-'}
         </div>
@@ -94,7 +87,7 @@ export const AllLicensesTable: React.FC<TAllLicensesTableProps> = ({
       enableHiding: false,
       cell: ({ row }) => (
         <div className='flex items-center justify-end space-x-4 pr-4'>
-          <Link href={`/licenses/${row.original?.licenseId}`}>
+          <Link href={`/licenses/${row.original?._id}`}>
             <Button variant='outline'>View</Button>
           </Link>
         </div>

@@ -1,3 +1,4 @@
+import { VulnerabilityDetailsType } from '@/app/(dashboards)/vulnerabilities/types/types';
 import { ExternalLink } from 'lucide-react';
 import React, { FC } from 'react';
 
@@ -10,6 +11,7 @@ interface CustomSummaryProps {
     isGitHubOverflowing: boolean;
     setShowMoreNVD: any;
     setShowMoreGitHub: any;
+    vulnerabilityDetails: VulnerabilityDetailsType | undefined;
 }
 
 const CustomSummary: FC<CustomSummaryProps> = ({
@@ -20,7 +22,8 @@ const CustomSummary: FC<CustomSummaryProps> = ({
     isNVDOverflowing,
     isGitHubOverflowing,
     setShowMoreNVD,
-    setShowMoreGitHub
+    setShowMoreGitHub,
+    vulnerabilityDetails
 }) => {
     return (
         <div className="pt-6 px-4 md:pt-6 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -32,7 +35,7 @@ const CustomSummary: FC<CustomSummaryProps> = ({
                     ref={nvdRef}
                     className={`pt-4 text-sm font-medium text-deepBlackColor ${showMoreNVD ? '' : 'line-clamp-5'}`}
                 >
-                    By design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed. Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
+                    {vulnerabilityDetails?.nvdDescription}
                 </p>
                 {isNVDOverflowing && (
                     <button className="text-miniSubheadingColor text-sm mt-2" onClick={() => setShowMoreNVD(!showMoreNVD)}>
@@ -49,7 +52,7 @@ const CustomSummary: FC<CustomSummaryProps> = ({
                     ref={githubRef}
                     className={`pt-4 text-sm font-medium text-deepBlackColor ${showMoreGitHub ? '' : 'line-clamp-5'}`}
                 >
-                    Improper validation of certificate with host mismatch in Apache Log4j SMTP appender. This could allow an SMTPS connection to be intercepted by a man-in-the-middle attack which could leak any log messages sent through that appender. Fixed in Apache Log4j 2.12.3 and 2.13.1
+                    -
                 </p>
                 {isGitHubOverflowing && (
                     <button className="text-miniSubheadingColor text-sm mt-2" onClick={() => setShowMoreGitHub(!showMoreGitHub)}>

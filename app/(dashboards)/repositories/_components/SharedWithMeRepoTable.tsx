@@ -1,21 +1,21 @@
 import ShareRepoModal from "@/app/(dashboards)/repositories/_components/ShareRepoModal";
-import { AllRepoType } from "@/app/(dashboards)/repositories/model/types";
+import { AllRepoSharedUsers } from "@/app/(dashboards)/repositories/model/types";
 import { Button } from "@/components/ui/button";
-import { Input, Modal, Pagination, Paper, Table } from "@mantine/core";
+import { Pagination, Paper, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { ChevronLeft, ChevronRight, FolderOpen, Plus, Share } from "lucide-react";
+import { ChevronLeft, ChevronRight, FolderOpen, Share } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-const RepoTable = ({
+const SharedWithMeRepoTable = ({
     session,
-    allRepos,
+    sharedWithMeRepos,
     setPage,
     limit,
     page,
 }: {
     session: any
-    allRepos: AllRepoType | undefined;
+    sharedWithMeRepos: AllRepoSharedUsers | undefined;
     setPage: (page: number) => void;
     limit: number;
     page: number;
@@ -23,18 +23,16 @@ const RepoTable = ({
     const [opened, { open, close }] = useDisclosure(false);
     const head = [
         "Repository Name",
-        "Total Vulnerabilities",
-        "Vulnerabilities",
-        "Shared With",
+        "Platform",
+        "Shared by",
         "Actions",
     ];
     const [selectedRepoId, setSelectedRepoId] = useState('')
 
-    const body = allRepos?.data?.length ? allRepos?.data?.map((item) => [
-        item.repoName,
-        '-',
+    const body = sharedWithMeRepos?.data?.length ? sharedWithMeRepos?.data?.map((item) => [
+        item.repositoryName,
         "-",
-        "-",
+        item.sharedByName,
         <section key={`link-${item?._id}`}>
             <Link
                 href={`/repositories/${item?._id}/details`}
@@ -60,7 +58,7 @@ const RepoTable = ({
         </section>
     ]) : []
 
-    const displayedRowsCount = Math.min(page * limit, allRepos?.count || 0);
+    const displayedRowsCount = Math.min(page * limit, sharedWithMeRepos?.count || 0);
 
     return (
         <>
@@ -109,19 +107,11 @@ const RepoTable = ({
                                             <FolderOpen size={32} strokeWidth={1} />
                                         </span>
                                         <p className='text-xl font-medium text-deepBlackColor'>
-                                            No Repositories Added
+                                            No Repositories Shared With You
                                         </p>
                                         <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                                            Get started by adding a new repository.
+                                            No one has shared a repository with you yet.
                                         </p>
-                                        <Link href='/repositories/add'>
-                                            <Button className='w-20'>
-                                                Add{' '}
-                                                <span className='text-white'>
-                                                    <Plus size={16} />
-                                                </span>
-                                            </Button>
-                                        </Link>
                                     </div>
                                 </td>
                             </tr>
@@ -133,7 +123,7 @@ const RepoTable = ({
 
             <div className="flex items-center">
                 <div className="mr-auto text-sm text-[#64748B]">
-                    {displayedRowsCount} of {allRepos?.count ?? 0} row(s) showing
+                    {displayedRowsCount} of {sharedWithMeRepos?.count ?? 0} row(s) showing
                 </div>
                 <div className="flex justify-end mt-4 ml-auto">
                     <Pagination
@@ -154,7 +144,8 @@ const RepoTable = ({
                             </span>
                         )}
                         onChange={setPage}
-                        total={Math.ceil((allRepos?.count ?? 0) / limit)}
+                        total={Math.ceil((sharedWithMeRepos?.count ?? 0) / limit)}
+                        // total={Math.ceil((0) / limit)}
                         boundaries={1}
                         siblings={0}
                         defaultValue={page}
@@ -166,4 +157,4 @@ const RepoTable = ({
     );
 };
 
-export default RepoTable;
+export default SharedWithMeRepoTable;

@@ -10,15 +10,15 @@ export const SingleDepTable: React.FC<TSingleDepTableProps> = ({
     refetch,
     totalCountAndLimit = { totalCount: 0, size: 10 },
     currentPage,
-    loading=false,
+    loading = false,
 }) => {
     const columns: ColumnDef<SingleDependencies>[] = [
         {
             accessorKey: "repositoryName",
             header: () => <div className="text-bold">Repository Name</div>,
-            cell: ({ row }: { row: any }) => (
-                <div className="text-medium">{row.getValue("repositoryName") || "-"}</div>
-            ),
+            cell: ({ row }: { row: any }) => {
+                return <div className="text-medium">{row?.original?.repoName || "-"}</div>;
+            },
         },
         {
             id: "actions",

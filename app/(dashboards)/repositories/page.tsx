@@ -1,23 +1,26 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import RepoTable from '@/app/(dashboards)/repositories/_components/RepoTable';
+import { AllRepoSharedUsers, AllRepoType } from '@/app/(dashboards)/repositories/model/types';
+import { getSharedWithMeRepos } from '@/app/(dashboards)/repositories/queryFn/queryFn';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
 import PageHeader from '@/components/PageHeader';
-import { FolderOpen, Plus, Share } from 'lucide-react';
+import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
+import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
-import { RepoTable } from './_components/repotable';
-import RepoSearchArea from './_components/RepoSearchArea';
+import { shareData } from '@/constants/DummyDataFactory';
+import { getAllRepositories } from '@/helpers/githubApp/githubApi';
+import { useQuery } from '@tanstack/react-query';
+import { FolderOpen, Plus, Share } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { parseAsInteger, useQueryState } from 'nuqs';
+import React, { Suspense, useEffect, useState } from 'react';
 import MyRepoSearchArea from './_components/MyRepoSearchArea';
 import PageHeadingwithButton from './_components/PageHeadingwithButton';
-import { MyRepoTable } from './_components/myRepoTable';
+import RepoSearchArea from './_components/RepoSearchArea';
 import { ShareTable } from './_components/shareTable';
-import Loader from '@/components/loader';
-import { useQuery } from '@tanstack/react-query';
-import { getAllRepositories } from '@/helpers/githubApp/githubApi';
-import { useSession } from 'next-auth/react';
-import EmptyTableSkeleton from '@/components/emptyTableSkeleton';
-import Link from 'next/link';
-import { shareData } from '@/constants/DummyDataFactory';
-import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
+import SharedWithMeRepoTable from '@/app/(dashboards)/repositories/_components/SharedWithMeRepoTable';
 
 // Need this for next build
 const SearchParamsWrapper = ({
@@ -30,8 +33,8 @@ const SearchParamsWrapper = ({
     <>
       {typeof children === 'function'
         ? (children as (params: URLSearchParams) => React.ReactNode)(
-            searchParams
-          )
+          searchParams
+        )
         : children}
     </>
   );
@@ -43,6 +46,7 @@ const Repositories = () => {
   const searchParams = useSearchParams();
   const [pages, setPages] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const session = useSession();
 
   useEffect(() => {
@@ -68,11 +72,18 @@ const Repositories = () => {
     router.push(newUrl);
   };
 
-  const { data: AllRepoData, isFetching: RepoDataLoading } = useQuery<any>({
+  const { data: AllRepoData, isFetching: RepoDataLoading } = useQuery<AllRepoType>({
     queryKey: ['AllRepo', session, pages, limit],
     queryFn: () => getAllRepositories(session, pages, limit),
   });
   // console.log('🚀 ~ Repositories ~ RepoData:', AllRepoData?.data);
+
+  const { data: sharedWithMeRepos, isFetching: sharedWithMeReposLoader } = useQuery<AllRepoSharedUsers>({
+    queryKey: ["sharedWithMeRepos", session, page, limit],
+    queryFn: () => getSharedWithMeRepos(session, page, limit),
+    staleTime: 0
+  });
+  console.log('🚀 - Repositories - sharedWithMeRepos:', sharedWithMeRepos)
 
   return (
     <Suspense fallback={<Loader />}>
@@ -89,6 +100,7 @@ const Repositories = () => {
                 title='All Repositories'
                 className='pl-2 pt-3'
                 showButton={activeTab !== 'all'}
+                session={session}
               />
               <div className='tab pt-4'>
                 <div className='flex space-x-2 border-b md:space-x-4'>
@@ -100,15 +112,14 @@ const Repositories = () => {
                     All
                   </button>
                   <button
-                    className={`text-nowrap px-4 py-2 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : 'cursor-not-allowed font-semibold text-gray-300'}`}
+                    className={`text-nowrap px-4 py-2 ${activeTab === 'myrepositories' ? 'border-b-2 border-black font-semibold text-black' : ''}`}
                     onClick={() => handleTabChange('myrepositories')}
                   >
                     My repositories
                   </button>
                   <button
-                    className={`text-nowrap px-4 py-2 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : 'cursor-not-allowed font-semibold text-gray-300'}`}
+                    className={`text-nowrap px-4 py-2 ${activeTab === 'sharedwithme' ? 'border-b-2 border-black font-semibold text-black' : ''}`}
                     onClick={() => handleTabChange('sharedwithme')}
-                    disabled
                   >
                     Shared with me
                   </button>
@@ -122,7 +133,7 @@ const Repositories = () => {
                       <EmptyTableSkeleton />
                     ) : (
                       <>
-                        {AllRepoData?.totalCount === 0 ? (
+                        {AllRepoData?.count === 0 ? (
                           <div className='flex h-96 flex-col items-center justify-center'>
                             <span>
                               <FolderOpen size={32} strokeWidth={1} />
@@ -144,13 +155,11 @@ const Repositories = () => {
                           </div>
                         ) : (
                           <RepoTable
-                            repos={AllRepoData?.data}
-                            totalCountAndLimit={{
-                              totalCount: AllRepoData?.count,
-                              size: 10,
-                            }}
-                            currentPage={1}
-                            loading={false}
+                            session={session}
+                            allRepos={AllRepoData}
+                            page={page}
+                            setPage={setPage}
+                            limit={limit}
                           />
                         )}
                       </>
@@ -159,40 +168,18 @@ const Repositories = () => {
                 )}
                 {activeTab === 'myrepositories' && (
                   <>
-                    <MyRepoSearchArea />
+                    <MyRepoSearchArea session={session} />
                     {RepoDataLoading ? (
                       <EmptyTableSkeleton />
                     ) : (
                       <>
-                        {AllRepoData?.totalCount === 0 ? (
-                          <div className='flex h-96 flex-col items-center justify-center'>
-                            <span>
-                              <FolderOpen size={32} strokeWidth={1} />
-                            </span>
-                            <p className='text-xl font-medium text-deepBlackColor'>
-                              No Shared Repositories
-                            </p>
-                            <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                              You haven&#39;t shared any repositories yet.
-                            </p>
-                            <Button className='w-[84px]'>
-                              Share{' '}
-                              <span className='text-white'>
-                                <Share size={16} />
-                              </span>
-                            </Button>
-                          </div>
-                        ) : (
-                          <MyRepoTable
-                            repos={AllRepoData?.data}
-                            totalCountAndLimit={{
-                              totalCount: AllRepoData?.count,
-                              size: 10,
-                            }}
-                            currentPage={pages}
-                            loading={false}
-                          />
-                        )}
+                        <RepoTable
+                          session={session}
+                          allRepos={AllRepoData}
+                          page={page}
+                          setPage={setPage}
+                          limit={limit}
+                        />
                       </>
                     )}
                   </>
@@ -200,29 +187,14 @@ const Repositories = () => {
                 {activeTab === 'sharedwithme' && (
                   <>
                     <RepoSearchArea />
-                    {shareData.length === 0 ? (
-                      <div className='flex h-96 flex-col items-center justify-center'>
-                        <span>
-                          <FolderOpen size={32} strokeWidth={1} />
-                        </span>
-                        <p className='text-xl font-medium text-deepBlackColor'>
-                          No Repositories Shared With You
-                        </p>
-                        <p className='pb-7 pt-1 text-sm font-normal text-inputFooterColor'>
-                          No one has shared a repository with you yet.
-                        </p>
-                      </div>
-                    ) : (
-                      <ShareTable
-                        data={shareData}
-                        totalCountAndLimit={{
-                          totalCount: shareData.length,
-                          size: 10,
-                        }}
-                        currentPage={1}
-                        loading={false}
-                      />
-                    )}
+
+                    <SharedWithMeRepoTable
+                      session={session}
+                      sharedWithMeRepos={sharedWithMeRepos}
+                      page={page}
+                      setPage={setPage}
+                      limit={limit}
+                    />
                   </>
                 )}
               </div>

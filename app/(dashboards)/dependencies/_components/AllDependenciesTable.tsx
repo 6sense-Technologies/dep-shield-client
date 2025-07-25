@@ -1,19 +1,15 @@
-import React from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import { GenericTable } from '@/components/GenericTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BadgeCheck, Flame, Handshake } from 'lucide-react';
-import Link from 'next/link';
-import { AllDependenciesPagination } from './AllDependenciesPagination';
 import {
-  getBadgeVariant,
-  getHealthBadgeVariant,
-} from '@/constants/globalFunctions';
-import {
-  Dependency,
   TDependenciesTableProps,
+  TSingleDependencies
 } from '@/types/dependencies.types';
-import { GenericTable } from '@/components/GenericTable';
+import { ColumnDef } from '@tanstack/react-table';
+import { BadgeCheck, Flame } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+import { AllDependenciesPagination } from './AllDependenciesPagination';
 
 export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
   dependencies = [],
@@ -22,7 +18,7 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
   currentPage,
   loading = false,
 }) => {
-  const columns: ColumnDef<Dependency>[] = [
+  const columns: ColumnDef<TSingleDependencies>[] = [
     {
       accessorKey: 'name',
       header: () => <div className='text-bold'>Name</div>,
@@ -62,10 +58,9 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
     {
       accessorKey: 'trustScore',
       header: 'Trust Score',
-      cell: (row: any) => {
-        // const scoreDetail = row?.original?.dependencyId?.score?.detail;
-        const popularity = row.original?.popularity;
-        const quality = row.original?.quality;
+      cell: ({ row }: { row: any }) => {
+        const popularity = row?.original?.popularity;
+        const quality = row?.original?.quality;
 
         const getBadgeColor = (value: number | undefined) => {
           if (value === undefined || value === null)
@@ -123,7 +118,7 @@ export const AllDependenciesTable: React.FC<TDependenciesTableProps> = ({
       enableHiding: false,
       cell: ({ row }) => (
         <div className='flex items-center justify-end space-x-4 pr-4'>
-          <Link href={`/dependencies/${row.original.dependencyId}`}>
+          <Link href={`/dependencies/${row.original._id}`}>
             <Button variant='outline'>View</Button>
           </Link>
         </div>

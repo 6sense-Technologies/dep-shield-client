@@ -1,10 +1,19 @@
-import React from 'react';
-import RepositorySearchbar from './repositorySearchbar';
+'use client'
+
 import { Button } from '@/components/ui/button';
+import { Input, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { ScanText, Share } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import RepositorySearchbar from './repositorySearchbar';
+import { emailValidator } from '@/helpers/helpers';
+import { useMutation } from '@tanstack/react-query';
+import { shareRepo } from '@/app/(dashboards)/repositories/queryFn/queryFn';
 
-const MyRepoSearchArea = () => {
+const MyRepoSearchArea = ({ session }: { session: any }) => {
+  
+
   return (
     <div className='flex w-full flex-col justify-between lg:flex-row'>
       <RepositorySearchbar
@@ -16,12 +25,7 @@ const MyRepoSearchArea = () => {
       />
       <div className='flex flex-col space-y-4 lg:flex-row lg:space-x-4'>
         <div className='flex space-x-4'>
-          <Button size='xsTight' variant='light' className='lg:mt-4'>
-            <Share />{' '}
-            <span className='text-sm font-medium text-deepBlackColor lg:hidden'>
-              Share
-            </span>
-          </Button>
+          
           <Button size='xsExtended' variant='light' className='lg:mt-4'>
             <ScanText className='lg:hidden' />
             Scan all
@@ -33,6 +37,7 @@ const MyRepoSearchArea = () => {
           </Button>
         </Link>
       </div>
+      
     </div>
   );
 };

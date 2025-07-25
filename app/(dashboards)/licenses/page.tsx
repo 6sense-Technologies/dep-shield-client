@@ -1,32 +1,32 @@
 'use client';
-import React, { Suspense, useState } from 'react';
+import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
+import Loader from '@/components/loader';
 import PageHeader from '@/components/PageHeader';
 import PageHeading from '@/components/pageHeading';
-import Loader from '@/components/loader';
+import { getAllGlobalLicense } from '@/helpers/globalLicences/globalLicencesApi';
+import { IAllLicenses } from '@/types/licenses.types';
+import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 import AllLicensesSearchArea from './_components/AllLicensesSearchArea';
 import { AllLicensesTable } from './_components/AllLicensesTable';
-import BreadcrumbWithAvatar from '@/components/BreadCrumbiwthAvatar';
-// import { EffectedlicensesData } from '@/constants/DummyDataFactory';
-import { useSession } from 'next-auth/react';
-import { useQuery } from '@tanstack/react-query';
-import { getAllGlobalLicense } from '@/helpers/globalLicences/globalLicencesApi';
 
 const LicensesContent = () => {
   const session = useSession();
   const [pages, setPages] = useState<number>(1);
   const [limit] = useState<number>(10);
+  const searchParams = useSearchParams();
 
-  const {
-    data: allGlobalLicenseData,
-    isFetching: allGlobalLicenseDataLoading,
-  } = useQuery<any>({
+  useEffect(() => {
+    const newPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1;
+    setPages(newPage);
+  }, [searchParams]);
+
+  const { data: allGlobalLicenseData } = useQuery<IAllLicenses>({
     queryKey: ['AllGlobalLicense', session, pages, limit],
     queryFn: () => getAllGlobalLicense(session, pages, limit),
   });
-  console.log(
-    '🚀 ~ LicensesContent ~ allGlobalLicenseData:',
-    allGlobalLicenseData
-  );
 
   return (
     <div className='flex min-h-screen flex-col'>
@@ -40,10 +40,10 @@ const LicensesContent = () => {
         <AllLicensesTable
           licenses={allGlobalLicenseData?.data || []}
           totalCountAndLimit={{
-            totalCount: allGlobalLicenseData?.count,
+            totalCount: allGlobalLicenseData?.count || 0,
             size: 10,
           }}
-          currentPage={1}
+          currentPage={pages}
           loading={false}
         />
       </div>
