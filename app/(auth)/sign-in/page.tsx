@@ -67,6 +67,7 @@ const SignIn = () => {
         onSuccess: ({ email }) => {
             localStorage.setItem("user-email", email);
             router.push("/dashboard");
+            console.log("Sign in successful env", process.env);
         },
         onError: (error: any) => {
             if (error.message === "User not found") {
