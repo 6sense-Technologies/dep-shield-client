@@ -173,14 +173,14 @@ NODE_ENV=production
       script {
         def repo = getRepoFromGitUrl()
         updateGitHubDeploymentStatus(repo, env.BUILD_URL, env.DEPLOYMENT_ID, 'success', (env.BRANCH_NAME == 'test') ? 'Preview' : 'Production', env.DEPLOY_URL)
-        slackSend channel: "#ops4", message: "Build deployed successfully - ${env.JOB_NAME}/${env.GIT_BRANCH} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        sendSlackBuildNotification('success')
       }
     }
     failure {
       script {
         def repo = getRepoFromGitUrl()
         updateGitHubDeploymentStatus(repo, env.BUILD_URL, env.DEPLOYMENT_ID ?: '0', 'failure', (env.BRANCH_NAME == 'test') ? 'Preview' : 'Production', env.DEPLOY_URL)
-        slackSend channel: "#ops4", message: "Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        sendSlackBuildNotification('failure')
       }
     }
     always {
@@ -274,3 +274,35 @@ def updateGitHubDeploymentStatus(String repo, String logUrl, String deploymentId
     
   }
 }
+
+def sendSlackBuildNotification(String status) {
+  def color = status == 'success' ? "#36a64f" : "#FF0000"
+  def statusText = status == 'success' ? "Build succeeded" : "Build failed"
+  def committer = sh(script: "git log -1 --pretty=format:'%an'", returnStdout: true).trim()
+
+  slackSend(
+    channel: "#ops4",
+    color: color,
+    attachments: [[
+      fallback: "${statusText} - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      blocks: [
+        [
+          type: "section",
+          text: [
+            type: "mrkdwn",
+            text: "*${statusText}*\n<${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
+          ]
+        ],
+        [
+          type: "section",
+          fields: [
+            [ type: "mrkdwn", text: "*Branch:*\n${env.BRANCH_NAME}" ],
+            [ type: "mrkdwn", text: "*Committer:*\n${committer}" ],
+            [ type: "mrkdwn", text: "*Project:*\n${env.GHCR_REPO}" ]
+          ]
+        ]
+      ]
+    ]]
+  )
+}
+
