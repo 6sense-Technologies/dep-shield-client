@@ -30,6 +30,7 @@ pipeline {
           def deployUrl = env.DEPLOY_URL
           def repo = getRepoFromGitUrl()
           env.DEPLOYMENT_ID = createAndUpdateGitHubDeployment(repo, env.GIT_COMMIT, env.BRANCH_NAME, (env.BRANCH_NAME == 'test') ? 'Preview' : 'Production', deployUrl)
+          sendSlackBuildNotification('success')
         }
         checkout scm
       }
@@ -283,26 +284,24 @@ def sendSlackBuildNotification(String status) {
   slackSend(
     channel: "#ops4",
     color: color,
-    attachments: [[
-      fallback: "${statusText} - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-      blocks: [
-        [
-          type: "section",
-          text: [
-            type: "mrkdwn",
-            text: "*${statusText}*\n<${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
-          ]
-        ],
-        [
-          type: "section",
-          fields: [
-            [ type: "mrkdwn", text: "*Branch:*\n${env.BRANCH_NAME}" ],
-            [ type: "mrkdwn", text: "*Committer:*\n${committer}" ],
-            [ type: "mrkdwn", text: "*Project:*\n${env.GHCR_REPO}" ]
-          ]
+    text: "${statusText} - ${env.JOB_NAME} #${env.BUILD_NUMBER}", // Fallback text
+    blocks: [
+      [
+        type: "section",
+        text: [
+          type: "mrkdwn",
+          text: "*${statusText}*\n<${env.BUILD_URL}|${env.JOB_NAME} #${env.BUILD_NUMBER}>"
+        ]
+      ],
+      [
+        type: "section",
+        fields: [
+          [ type: "mrkdwn", text: "*Branch:*\n${env.BRANCH_NAME}" ],
+          [ type: "mrkdwn", text: "*Committer:*\n${committer}" ],
+          [ type: "mrkdwn", text: "*Project:*\n${env.GHCR_REPO}" ]
         ]
       ]
-    ]]
+    ]
   )
 }
 
