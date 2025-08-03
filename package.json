@@ -52,7 +52,7 @@
     "next": "15.1.7",
     "next-auth": "^5.0.0-beta.25",
     "react": "^18",
-    "react-day-picker": "^8.10.1",
+    "react-day-picker": "^9.0.0",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
